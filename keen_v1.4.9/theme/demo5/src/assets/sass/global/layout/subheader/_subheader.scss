@@ -1,0 +1,200 @@
+//
+// Sub-header
+//
+
+
+
+
+// General mode
+.kt-subheader {
+	padding: 1rem 0;
+	box-shadow: kt-get($kt-subheader-config, default, shadow);
+	transition: kt-get($kt-header-config, base, desktop, fixed, transition);
+	background-color: #fff;
+	min-height: kt-get($kt-subheader-config, default, height, desktop);
+	margin: 0;
+	display: flex;
+	align-items: stretch;
+
+	.kt-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	// Title
+	.kt-subheader__title {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+
+		// Toggler
+		@include kt-burger-icon-build(kt-subheader__toggler, kt-get($kt-subheader-config, default, toggler));
+		@include kt-burger-icon-skin(kt-subheader__toggler, kt-get($kt-subheader-config, default, toggler, color));
+
+		.kt-subheader__toggler {
+			margin-right: 2.5rem;
+		}
+
+		// Breadcrumbs
+		.kt-subheader__breadcrumbs {
+			display: flex;
+			align-items: center;
+			list-style-type: none;
+			flex-wrap: wrap;
+			margin: 0;
+			padding: 0;
+			flex-wrap: wrap;
+
+			.kt-subheader__breadcrumbs-link {
+				padding: 0 0.75rem 0 0;
+				font-size: 1rem;
+				font-weight: 400;
+				color: #a8a5bb;
+
+				&:hover {
+					color: kt-brand-color();
+				}
+
+				&.kt-subheader__breadcrumbs-link--active {
+					color: kt-brand-color();
+				}
+
+				@include kt-hover-transition();
+
+				&.kt-subheader__breadcrumbs-link--home {
+					color: #33323f;
+					font-weight: 500;
+				}
+			}
+
+			.kt-subheader__breadcrumbs-separator {
+				display: flex;
+				justify-content: content;
+				align-items: center;
+				padding: 0 0.75rem 0 0;
+
+				&:after {
+					display: block;
+					width: 4px;
+					height: 4px;
+					border-radius: 50%;
+					content: " ";
+					background: #dedeea;
+				}
+			}
+		}
+	}
+
+	// Toolbar
+	.kt-subheader__toolbar {
+		display: flex;
+		justify-content: flex-end;
+
+		.btn:not(.btn-icon) {
+			margin-right: 0.1rem;
+			padding: 0.5rem 1.25rem;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// Desktop mode
+@include kt-desktop {
+	// Fixed subheader mode
+	.kt-subheader--fixed.kt-header--fixed {
+		.kt-page {
+			padding-top: kt-get($kt-header-config, base, desktop, default, height) + kt-get($kt-subheader-config, default, height, desktop);
+		}
+
+		.kt-subheader {
+			position: fixed;
+			height: kt-get($kt-subheader-config, fixed, height, desktop);
+			top: kt-get($kt-header-config, base, desktop, default, height);
+			left: 0;
+			right: 0;
+			transition: all 0.3s ease;
+			z-index: kt-get($kt-header-config, base, desktop, fixed, zindex) - 1;
+			box-shadow: 0px 10px 30px 0px rgba(82,63,105, 0.08);
+			background-color: #fff;
+			padding-top: 0;
+			padding-bottom: 0;
+			margin: 0;
+		}
+	}
+}
+
+// Tablet and mobile mode
+@include kt-tablet-and-mobile {
+	.kt-subheader {
+		margin: 0;
+		padding: 0;
+		min-height: kt-get($kt-subheader-config, default, height, mobile);
+
+		// Title
+		.kt-subheader__title {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			margin: 0.25rem 0;
+
+			// Toggler
+			.kt-subheader__toggler {
+				margin-top: 0.5rem;
+				margin-right: 1rem;
+			}
+
+			// Caption
+			.kt-subheader__caption {
+				margin-left: 0.5rem;
+				margin-top: 0.5rem;
+			}
+
+			// Breadcrumbs
+			.kt-subheader__breadcrumbs {
+				margin-top: 0.5rem;
+			}
+		}
+
+		// Toolbar
+		.kt-subheader__toolbar {
+			display: flex;
+			justify-content: flex-end;
+			margin: 0.25rem 0;
+
+			.btn {
+				margin-right: 0.1rem;
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	// Fixed subheader mode
+	.kt-subheader-mobile--fixed.kt-header-mobile--fixed {
+		.kt-page {
+			padding-top: kt-get($kt-header-config, base, mobile, self, default, height) + kt-get($kt-subheader-config, default, height, mobile);
+		}
+
+		.kt-subheader {
+			position: fixed;
+			height: kt-get($kt-subheader-config, fixed, height, mobile);
+			top: kt-get($kt-header-config, base, mobile, self, default, height);
+			left: 0;
+			right: 0;
+			transition: all 0.3s ease;
+			z-index: kt-get($kt-header-config, base, mobile, self, fixed, zindex) - 1;
+			box-shadow: 0px 10px 30px 0px rgba(82,63,105, 0.08);
+			background-color: #fff;
+			padding-top: 0;
+			padding-bottom: 0;
+			margin: 0;
+		}
+	}
+}
