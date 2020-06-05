@@ -4,8 +4,9 @@ $a = $_SESSION['user_details']['role_id'];
 ?>
 <style>
 .kt-menu__toggle{
- background-color: #421E11 !important;
+ background-color: #660099 !important;
 }
+
 
 </style>
 <input type="hidden" value="<?php if(isset($_GET['page'])){echo $_GET['page'];}?>" id="page">
@@ -36,7 +37,7 @@ $a = $_SESSION['user_details']['role_id'];
                         <?php if(access('10')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/requstedItems.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اخراج مخزني</span></a></li>
                         <?php } ?>
-                        <?php if(access('11')){?>
+                        <?php if(access('12')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/makeOrders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">توليد الشحنات</span></a></li>
                         <?php } ?>
 <!--                        <?php if(access('11')){?>
@@ -45,9 +46,13 @@ $a = $_SESSION['user_details']['role_id'];
                         <?php if(access('12')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/reports.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تقارير الطلبيات</span></a></li>
                         <?php } ?>-->
+                        <?php if(access('11')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
+                        <?php } ?>
                         <?php if(access('12')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحديث حالة الطلبيات</span></a></li>
                         <?php } ?>
+
                     </ul>
 				</div>
 			</li>
@@ -77,27 +82,6 @@ $a = $_SESSION['user_details']['role_id'];
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطبيات</span></a></li>
                                 <?php }?>
                                </ul>
-							</div>
-						</li>
-						<li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">ادارة الطلاب</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
-							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
-								<ul class="kt-menu__subnav">
-                                <?php if($a == 4 || $a == 3 || $a == 2 || $a == 1 || $a==99){?>
-                                    <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/students.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اضافة وتعديل بيانات الطلاب</span></a></li>
-                                <?php }?>
-                                <?php if($a == 5 || $a==99){?>
-                                    <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/studentManagement.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تقيم الطلاب</span></a></li>
-                                <?php }?>
-                                <?php if($a == 4 || $a == 3 || $a == 1 || $a==99){?>
-                                    <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/studentLeave.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اجازات الطلاب</span></a></li>
-                                <?php }?>
-                                <?php if($a == 2 || $a == 4 || $a == 3 || $a == 1 || $a==99){?>
-                                    <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/showStudentLeave.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض اجازات طالب</span></a></li>
-                                <?php }?>
-                                <?php if($a == 2 || $a == 4 || $a == 3 || $a == 1 || $a==99){?>
-                                    <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/studentPenalty.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">غرامات الطلاب</span></a></li>
-                                <?php }?>
-                                </ul>
 							</div>
 						</li>
                         <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">الاعدادات</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>

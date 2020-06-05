@@ -39,7 +39,13 @@ if($v->passes()) {
     $res2 = getData($con,$sql,[$id]);
     if(count($res2) >= 1){
         foreach($res2 as $val){
-          if($val['status'] == 0){
+          $sql = "select * configurable_product where id=?";
+          $res6 = getData($con,$sql,[$val['configurable_product_id']]);
+          $a_qty = $res6[0]['qty'];
+          if($a_qty <  $val['qty']){
+            $msg = "يوجد منتج واحد  على الاقل  بكمية غير كافية";
+            break;
+          }else if($val['status'] == 0){
             $msg = "يوجد منتجات بالسلة لم  يتم تجهيزها";
             break;
           }else{
@@ -55,7 +61,9 @@ if($v->passes()) {
       $order_id = setDataWithLastID($con,$sql,[$order_no,$res[0]['total_price'],$res[0]['customer_name'],$res[0]['customer_phone'],$res[0]['city_id'],$res[0]['town_id'],$res[0]['address'],$res[0]['note'],$res[0]['staff_id'],$_SESSION['userid']]);
 
       //--- ternsfer basket_items to order_items
+
       foreach($res2 as $val){
+
         $sql = "insert into order_items (order_id,configurable_product_id,qty,staff_id,storage_manager_id,price)
                values (?,?,?,?,?,?)";
         $res4 = setData($con,$sql,[$order_id,
@@ -65,6 +73,8 @@ if($v->passes()) {
                                   $val['price'],
                                   $val['staff_id'],
                                   ]);
+        $sql = "update configurable_product set qty = qty - ? where id=?";
+        $res4 = setData($con,$sql,[$val['qty'],$val['configurable_product_id']]);
       }
 
       //--- empty all items in the basket

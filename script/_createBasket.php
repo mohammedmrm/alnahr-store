@@ -26,7 +26,7 @@ if(empty($town)){
 }
 $address = $_REQUEST['address'];
 $note = $_REQUEST['note'];
-
+$error = [];
 
 $v->addRuleMessage('isPhoneNumber', ' رقم هاتف غير صحيح ');
 
@@ -63,10 +63,9 @@ if($res[0] > 6){
   $max = (bool) 1;
 }
 if($v->passes() && $max) {
-  $password = hashPass($password);
   $sql = 'insert into basket (customer_name,customer_phone,city_id,town_id,address,note,staff_id) values
                               (?,?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$addess,$note,$_SESSION['userid']]);
+  $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$_SESSION['userid']]);
   if($result > 0){
     $success = 1;
   }
