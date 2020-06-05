@@ -44,7 +44,7 @@ $v->addRuleMessages([
 ]);
 
 $v->validate([
-    'name'  => [$name,  'required|min(3)|max(100)'],
+    'name'  => [$name,  'required|min(2)|max(100)'],
     'client'=> [$client,'required|int'],
     'note'  => [$note,  'max(250)'],
 ]);

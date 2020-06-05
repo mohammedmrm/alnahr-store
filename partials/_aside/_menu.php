@@ -27,6 +27,27 @@ $a = $_SESSION['user_details']['role_id'];
                         <?php if(access('1')){?>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/addProduct.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اضافه منتج</span></a></li>
                         <?php } ?>
+                        <?php if(access('8')){?>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات</span></a></li>
+                        <?php } ?>
+                        <?php if(access('9')){?>
+                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myBaskets.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">سلاتي</span></a></li>
+                        <?php } ?>
+                        <?php if(access('10')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/requstedItems.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اخراج مخزني</span></a></li>
+                        <?php } ?>
+                        <?php if(access('11')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/makeOrders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">توليد الشحنات</span></a></li>
+                        <?php } ?>
+<!--                        <?php if(access('11')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
+                        <?php } ?>
+                        <?php if(access('12')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/reports.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تقارير الطلبيات</span></a></li>
+                        <?php } ?>-->
+                        <?php if(access('12')){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحديث حالة الطلبيات</span></a></li>
+                        <?php } ?>
                     </ul>
 				</div>
 			</li>

@@ -103,8 +103,8 @@ if($v->passes() && $img_err ==""){
     if($type==2){
       foreach($config_matrix as $val){
         //---insert each config
-        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku) values(?,?,?,?,?)";
-        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku']]);
+        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,location,stock,sub_name) values(?,?,?,?,?,?,?,?)";
+        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku'],$val['location'],$val['stock'],$val['sub_name']]);
         //--get data of last inserted config
         $sql = "select * from `configurable_product` where product_id=? and buy_price=? and sku=? order by id DESC limit 1";
         $res3 = getData($con,$sql,[$res['id'],$val['buy_price'],$val['sku']]);

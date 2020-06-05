@@ -36,12 +36,12 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 </div>
 <!-- end:: Subheader -->
 					<!-- begin:: Content -->
-	<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 <div class="kt-portlet kt-portlet--mobile">
 	<div class="kt-portlet__head">
 		<div class="kt-portlet__head-label">
 			<h3 class="kt-portlet__head-title">
-				العملاء
+				اضافة منتج
 			</h3>
 		</div>
 	</div>
@@ -64,7 +64,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
   					</div>
                     <div class="form-group">
   						<label>اسم المنتج</label>
-  						<input type="name" name="Product_name" class="form-control"  placeholder="ادخل اسم المنتج">
+  						<input type="name" onkeyup="updateSKU()" id="Product_name" name="Product_name" class="form-control"  placeholder="ادخل اسم المنتج">
   						<span class="form-text  text-danger" id="name_err"></span>
   					</div>
   					<div class="form-group">
@@ -107,6 +107,11 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
     						<span class="form-text  text-danger" id="sku_err"></span>
     					</div>
     					<div class="form-group">
+    						<label>الموقع</label>
+    						<input type="text" id="location" name="location" class="form-control" placeholder="">
+    						<span class="form-text  text-danger" id="location_err"></span>
+    					</div>
+    					<div class="form-group">
     						<label>نوع المنتج</label>
     						<select onchange="toggloConfigrationBtn($(this))" id="type" name="type" class="selectpicker form-control">
                              <option value="1">منتج بسيط</option>
@@ -122,7 +127,40 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
                 </div>
                 <div class="row">
   				  <div class="col-md-12">
-                  <div id="productConfigration"></div>
+                           <div id="configTable" style="visibility: hidden;">
+                      		<table class="table table-striped table-bordered table-hover responsive no-wrap" id="tb-Configrationtable">
+                      		<thead>
+                      	  	<tr id="configTableHead">
+    	 							<th>Image</th>
+    								<th>الاسم</th>
+    								<th>sku</th>
+                                    <th>الكميه</th>
+    								<th>السعر</th>
+    								<th>سعر الشراء</th>
+    								<th>الموقع</th>
+    								<th>المخزن</th>
+
+                            </tr>
+                      	  	<tr id="configTableInit" class="bg-warning">
+    	 							<td colspan="3">القيم الاولية</td>
+    								<td><input type="number" step="1" min="0" onchange="updateInitVal()" id="qty_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="price_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="buy_price_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="location_init" class="form-control" /></td>
+    								<td>
+                                      <select onchange="updateInitVal()" id="stock_init" class="from-control selectpicker">
+                                        <option value="1" class="text-success">بالمخزن</option>
+                                        <option value="0" class="text-danger">غير متوفر</option>
+                                      </select>
+                                    </td>
+
+                            </tr>
+                            </thead>
+                                <tbody id="configTableBody">
+                                </tbody>
+                            </table>
+                           </div>
+
                   </div>
                 </div>
 	            <div class="kt-portlet__foot kt-portlet__foot--solid">
@@ -167,9 +205,6 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 						<a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="pending">
 							<span>2</span>
 						</a>
-						<a class="kt-wizard-v1__nav-item" href="#" data-ktwizard-type="step" data-ktwizard-state="pending">
-							<span>3</span>
-						</a>
 					</div>
 					<div class="kt-wizard-v1__nav-details">
 						<div class="kt-wizard-v1__nav-item-wrapper" data-ktwizard-type="step-info">
@@ -188,20 +223,11 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 								يتم تحديد قيم كل صفه
 							</div>
 						</div>
-						<div class="kt-wizard-v1__nav-item-wrapper" data-ktwizard-type="step-info" data-ktwizard-state="current">
-							<div class="kt-wizard-v1__nav-item-title">
-								جدول الاعدادات
-							</div>
-							<div class="kt-wizard-v1__nav-item-desc">
-								يتم تحديد السعر والكمية حسب قيم الصفات للمنتج
-							</div>
-						</div>
 					</div>
 				</div>
 				<!--end: Form Wizard Nav -->
 
 			</div>
-			<div class="kt-grid__item kt-grid__item--fluid kt-wizard-v1__wrapper">
 				<!--begin: Form Wizard Form-->
 				<form class="kt-form" id="kt_form" novalidate="novalidate">
 
@@ -226,38 +252,12 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 						</div>
 					</div>
 					<!--end: Form Wizard Step 2-->
-
-					<!--begin: Form Wizard Step 3-->
-					<div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
-						<div class="kt-heading kt-heading--md">انشاء جدول المنتجات الافتراضية</div>
-						<div class="kt-separator kt-separator--height-sm"></div>
-						<div class="kt-form__section kt-form__section--first">
-                           <div id="configTable">
-                      		<table class="table table-striped table-bordered table-hover responsive no-wrap" id="tb-Configrationtable">
-                      		<thead>
-                      	  	<tr id="configTableHead">
-    	 							<th>Image</th>
-    								<th>sku</th>
-                                    <th>الكميه</th>
-    								<th>السعر</th>
-    								<th>سعر الشراء</th>
-
-                            </tr>
-                            </thead>
-                                <tbody id="configTableBody">
-                                </tbody>
-                            </table>
-                           </div>
-						</div>
-					</div>
-					<!--end: Form Wizard Step 3-->
-
-					<!--begin: Form Actions -->
+                    <!--begin: Form Actions -->
 					<div class="kt-form__actions" style="alignment-adjust: central; text-align: left">
 						<div class="btn btn-outline-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-prev">
 							السابق
 						</div>
-						<div onclick="addConigration()" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
+						<div onclick="createCofigTable()" class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-submit">
 							اضافة الاعدادات
 						</div>
 						<div class="btn btn-brand btn-md btn-tall btn-wide btn-bold btn-upper" data-ktwizard-type="action-next">
@@ -267,7 +267,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 					<!--end: Form Actions -->
 				</form>
 				<!--end: Form Wizard Form-->
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -294,6 +294,9 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 <script type="text/javascript">
 getAttributes($("#attributes"));
 $(".selectpicker").selectpicker("refresh");
+function updateSKU(){
+  $("#sku").val($("#Product_name").val());
+}
 function getAllProducts(elem){
 $.ajax({
   url:"script/_getProducts.php",
@@ -438,7 +441,7 @@ function addProduct(){
        if(res.success == 1){
          getAllProducts($("#getAllProductsTable"));
          $("#addProductForm input").val("");
-         Toast.success('تم الاضافة');
+         toaste.success('تم الاضافة');
        }else{
            $("#cat_err").text(res.error["cat"]);
            $("#name_err").text(res.error["name"]);
@@ -454,8 +457,7 @@ function addProduct(){
      },
      error:function(e){
        console.log(e);
-       Toast.error.displayDuration=5000;
-       Toast.error('تأكد من المدخلات','خطأ');
+       toaste.error('تأكد من المدخلات','خطأ');
      }
   });
 }
@@ -476,7 +478,7 @@ function getAttributesConfig(){
                  '<div>';
           $.each(this.config,function(){
              data = data + '<label class="col-md-3 kt-checkbox kt-checkbox--bold kt-checkbox--brand">'+
-								'<input onclick="createCofigTable()" name="config[]" type="checkbox" value="'+this.id+'" >'+this.value+
+								'<input  name="config[]" type="checkbox" value="'+this.id+'" >'+this.value+
 								'<span></span>'+
 							'</label>';
           });
@@ -499,20 +501,22 @@ function createCofigTable(){
     data:$('#kt_form').serialize(),
     type:"POST",
     beforeSend:function(){
-      $("#attributesConfig").addClass('loading');
+      $("#configTable").addClass('loading');
       $('[extra="head"]').remove();
       $('#configTableBody').html("");
+      $("#configTable").css('visibility','visible');
     },
     success:function(res){
-       $("#attributesConfig").removeClass('loading');
-
+       $("#configTable").removeClass('loading');
       if(res.success == 1){
 
         $.each(res.data,function(){
             $('#configTableHead').append('<th extra="head">'+this.attribute.name+'</th>');
+            $('#configTableInit').append('<td extra="head"></td>');
 
         });
         bluid(res.veiwID,res.veiw,res.rows);
+
       }
       console.log(res);
     },
@@ -527,16 +531,38 @@ function createCofigTable(){
 function bluid(veiwID,veiw,rows){
   row = "";
   $("#configTable").addClass("loading");
+  $("#price_init").val($("#price").val());
+  $("#buy_price_init").val($("#buy_price").val());
+  $("#location_init").val($("#location").val());
+  $("#qty_init").val($("#qty").val());
   i=0;
   $.each(veiwID,function(k1,v1){
     j=0;
+    h=0;
+    sku =  $("#Product_name").val();
+    name =  $("#Product_name").val();
+    $.each(v1,function(wdez){
+      name = name +"-"+veiw[i][h];
+      sku =  sku +"-"+veiw[i][h];
+      h++;
+    });
+
     row = row +
     "<tr>"+
       "<td><input type='file' class='form-control' name='config_matrix["+i+"][img]'></td>"+
-      "<td><input type='text' class='form-control'  value='"+$("#sku").val()+"' name='config_matrix["+i+"][sku]'></td>"+
-      "<td><input type='number' class='form-control'value='"+Math.ceil((Number($("#qty").val())/rows))+"' name='config_matrix["+i+"][qty]'></td>"+
-      "<td><input type='text' class='form-control'  value='"+$("#price").val()+"' name='config_matrix["+i+"][price]'></td>"+
-      "<td><input type='text' class='form-control'  value='"+$("#buy_price").val()+"' name='config_matrix["+i+"][buy_price]'></td>";
+      "<td><input type='text' class='form-control'  value='"+name+"' name='config_matrix["+i+"][sub_name]'></td>"+
+      "<td><input type='text' class='form-control'  value='"+sku+"' name='config_matrix["+i+"][sku]'></td>"+
+      "<td><input type='number' class='form-control' qty='qty' value='"+Math.ceil((Number($("#qty").val())/rows))+"' name='config_matrix["+i+"][qty]'></td>"+
+      "<td><input type='text' class='form-control' price='price' value='"+$("#price_init").val()+"' name='config_matrix["+i+"][price]'></td>"+
+      "<td><input type='text' class='form-control' buy_price='buy_price'  value='"+$("#buy_price_init").val()+"' name='config_matrix["+i+"][buy_price]'></td>"+
+      "<td><input type='text' class='form-control' location='location' value='"+$("#location_init").val()+"' name='config_matrix["+i+"][location]'></td>"+
+      "<td>"+
+      '<select stock="stock" onchange="updateInitVal()" id="stock_init" name="config_matrix['+i+'][stock]" class="from-control selectpicker">'+
+          '<option value="1" class="text-success">بالمخزن</option>'+
+          '<option value="0" class="text-danger">غير متوفر</option>'+
+      '</select>'+
+      "</td>"
+      ;
     $.each(v1,function(k2,v2){
           row = row +
           "<td>"+
@@ -552,13 +578,15 @@ function bluid(veiwID,veiw,rows){
   });
   $('#configTableBody').append(row);
   $("#configTable").removeClass('loading');
-  //$("#productConfigration").html($("#configTable").html());
-  //$("#configTable").html("");
+  $(".selectpicker").selectpicker('refresh');
 }
-function addConigration(){
-  $("#productConfigration").html($("#configTable").html());
-  //$('[extra="head"]').remove();
-  //$("#configTableBody").html("");
+function updateInitVal(){
+  $('[qty="qty"]').val($("#qty_init").val());
+  $('[price="price"]').val($("#price_init").val());
+  $('[buy_price="buy_price"]').val($("#buy_price_init").val());
+  $('[location="location"]').val($("#location_init").val());
+  $('[stock="stock"]').val($("#stock_init").val());
+  $(".selectpicker").selectpicker('refresh');
 }
 function toggloConfigrationBtn(ele){
  if(ele.val() == 1){

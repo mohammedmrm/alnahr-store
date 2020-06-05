@@ -277,5 +277,5 @@ function ValidURL(str) {
 		<!--end::Page Vendors -->
 
 <!--begin::Page Scripts(used by this page) -->
-<script src="./assets/js/demo1/pages/custom/user/login.js" type="text/javascript"></script>
+<script src="assets/js/pages/custom/user/login.js" type="text/javascript"></script>
 <!--end::Page Scrip

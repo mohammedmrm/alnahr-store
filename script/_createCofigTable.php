@@ -9,7 +9,7 @@ $ids = $_REQUEST['attributes'];
 $configs = $_REQUEST['config'];
 $data=[];
 $rows =1;
-    function traverse( $array, $parent_ind ){
+function traverse( $array, $parent_ind ){
         $r = [];
         $pr = '';
         if( !is_numeric($parent_ind) )
@@ -24,7 +24,7 @@ $rows =1;
                     $r[] = $pr . $ind . '-' . $el;
         }
         return $r;
-    }
+}
 function variations( $array ){
     if( empty( $array ) ) return [];
 

@@ -20,7 +20,7 @@ License: You must have a valid license purchased only from https://themes.getboo
 
 	<!-- begin::Head -->
 	<head>
-		<base href="">
+        <base href="">
 		<meta charset="utf-8" />
 		<title>نظام المخازن</title>
 		<meta name="description" content="Latest updates and statistic charts">
@@ -48,6 +48,7 @@ License: You must have a valid license purchased only from https://themes.getboo
 		<link href="assets/css/skins/header/menu/light.rtl.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/skins/brand/light.rtl.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/skins/aside/navy.rtl.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/datatables/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
@@ -103,10 +104,14 @@ License: You must have a valid license purchased only from https://themes.getboo
            overflow-x: hidden;
         }
 
-        body,body * :not([type="tel"]):not(.other):not(td):not(th) {
+        body,body * :not([type="tel"]):not(.other):not(td):not(th):not(.pagination) {
             direction: rtl !important;
             text-align: right !important;
         }
+        .pagination {
+              direction: ltr !important;;
+        }
+
         .kt-wizard-v1__wrapper * {
           direction: ltr !important;
         }
@@ -140,7 +145,87 @@ License: You must have a valid license purchased only from https://themes.getboo
         .close {
           margin-right: 0px !important;
         }
+        .toast {
+          opacity: 1 !important;
+        }
 
+        .toast-message{
+          font-size: 1.2rem !important;
+        }
+        .toast-success{
+          background-color:#33CC33 !important;
+          color:#FFFFFF !important;
+        }
+        .toast-error{
+          background-color: #CC0000 !important;
+          color:#FFFFFF;
+        }
+        .toast-warning{
+          background-color: #FFCC33 !important;
+          color:#FFFFFF !important;
+        }
+        .toast-info{
+          background-color: #6666FF !important;
+          color:#FFFFFF !important;
+        }
+        hr.hr {
+          border: 0;   /* in order to override TWBS stylesheet */
+          height: 5px;
+
+          background: -moz-linear-gradient(left, rgba(196,222,138,1) 0%, rgba(196,222,138,1) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%);  /* FF3.6+ */
+          background: -webkit-linear-gradient(left, rgba(196,222,138,1) 0%, rgba(196,222,138,1) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(left, rgba(196,222,138,1) 0%, rgba(196,222,138,1) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* Opera 11.10+ */
+          background: -ms-linear-gradient(left, rgba(196,222,138,1) 0%, rgba(196,222,138,1) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* IE10+ */
+          background: linear-gradient(to right, rgba(196,222,138,1) 0%, rgba(196,222,138,1) 12.5%, rgba(245,253,212,1) 12.5%, rgba(245,253,212,1) 25%, rgba(255,208,132,1) 25%, rgba(255,208,132,1) 37.5%, rgba(242,122,107,1) 37.5%, rgba(242,122,107,1) 50%, rgba(223,157,185,1) 50%, rgba(223,157,185,1) 62.5%, rgba(192,156,221,1) 62.5%, rgba(192,156,221,1) 75%, rgba(95,156,217,1) 75%, rgba(95,156,217,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 87.5%, rgba(94,190,227,1) 100%); /* W3C */
+        }
+        .item-img {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:100px;
+          height:100px;
+        }
+        .item-img-xlg {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:180px;
+          height:180px;
+        }
+        .item-img-lg {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:150px;
+          height:150px;
+        }
+        .item-img-md {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:80px;
+          height:80px;
+        }
+        .item-img-sm {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:50px;
+          height:50px;
+        }
+        .item-img-xs {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          border-radius: 5px;
+          width:25px;
+          height:25px;
+        }
         </style>
 	</head>
 
@@ -148,18 +233,13 @@ License: You must have a valid license purchased only from https://themes.getboo
 
 	<!-- begin::Body -->
 	<body class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-header-mobile--fixed kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
-	   <?php include("partials/_page-loader.php"); ?>
-
-
-
-		<!-- begin::Global Config(global config for global JS sciprts) -->
-
-
-		<!-- end::Global Config -->
-
-		<!--begin::Global Theme Bundle(used by all pages) -->
+	    <!--begin::Global Theme Bundle(used by all pages) -->
 		<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
-          <script>
+        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
+        <!--end::Global Theme Bundle -->
+        <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+        <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+        <script>
 			var KTAppOptions = {
 				"colors": {
 					"state": {
@@ -191,32 +271,39 @@ License: You must have a valid license purchased only from https://themes.getboo
 				}
 			};
 		</script>
-
+        <?php include("partials/_page-loader.php"); ?>
         <?php include("layout.php"); ?>
-
-        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
-        <!--end::Global Theme Bundle -->
-
-		<!--begin::Page Vendors(used by this page) -->
+        <!--begin::Page Vendors(used by this page) -->
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
-
-		<!--end::Page Vendors -->
-
-		<!--begin::Page Scripts(used by this page) -->
-		<script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
-<script>
+        <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
+        <script>
 $(document).ready(function () {
-        $(document).on('show.bs.modal', '.modal', function (event) {
-            var zIndex = 1040 + (10 * $('.modal:visible').length);
-            $(this).css('z-index', zIndex);
-            setTimeout(function() {
-                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-            }, 0);
-        });
+    $(document).on('show.bs.modal', '.modal', function (event) {
+        var zIndex = 1040 + (10 * $('.modal:visible').length);
+        $(this).css('z-index', zIndex);
+        setTimeout(function() {
+            $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+        }, 0);
+    });
 });
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "5000",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
 </script>
-		<!--end::Page Scripts -->
-	</body>
-
-	<!-- end::Body -->
+<!--end::Page Scripts -->
+</body>
 </html>
