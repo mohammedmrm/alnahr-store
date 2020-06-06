@@ -2,8 +2,7 @@
 session_start();
 error_reporting(0);
 header('Content-Type: application/json');
-require_once("_access.php");
-
+//require_once("_access.php");
 require_once("dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
@@ -14,10 +13,13 @@ if(empty($page) || $page <=0){
   $page=1;
 }
 $name = trim($_REQUEST['name']);
+
+
 try{
   $count = "select count(*) as count from configurable_product left join product on configurable_product.product_id = product.id  ";
   $query = "select *,a.path as path,configurable_product.id as c_id from configurable_product
             left join product on configurable_product.product_id = product.id
+
             left join (
              select  max(path) as path,product_id from images
              group by images.product_id
@@ -27,6 +29,24 @@ try{
   if(!empty($name)){
    $filter .= " and name like '%".$name."%' ";
   }
+  $f1 = "";
+  if($_SESSION['role'] == 4){
+   $sql = "select * from mandop_stores where mandop_id=?";
+   $res=getData($con,$sql,[$_SESSION['userid']]);
+   if(count($res)>0){
+     $f1 = " and ( ";
+     foreach($res as $val){
+         $f2 ="store_id =".$val['store_id']." or";
+     }
+     $last = strrpos($f2, 'or');
+     $f2 = substr($f2, 0, $last);
+     $f1 .= $f2." ) ";
+   }else{
+     $f1 = " and store_id = -1";
+   }
+  }
+  $filter .= $f1;
+
   if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
     $filter = $where." ".$filter;

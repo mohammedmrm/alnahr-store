@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
-access("");
+access([1,3,5]);
 require_once("dbconnection.php");
 require_once("_crpt.php");
 require_once("../config.php");
@@ -39,7 +39,7 @@ if($v->passes()) {
     $res2 = getData($con,$sql,[$id]);
     if(count($res2) >= 1){
         foreach($res2 as $val){
-          $sql = "select * configurable_product where id=?";
+          $sql = "select * from configurable_product where id=?";
           $res6 = getData($con,$sql,[$val['configurable_product_id']]);
           $a_qty = $res6[0]['qty'];
           if($a_qty <  $val['qty']){

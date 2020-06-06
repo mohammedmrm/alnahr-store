@@ -2,7 +2,6 @@
 session_start();
 header('Content-Type: application/json');
 require("_access.php");
-access("");
 require("dbconnection.php");
 try{
   $query = "select * from basket where staff_id=? and status > 0";

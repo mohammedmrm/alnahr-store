@@ -1,6 +1,9 @@
 <?php
 $a = $_SESSION['user_details']['role_id'];
 //$a = 99;
+function acc($id){
+  return true;
+}
 ?>
 <style>
 .kt-menu__toggle{
@@ -25,34 +28,40 @@ $a = $_SESSION['user_details']['role_id'];
 						<li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Dashboards</span></span></li>
 
                         <li class="kt-menu__item" aria-haspopup="true"><a href="index.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">لوحة  التحكم</span></a></li>
-                        <?php if(access('1')){?>
+                        <?php if($a == 1 || $a == 3 || $a==99){?>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/addProduct.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اضافه منتج</span></a></li>
                         <?php } ?>
-                        <?php if(access('8')){?>
+                        <?php if($a == 1 || $a == 3 || $a == 4 || $a == 5 || $a == 6 || $a==99){?>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات</span></a></li>
                         <?php } ?>
-                        <?php if(access('9')){?>
                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myBaskets.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">سلاتي</span></a></li>
-                        <?php } ?>
-                        <?php if(access('10')){?>
+                        <?php if($a == 1 || $a == 5|| $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/requstedItems.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اخراج مخزني</span></a></li>
                         <?php } ?>
-                        <?php if(access('12')){?>
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/makeOrders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">توليد الشحنات</span></a></li>
                         <?php } ?>
-<!--                        <?php if(access('11')){?>
+<!--                        <?php if(acc('11')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
                         <?php } ?>
-                        <?php if(access('12')){?>
+                        <?php if(acc('12')){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/reports.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تقارير الطلبيات</span></a></li>
                         <?php } ?>-->
-                        <?php if(access('11')){?>
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
                         <?php } ?>
-                        <?php if(access('12')){?>
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحديث حالة الطلبيات</span></a></li>
                         <?php } ?>
-
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحدبث الرواجع الجزئية</span></a></li>
+                        <?php } ?>
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشف حساب مندوب</span></a></li>
+                        <?php } ?>
+                        <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشوفات العملاء</span></a></li>
+                        <?php } ?>
                     </ul>
 				</div>
 			</li>
@@ -64,10 +73,10 @@ $a = $_SESSION['user_details']['role_id'];
 							<div class="kt-menu__submenu kt-menu__item--open"><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
                                     <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Users</span></span></li>
-                                 <?php if(access('3')){?>
+                                 <?php if($a == 1 || $a == 2 || $a==99){?>
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/clients.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">العملاء</span></a></li>
                                  <?php } ?>
-                                 <?php if(access('4')){?>
+                                 <?php if($a == 1 || $a == 2 || $a==99){?>
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/stores.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الصفحات (الاسواق)</span></a></li>
                                  <?php } ?>
                                 </ul>
@@ -78,7 +87,7 @@ $a = $_SESSION['user_details']['role_id'];
 							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
                                     <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Profile</span></span></li>
-                                <?php if(access('2')){?>
+                                <?php if($a == 1 || $a == 2 || $a==99){?>
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطبيات</span></a></li>
                                 <?php }?>
                                </ul>
@@ -88,13 +97,16 @@ $a = $_SESSION['user_details']['role_id'];
 							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
 									<li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Profile</span></span></li>
-                                    <?php if(access("5")){?>
+                                    <?php if($a == 1 || $a==99){?>
+                                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/staff.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الموظفين</span></a></li>
+                                    <?php } ?>
+                                    <?php if($a == 1 || $a == 2 || $a == 3 || $a == 5 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/towns.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">المناطق</span></a></li>
                                     <?php } ?>
-                                    <?php if(access("6")){?>
+                                    <?php if($a == 1 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orderStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الحالات</span></a></li>
                                     <?php } ?>
-                                    <?php if(access("7")){?>
+                                    <?php if($a == 1 || $a == 2 || $a == 3 || $a == 5 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/attrbutes.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الاوسمة</span></a></li>
                                     <?php } ?>                                </ul>
 							</div>

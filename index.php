@@ -1,11 +1,9 @@
 <?php
-require_once('script/_access.php');
-if(!isset($_SESSION)){
- session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 ?>
 <!DOCTYPE html>
-
 <!--
 Theme: Keen - The Ultimate Bootstrap Admin Theme
 Author: KeenThemes
@@ -73,9 +71,8 @@ License: You must have a valid license purchased only from https://themes.getboo
         }
 
       fieldset {
-
-      		margin: 0;
-      		xmin-width: 0;
+            margin: 0;
+      		min-width: 0;
       		padding: 10px;
       		position: relative;
       		border-radius:4px;
@@ -231,10 +228,11 @@ License: You must have a valid license purchased only from https://themes.getboo
 	<body class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-header-mobile--fixed kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
 	    <!--begin::Global Theme Bundle(used by all pages) -->
 		<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
-        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
+
         <!--end::Global Theme Bundle -->
         <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+        <?php include("partials/_page-loader.php"); ?>
         <script>
 			var KTAppOptions = {
 				"colors": {
@@ -267,8 +265,8 @@ License: You must have a valid license purchased only from https://themes.getboo
 				}
 			};
 		</script>
-        <?php include("partials/_page-loader.php"); ?>
         <?php include("layout.php"); ?>
+        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
         <!--begin::Page Vendors(used by this page) -->
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>

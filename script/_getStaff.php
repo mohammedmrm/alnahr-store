@@ -7,18 +7,15 @@ require("dbconnection.php");
 try{
   if($_SESSION['role'] == 1 ){
   $query = "select staff.*,
-            branches.name as branch_name,
-            role.name as role_name 
-            from staff inner join branches on branches.id = staff.branch_id
-            inner join role on role.id = staff.role_id
-            where account_type <> 2";
+            role.name as role_name
+            from staff inner join role on role.id = staff.role_id
+            ";
   }else{
    $query = "select staff.*,
-            branches.name as branch_name,
             role.name as role_name
             from staff inner join branches on branches.id = staff.branch_id
             inner join role on role.id = staff.role_id
-            where account_type <> 2 and staff.branch_id = '".$_SESSION['user_details']['branch_id']."'";
+            ";
   }
   $data = getData($con,$query);
   $success="1";

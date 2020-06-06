@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 error_reporting(0);
 require_once("_access.php");
-access("");
+access([1,5,3]);
 $success="0";
 $sub_name = $_REQUEST['name'];
 $client = $_REQUEST['client'];

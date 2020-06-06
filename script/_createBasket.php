@@ -1,9 +1,8 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
-access([1,2,5]);
 require_once("dbconnection.php");
 require_once("_crpt.php");
 require_once("../config.php");
@@ -48,10 +47,10 @@ $v->addRuleMessages([
 ]);
 
 $v->validate([
-    'customer_name'   => [$customer_name,    'min(3)|max(100)'],
-    'customer_phone'  => [$customer_phone,   'isPhoneNumber'],
-    'city'            => [$city,'int'],
-    'town'            => [$town,"int"],
+    'customer_name'   => [$customer_name,    'required|min(3)|max(100)'],
+    'customer_phone'  => [$customer_phone,   'required|isPhoneNumber'],
+    'city'            => [$city,'required|int'],
+    'town'            => [$town,"required|int"],
     'address'         => [$address,'max(250)'],
     'note'            => [$note,  'max(250)'],
 ]);

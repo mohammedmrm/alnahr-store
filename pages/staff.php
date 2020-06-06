@@ -48,10 +48,9 @@ access([1,2]);
 	  						<tr>
 										<th>ID</th>
 										<th>الاسم</th>
-										<th>الفرع</th>
 										<th>رقم الهاتف</th>
+										<th>الصفحات</th>
 										<th>الوظيفة</th>
-										<th>المناطق</th>
 										<th>الهوية</th>
 										<th>تعديل</th>
 										
@@ -59,40 +58,14 @@ access([1,2]);
       	            </thead>
                             <tbody id="staffTable">
                             </tbody>
-                            <tfoot>
-	                <tr>
-										<th>ID</th>
-										<th>الاسم</th>
-										<th>الفرع</th>
-										<th>رقم الهاتف</th>
-										<th>الوظيفة</th>
-										<th>المناطق</th>
-										<th>الهوية</th>
-										<th>تعديل</th>
-
-					</tr>
-	           </tfoot>
 		</table>
 		<!--end: Datatable -->
 	</div>
 </div>	</div>
-<!-- end:: Content -->				</div>
-
-
-            <!--begin::Page Vendors(used by this page) -->
-                            <script src="assets/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-                        <!--end::Page Vendors -->
-
-
-
-            <!--begin::Page Scripts(used by this page) -->
-                            <script src="assets/js/demo1/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
-            <!--begin::Page Scripts(used by this page) -->
-                            <script src="./assets/js/demo1/pages/custom/profile/overview-3.js" type="text/javascript"></script>
-                            <script src="./assets/js/demo1/pages/custom/profile/profile.js" type="text/javascript"></script>
-<script src="js/getBraches.js" type="text/javascript"></script>
+<!-- end:: Content -->
+</div>
 <script src="js/getRoles.js" type="text/javascript"></script>
-<script src="js/getAllunAssignedTowns.js" type="text/javascript"></script>
+<script src="js/getAllunAssignedPages.js" type="text/javascript"></script>
 <script type="text/javascript">
 function getStaff(elem){
 $.ajax({
@@ -103,18 +76,17 @@ $.ajax({
    console.log(res);
    elem.html("");
    $.each(res.data,function(){
-      btn ='';
-     if(this.role_id == 4){
-       btn = "<button data-toggle='modal' data-target='#driverTownsModal' class='btn btn-warning text-white' onclick='getDriverTowns("+this.id+")'>مناطق</button>"
-     }
+       btn ='';
+       if(this.role_id == 4){
+         btn = "<button data-toggle='modal' data-target='#mandopPagesModal' class='btn btn-warning text-white' onclick='getMandopPages("+this.id+")'>الصفحات</button>"
+       }
      elem.append(
        '<tr>'+
             '<td>'+this.id+'</td>'+
             '<td>'+this.name+'</td>'+
-            '<td>'+this.branch_name+'</td>'+
             '<td>'+this.phone+'</td>'+
-            '<td>'+this.role_name+'</td>'+
             '<td>'+btn+'</td>'+
+            '<td>'+this.role_name+'</td>'+
             '<td><a href="img/staff/'+this.id_copy+'"><img class="userimg" src="img/staff/'+this.id_copy+'"></a></td>'+
             '<td><button class="btn btn-link " onclick="editStaff('+this.id+')" data-toggle="modal" data-target="#editstaffModal"><span class="flaticon-edit"></sapn></button>'+
             '<button class="btn btn-link text-danger" onclick="deleteStaff('+this.id+')" data-toggle="modal" data-target="#deletestaffModal"><span class="flaticon-delete"></sapn></button></td>'+
@@ -140,7 +112,7 @@ getStaff($("#staffTable"));
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">اضافة موظف</h4>
         </div>
         <div class="modal-body">
@@ -188,14 +160,6 @@ getStaff($("#staffTable"));
                                         <input type="text" id="staff_phone" name="staff_phone" class="form-control" value="" placeholder="" aria-describedby="basic-addon1">
                                     </div>
                                     <span class="form-text text-danger" id="staff_phone_err"></span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label">الفرع</label>
-                                <div class="col-lg-9 col-xl-6">
-                                  <select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary"  id="staff_branch" name="staff_branch"  value="">
-                                  </select>
-                                  <span class="form-text text-danger" id="staff_branch_err"></span>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -255,7 +219,7 @@ getStaff($("#staffTable"));
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">تعديل بينات الموظف</h4>
         </div>
         <div class="modal-body">
@@ -316,14 +280,6 @@ getStaff($("#staffTable"));
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label">الفرع</label>
-                                <div class="col-lg-9 col-xl-6">
-                                  <select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary"  id="e_staff_branch" name="e_staff_branch"  value="">
-                                  </select>
-                                  <span class="form-text text-danger" id="e_staff_branch_err"></span>
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">العنوان الوظيفي</label>
                                 <div class="col-lg-9 col-xl-6">
                                   <select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary"  id="e_staff_role" name="e_staff_role"  value="">
@@ -369,56 +325,55 @@ getStaff($("#staffTable"));
     </div>
   </div>
 
-<div class="modal fade" id="driverTownsModal" role="dialog">
+<div class="modal fade" id="mandopPagesModal" role="dialog">
     <div class="modal-dialog modal-lg">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">مناطق المندوب</h4>
         </div>
         <div class="modal-body">
         <!--Begin:: App Content-->
         <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
             <div class="kt-portlet">
-                <form class="kt-form kt-form--label-right" id="driverTownsForm">
+                <form class="kt-form kt-form--label-right" id="mandopPagesForm">
                   <fieldset><legend>اضافه منطقه للمندوب</legend>
                   <div class="row kt-margin-b-20">
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                    	<label>المنطقه:</label>
-                        <select data-live-search="true" class="form-control selectpicker" id="town" name="town"></select>
+                    	<label>الصفحة:</label>
+                        <select data-live-search="true" class="form-control selectpicker" id="store" name="store"></select>
                     </div>
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                     	<label>اضافه:</label><br>
-                    	<button type="button" onclick="setTownToDriver()" class="btn btn-success" value="" placeholder="" data-col-index="0">اضافه
+                    	<button type="button" onclick="setTownToMandop()" class="btn btn-success" value="" placeholder="" data-col-index="0">اضافه
 
                         </button>
                     </div>
                     <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile">
                     	<label>اسم المندوب:</label><br>
-                    	<label id="driver_name"></label><br>
+                    	<label id="mandop_name"></label><br>
                     </div>
                   </div>
                   </fieldset>
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable responsive no-wrap" id="tb-driverTown">
+	              <!--begin: Datatable -->
+		           <table class="table table-striped table-bordered table-hover table-checkable responsive no-wrap" id="tb-mandopPages">
 			       <thead>
 	  						<tr>
 										<th>ID</th>
-										<th>المحافظه</th>
-										<th>المنطقه</th>
+										<th>العميل</th>
+										<th>الصفحة</th>
 										<th>حذف</th>
-
-		  					</tr>
+                           </tr>
       	            </thead>
-                    <tbody id="driverTown">
+                    <tbody id="mandopPages">
                     </tbody>
-		</table>
-		<!--end: Datatable -->
-        <input type="hidden" value="" id="driver_id" name="driver_id" />
-                </form>
-            </div>
-        </div>
+            		</table>
+            		<!--end: Datatable -->
+                    <input type="hidden" value="" id="mandop_id" name="mandop_id" />
+                            </form>
+                        </div>
+                    </div>
         <!--End:: App Content-->
         </div>
       </div>
@@ -427,6 +382,7 @@ getStaff($("#staffTable"));
 </div>
 
 <script>
+
 function addStaff(){
     var myform = document.getElementById('addStaffForm');
     var fd = new FormData(myform);
@@ -444,7 +400,7 @@ function addStaff(){
       $("#addStaffForm").removeClass('loading');
        if(res.success == 1){
          $("#addStaffForm input").val("");
-         Toast.success('تم الاضافة');
+         toastr.success('تم الاضافة');
          getStaff($("#staffTable"));
          $("#staffTable input").val("");
          $("#addstaffModal").modal('hide');
@@ -452,24 +408,22 @@ function addStaff(){
            $("#staff_name_err").text(res.error["staff_name_err"]);
            $("#staff_email_err").text(res.error["staff_email_err"]);
            $("#staff_phone_err").text(res.error["staff_phone_err"]);
-           $("#staff_branch_err").text(res.error["staff_branch_err"]);
            $("#staff_password_err").text(res.error["staff_password_err"]);
            $("#staff_role_err").text(res.error["staff_role_err"]);
            $("#staff_id_err").text(res.error["staff_id_err"]);
-           Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+           toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
       console.log(res);
     },
     error:function(e){
      $("#addStaffForm").addClass('loading');
      console.log(e);
-     Toast.error('خطأ');
+     toastr.error('خطأ');
     }
   });
 }
 function editStaff(id){
   $("#editstaffid").val(id);
-  getBraches($("#e_staff_branch"));
   getRoles($("#e_staff_role"));
   $.ajax({
     url:"script/_getStaff1.php",
@@ -481,7 +435,6 @@ function editStaff(id){
           $('#e_staff_email').val(this.email);
           $('#e_staff_phone').val(this.phone);
           //$('#img').css('background-image','url("img/staff/'+this.id_copy+'")');
-          $('select[name=e_staff_branch]').val(this.branch);
           $('#e_staff_role').val(this.role_id);
           $('.selectpicker').selectpicker('refresh')
         });
@@ -509,7 +462,7 @@ function updateStaff(){
        success:function(res){
        if(res.success == 1){
          $("#editStaffForm input").val("");
-          Toast.success('تم التحديث');
+          toastr.success('تم التحديث');
           getStaff($("#staffTable"));
           $("#editstaffModal").modal('hide');
        }else{
@@ -519,13 +472,12 @@ function updateStaff(){
            $("#e_staff_phone_err").text(res.error["staff_phone_err"]);
            $('#e_staff_password').val(res.error["staff_password_err"]);
            $("#e_staff_role_err").text(res.error["staff_role_err"]);
-           $("#e_staff_branch_err").text(res.error["staff_branch_err"]);
-           Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+           toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
         console.log(res);
        },
        error:function(e){
-        Toast.error('خطأ');
+        toastr.error('خطأ');
         console.log(e);
        }
     })
@@ -538,10 +490,10 @@ function deleteStaff(id){
         data:{id:id},
         success:function(res){
          if(res.success == 1){
-           Toast.success('تم الحذف');
+           toastr.success('تم الحذف');
            getStaff($("#staffTable"));
          }else{
-           Toast.warning(res.msg);
+           toastr.warning(res.msg);
          }
          console.log(res)
         } ,
@@ -551,32 +503,32 @@ function deleteStaff(id){
       });
   }
 }
-$("#tb-driverTown").DataTable();
-function getDriverTowns(id){
-      $('#driver_id').val(id);
+$("#tb-mandopPages").DataTable();
+function getMandopPages(id){
+      $('#mandop_id').val(id);
       $.ajax({
-        url:"script/_getDriverTowns.php",
+        url:"script/_getMandopPages.php",
         type:"POST",
         data:{id:id},
         beforeSend:function(){
-          $("#tb-driverTown").DataTable().destroy();
+          $("#tb-mandopPages").DataTable().destroy();
         },
         success:function(res){
          if(res.success == 1){
-          $('#driverTown').html("");
-          $('#driver_name').text(res.driver_info.name);
+          $('#mandopPages').html("");
+          $('#mandop_name').text(res.mandop_info.name);
 
           $.each(res.data,function(){
-            $('#driverTown').append(
+            $('#mandopPages').append(
             '<tr>'+
               '<td>'+this.id+'</td>'+
-              '<td>'+this.city_name+'</td>'+
-              '<td>'+this.town_name+'</td>'+
-              '<td><button type="button" onclick="deleteDriverTown('+this.id+')" class="btn btn-icon btn-danger"><span class="flaticon-delete"></span></button></td>'+
+              '<td>'+this.client_name+'</td>'+
+              '<td>'+this.store_name+'</td>'+
+              '<td><button type="button" onclick="deleteMandopPage('+this.id+')" class="btn btn-icon btn-danger"><span class="flaticon-delete"></span></button></td>'+
             '</tr>'
             );
           });
-          $("#tb-driverTown").DataTable();
+          $("#tb-mandopPages").DataTable();
          }else{
 
          }
@@ -587,43 +539,44 @@ function getDriverTowns(id){
         }
       });
 }
-function setTownToDriver(){
+function setTownToMandop(){
       $.ajax({
-        url:"script/_setTownToDriver.php",
+        url:"script/_setPageToMandop.php",
         type:"POST",
-        data:$("#driverTownsForm").serialize(),
+        data:$("#mandopPagesForm").serialize(),
         beforeSend:function(){
-          $("#driverTownsForm").addClass("loading");
+          $("#mandopPagesForm").addClass("loading");
         },
         success:function(res){
-        $("#driverTownsForm").removeClass("loading");
+        $("#mandopPagesForm").removeClass("loading");
          if(res.success == 1){
-           Toast.success(res.msg);
-           getDriverTowns($('#driver_id').val());
-           getAllunAssignedTowns($("#town"));
+           toastr.success(res.msg);
+           getMandopPages($('#mandop_id').val());
+           getAllunAssignedPages($("#store"));
          }else{
-           Toast.warning(res.msg);
+           toastr.warning(res.msg);
          }
          console.log(res)
         } ,
         error:function(e){
-          $("#driverTownsForm").removeClass("loading");
+          $("#mandopPagesForm").removeClass("loading");
           console.log(e);
         }
       });
 }
-function deleteDriverTown(id){
+function deleteMandopPage(id){
   if(confirm("هل انت متاكد من الحذف")){
       $.ajax({
-        url:"script/_deleteDriverTown.php",
+        url:"script/_deleteMandopStore.php",
         type:"POST",
         data:{id:id},
         success:function(res){
          if(res.success == 1){
-           Toast.success('تم الحذف');
-          getDriverTowns($('#driver_id').val());
+           toastr.success('تم الحذف');
+           getAllunAssignedPages($("#store"));
+           getMandopPages($('#mandop_id').val());
          }else{
-           Toast.warning(res.msg);
+           toastr.warning(res.msg);
          }
          console.log(res)
         } ,
@@ -633,7 +586,6 @@ function deleteDriverTown(id){
       });
   }
 }
-getBraches($("#staff_branch"));
 getRoles($("#staff_role"));
-getAllunAssignedTowns($("#town"));
+getAllunAssignedPages($("#store"));
 </script>

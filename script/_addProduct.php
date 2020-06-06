@@ -17,6 +17,7 @@ $success = 0;
 $error = [];
 $name    = $_REQUEST['Product_name'];
 $cat   = $_REQUEST['cat'];
+$store   = $_REQUEST['store'];
 $simple_des   = $_REQUEST['simple_des'];
 $des  = $_REQUEST['des'];
 $buy_price  = $_REQUEST['buy_price'];
@@ -24,7 +25,7 @@ $price   = $_REQUEST['price'];
 $sku  = $_REQUEST['sku'];
 $qty  = $_REQUEST['qty'];
 $type = $_REQUEST['type'];
-
+$location = $_REQUEST['location'];
 $attributes = $_REQUEST['attributes'];
 $config_matrix = $_REQUEST['config_matrix'];
 
@@ -56,6 +57,7 @@ $v->validate([
     'buy_price' => [$buy_price,"required"],
     'price'     => [$price,  'required'],
     'cat'       => [$cat,  'required|int'],
+    'store'     => [$store,  'required|int'],
     'sku'       => [$sku,  'required'],
     'type'      => [$type,  'required|int'],
 ]);
@@ -81,8 +83,8 @@ foreach($imgs["tmp_name"] as $val){
    $img_err =  "يجب رفع صورة واحدة على الاقل";
 }
 if($v->passes() && $img_err ==""){
-  $sql = 'insert into product (name,simple_des,des,type,category_id) values (?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat]);
+  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id) values (?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store]);
   if($result > 0){
     $success = 1;
     $product = 'select * from product where name = ? and type = ? and category_id = ? order by id DESC limit 1';;
@@ -118,8 +120,8 @@ if($v->passes() && $img_err ==""){
         }
       }
     }else if($type == 1){
-      $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku) values(?,?,?,?,?)";
-      $res2 = setData($con,$sql,[$res['id'],$buy_price,$price,$qty,$sku]);
+      $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,sub_name,location) values(?,?,?,?,?,?,?)";
+      $res2 = setData($con,$sql,[$res['id'],$buy_price,$price,$qty,$sku,$name,$location]);
     }
  }
 

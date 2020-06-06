@@ -4,9 +4,6 @@ header('Content-Type: application/json');
 require("_access.php");
 access([1,2,3,4,5,6]);
 require("dbconnection.php");
-if(empty($city)){
-  $city =1;
-}
 try{
   $query = "select * from basket where staff_id=?";
   $data = getData($con,$query,[$_SESSION['userid']]);

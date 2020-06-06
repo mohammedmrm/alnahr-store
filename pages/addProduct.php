@@ -1,9 +1,4 @@
 <?php
-if(file_exists("script/_access.php")){
-require_once("script/_access.php");
-access([1,2,5]);
-
-}
 require_once("script/dbconnection.php");
 function categoryTree($parent_id = -1, $sub_mark = ''){
     global $con;
@@ -17,29 +12,10 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 ?>
 <link href="assets/css/pages/wizards/wizard-v1.css" rel="stylesheet" type="text/css" />
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    <div class="kt-container  kt-container--fluid ">
-        <div class="kt-subheader__toolbar">
-            <div class="kt-subheader__wrapper">
-                <div class="dropdown dropdown-inline" data-toggle="kt-tooltip" title="اضافة عميل" data-placement="top">
-                    <span>اضافة عميل جديد</span>
-                    <a data-toggle="modal" data-target="#addProductModal" class="btn btn-icon btn btn-label btn-label-brand btn-bold" data-toggle="dropdown" data-offset="0px,0px" aria-haspopup="true" aria-expanded="false">
-                        <i class="flaticon2-add-1"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end:: Subheader -->
-					<!-- begin:: Content -->
+<!-- begin:: Content -->
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head">
-		<div class="kt-portlet__head-label">
+    <div class="kt-portlet__head">
+		<div class="kt-portlet__head">
 			<h3 class="kt-portlet__head-title">
 				اضافة منتج
 			</h3>
@@ -56,8 +32,15 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
   				  <div class="col-md-6">
   				    <div class="kt-portlet__body">
   					<div class="form-group">
+  						<label>السوق او الصفحة (البيج)</label>
+  						<select id="store" name="store" class="selectpicker form-control">
+
+                        </select>
+  						<span class="form-text  text-danger" id="cat_err"></span>
+  					</div>
+  					<div class="form-group">
   						<label>التصنيف</label>
-  						<select type="name" name="cat" class="selectpicker form-control">
+  						<select  name="cat" class="selectpicker form-control">
                             <?php categoryTree();?>
                         </select>
   						<span class="form-text  text-danger" id="cat_err"></span>
@@ -69,23 +52,26 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
   					</div>
   					<div class="form-group">
   						<label>وصف مختصر</label>
-  						<textarea type="name" name="simple_des" class="form-control"  placeholder=""></textarea>
+  						<textarea type="name" id="simple_des" name="simple_des" class="form-control"  placeholder=""></textarea>
   						<span class="form-text  text-danger" id="simple_des_err"></span>
   					</div>
   					<div class="form-group">
   						<label>وصف المنتج</label>
-  						<div class="summernote" name="des" id="m_summernote_1"></div>
+  						<textarea type="name" id="des" name="des" class="form-control"  placeholder=""></textarea>
                         <span class="form-text  text-danger" id="des_err"></span>
   					</div>
   	              </div>
   	             </div>
                   <div class="col-md-6">
                     <div class="kt-portlet__body">
-    					<div class="form-group">
-    						<label>الصور</label>
-      					<input name="imgs[]" id="imgs" type="file" multiple max='15' />
-                          <span  id="imgs_err"class="form-text  text-danger"></span>
-    					</div>
+                    <div class="form-group">
+						<label>الصور</label>
+						<div class="custom-file">
+						  	<input type="file" class="custom-file-input" id="imgs" name="imgs[]" multiple="multiple">
+						  	<label class="custom-file-label" for="img">اختر الصور</label>
+						</div>
+                        <span class="form-text  text-danger" id="imgs_err"></span>
+					</div>
     					<div class="form-group">
     						<label>سعر الشراء</label>
     						<input type="text" id="buy_price" name="buy_price" class="form-control" placeholder="">
@@ -174,9 +160,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 		<!--end::Portlet-->
 	</div>
 </div>
-</div>
 <!-- end:: Content -->
-</div>
 <div class="modal fade" id="productConfigrationModal" role="dialog">
     <div class="modal-dialog modal-xl">
       <!-- Modal content-->
@@ -290,8 +274,13 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 <!--end::Page Scripts -->
  <script src="assets/js/pages/custom/wizards/wizard-v1.js" type="text/javascript"></script>
  <script src="js/getAttributes.js" type="text/javascript"></script>
+ <script src="js/getStores.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+var des = new Quill('#des', {
+  theme: 'snow'
+});
+getStores($("#store"));
 getAttributes($("#attributes"));
 $(".selectpicker").selectpicker("refresh");
 function updateSKU(){
@@ -441,7 +430,7 @@ function addProduct(){
        if(res.success == 1){
          getAllProducts($("#getAllProductsTable"));
          $("#addProductForm input").val("");
-         toaste.success('تم الاضافة');
+         toastr.success('تم الاضافة');
        }else{
            $("#cat_err").text(res.error["cat"]);
            $("#name_err").text(res.error["name"]);
@@ -457,7 +446,7 @@ function addProduct(){
      },
      error:function(e){
        console.log(e);
-       toaste.error('تأكد من المدخلات','خطأ');
+       toastr.error('تأكد من المدخلات','خطأ');
      }
   });
 }

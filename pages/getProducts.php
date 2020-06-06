@@ -1,7 +1,7 @@
 <?php
 if(file_exists("script/_access.php")){
 require_once("script/_access.php");
-access([1,2,3,5]);
+access([1,2,3,5,4]);
 }
 ?>
 <style>
@@ -29,16 +29,7 @@ legend
 }
 </style>
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
-
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-    <div class="kt-container  kt-container--fluid ">
-
-    </div>
-</div>
-<!-- end:: Subheader -->
-					<!-- begin:: Content -->
+<!-- begin:: Content -->
 	<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
 <div class="kt-portlet kt-portlet--mobile">
 	<div class="kt-portlet__head">
@@ -148,7 +139,6 @@ legend
 	</div>
 </div>	</div>
 <!-- end:: Content -->
-</div>
 <div class="modal fade" id="basketProductModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->

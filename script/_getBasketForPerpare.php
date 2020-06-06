@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require("_access.php");
-access("");
+access([1,5,3]);
 require("dbconnection.php");
 $store = $_REQUEST['store'];
 try{

@@ -7,7 +7,12 @@ if(isset($_GET['page'])){
 
 ?>
 <?php include("partials/_header/base-mobile.php"); ?>
+<style>
+.head-space {
+  margin-top:80px;
+}
 
+</style>
 <!-- begin:: Root -->
 <div class="kt-grid kt-grid--hor kt-grid--root">
 
@@ -15,12 +20,11 @@ if(isset($_GET['page'])){
 	<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
 
 		<?php include("partials/_aside/base.php"); ?>
-
-		<!-- begin:: Wrapper -->
+        <!-- begin:: Wrapper -->
 		<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-
-			<?php include("partials/_header/base.php"); ?>
+            <?php include("partials/_header/base.php"); ?>
 			<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+			<div class="head-space">
                <?php
                   if(file_exists($page)){
                     include_once ($page);
@@ -28,6 +32,7 @@ if(isset($_GET['page'])){
                     include_once ("pages/dashboard.php" );
                   }
                 ?>
+			</div>
 			</div>
 
 			<?php include("partials/_footer/base.php"); ?>
