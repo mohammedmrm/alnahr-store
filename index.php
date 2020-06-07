@@ -2,6 +2,10 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+if($_SESSION['login'] != 1){
+    header('location: login.php');
+}
+include_once("config.php");
 ?>
 <!DOCTYPE html>
 <!--
@@ -49,7 +53,7 @@ License: You must have a valid license purchased only from https://themes.getboo
 		<link href="assets/plugins/custom/datatables/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="<?php echo $config['faicon'];?>" />
 <style>
         /* arabic */
         @font-face {
@@ -226,14 +230,7 @@ License: You must have a valid license purchased only from https://themes.getboo
 
 	<!-- begin::Body -->
 	<body class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--static kt-header-mobile--fixed kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
-	    <!--begin::Global Theme Bundle(used by all pages) -->
-		<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
-
-        <!--end::Global Theme Bundle -->
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-        <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
-        <?php include("partials/_page-loader.php"); ?>
-        <script>
+	    <script>
 			var KTAppOptions = {
 				"colors": {
 					"state": {
@@ -265,8 +262,16 @@ License: You must have a valid license purchased only from https://themes.getboo
 				}
 			};
 		</script>
+<!--begin::Global Theme Bundle(used by all pages) -->
+        <?php include("partials/_page-loader.php"); ?>
+        <script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
+
+        <!--end::Global Theme Bundle -->
         <?php include("layout.php"); ?>
         <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
+        <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+        <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+
         <!--begin::Page Vendors(used by this page) -->
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
@@ -323,6 +328,8 @@ License: You must have a valid license purchased only from https://themes.getboo
           }
         }
         </script>
+
+
 <!--end::Page Scripts -->
 </body>
 </html>

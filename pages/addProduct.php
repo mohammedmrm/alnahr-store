@@ -106,7 +106,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
                             <span class="form-text  text-danger" id="type_err"></span>
     					</div>
     					<div class="form-group" id="configration_btn" style="display: none;">
-    						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#productConfigrationModal">Create Configrations</button>
+    						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#productConfigrationModal">انشاء ضبط</button>
     					</div>
                     </div>
                   </div>

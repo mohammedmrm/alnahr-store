@@ -294,7 +294,7 @@ legend
                </div>
           </div>
           </div>
-		<table class="table table-striped  table-bordered responsive nowrap" style="white-space: nowrap;" id="tb-orders">
+		<table class="table table-striped  table-bordered responsive nowrap"  id="tb-orders">
 			       <thead>
 	  						<tr>
 										<th>رقم الشحنه</th>
@@ -311,32 +311,11 @@ legend
 										<th>المبلغ المستلم</th>
 										<th>المبلغ الصافي للعميل</th>
 										<th>المندوب</th>
-                                        <th>من فرع الى فرع</th>
-
-		  					</tr>
+                            </tr>
       	            </thead>
                             <tbody id="ordersTable">
                             </tbody>
-                            <tfoot>
-	                <tr>
-										<th>رقم الشحنه</th>
-                                        <th>رقم الوصل</th>
-										<th>اسم وهاتف العميل</th>
-										<th>المستلم هاتف</th>
-										<th>عنوان الارسال</th>
-                                        <th>تاريخ الادخال</th>
-										<th>تعديل</th>
-										<th>الحاله</th>
-										<th>المدخل</th>
-										<th>مبلغ الوصل</th>
-										<th>مبلغ التوصيل</th>
-										<th>المبلغ المستلم</th>
-										<th>المبلغ الصافي للعميل</th>
-										<th>المندوب</th>
-										<th>من فرع الى فرع</th>
 
-					</tr>
-	           </tfoot>
 		</table>
         <div class="kt-section__content kt-section__content--border">
 		<nav aria-label="...">
@@ -620,14 +599,10 @@ legend
 <input type="hidden" id="user_id" value="<?php echo $_SESSION['userid'];?>"/>
 <input type="hidden" id="user_branch" value="<?php echo $_SESSION['user_details']['branch_id'];?>"/>
 <input type="hidden" id="user_role" value="<?php echo $_SESSION['role'];?>"/>
-            <!--begin::Page Vendors(used by this page) -->
-<script src="assets/vendors/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-                        <!--end::Page Vendors -->
-
-
-
-            <!--begin::Page Scripts(used by this page) -->
-                            <script src="assets/js/demo1/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+<!--begin::Page Vendors(used by this page) -->
+<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+<!--begin::Page Scripts(used by this page) -->
+<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
 <script src="js/getBraches.js" type="text/javascript"></script>
 <script src="js/getClients.js" type="text/javascript"></script>
 <script src="js/getStores.js" type="text/javascript"></script>
@@ -639,16 +614,6 @@ legend
 <script type="text/javascript">
 getStores($("#store"));
 getStores($("#e_store_id"));
-getAllDrivers($("#driver"),$("#branch").val());
-$('#tb-orders').DataTable({
-      "oLanguage": {
-        "sLengthMenu": "عرض_MENU_سجل",
-        "sSearch": "بحث:"
-      },
-       "bPaginate": false,
-       "bLengthChange": false,
-       "bFilter": false,
-      });
 function getorders(){
 $.ajax({
   url:"script/_getOrders.php",
@@ -769,12 +734,11 @@ $.ajax({
             '<td>'+formatMoney(this.dev_price)+'</td>'+
             '<td>'+formatMoney(this.new_price)+'</td>'+
             '<td>'+formatMoney(this.client_price)+'</td>'+
-            '<td>'+this.driver_name+'</td>'+
-            '<td> من :'+this.branch_name+' الى :'+this.to_branch_name+'</td>'+
+            '<td>'+this.mandop_name+'</td>'+
         '</tr>');
      });
 
-     var myTable= $('#tb-orders').DataTable({
+/*     var myTable= $('#tb-orders').DataTable({
       "oLanguage": {
         "sLengthMenu": "عرض_MENU_سجل",
         "sSearch": "بحث:"
@@ -782,7 +746,7 @@ $.ajax({
        "bPaginate": false,
        "bLengthChange": false,
        "bFilter": false,
-      });
+      });*/
     },
    error:function(e){
     $("#section-to-print").removeClass('loading');

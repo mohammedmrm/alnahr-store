@@ -74,5 +74,5 @@ try{
    $success="0";
 }
 
-echo (json_encode(array($query,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
+echo (json_encode(array($query,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page,'role'=>$_SESSION['role'])));
 ?>

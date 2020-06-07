@@ -64,6 +64,9 @@ access([1,2]);
 </div>	</div>
 <!-- end:: Content -->
 </div>
+<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+
 <script src="js/getRoles.js" type="text/javascript"></script>
 <script src="js/getAllunAssignedPages.js" type="text/javascript"></script>
 <script type="text/javascript">

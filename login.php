@@ -23,9 +23,9 @@ License: You must have a valid license purchased only from https://themes.getboo
 include_once("config.php");
 ?>
 <html lang="en" >
-    <!-- begin::Head -->
-    <head><!--begin::Base Path (base relative path for assets of this page) -->
-<base href=""><!--end::Base Path -->
+         <!-- begin::Head -->
+        <head><!--begin::Base Path (base relative path for assets of this page) -->
+        <base href=""><!--end::Base Path -->
         <meta charset="utf-8"/>
 
         <title>Al-Nahar Al-Thalath</title>
@@ -38,8 +38,6 @@ include_once("config.php");
 
 		<!--end::Fonts -->
 
-		<!--begin::Page Vendors Styles(used by this page) -->
-		<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Page Vendors Styles -->
 
@@ -99,16 +97,6 @@ include_once("config.php");
 		<!--begin::Heade-->
 		<div class="kt-login-v2__head">
            <div class="col-md-4"></div>
-<!--           <div class="col-md-4">
-             <div class="text-center">
-                  <h1>السكة</h1>
-                  <h2>للتوصيل السريع</h2>
-                  <p>
-                      <?php $t=time(); echo(date("Y-m-d",$t));  ?>
-
-                  </p>
-              </div>
-            </div>-->
             <div class="col-md-4">
               <div class="kt-login-v2__logo">
   				<a href="#">
@@ -265,17 +253,15 @@ function ValidURL(str) {
 </script>
 
 <!-- end::Global Config -->
+<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
+<script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
+<!--end::Global Theme Bundle -->
 
-		<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
-        <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
-
-		<!--end::Global Theme Bundle -->
-
-		<!--begin::Page Vendors(used by this page) -->
-		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
-
-		<!--end::Page Vendors -->
+<!--begin::Page Vendors(used by this page) -->
+<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
+<!--end::Page Vendors -->
 
 <!--begin::Page Scripts(used by this page) -->
 <script src="assets/js/pages/custom/user/login.js" type="text/javascript"></script>
-<!--end::Page Scrip
+<!--end::Page Scrip -->
+</html>

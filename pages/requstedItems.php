@@ -87,6 +87,11 @@
                 </div>
             </div>
         </div>
+<!--begin::Page Vendors(used by this page) -->
+<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+<!--begin::Page Scripts(used by this page) -->
+<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+
 <script>
 function getItemsToPrepare(){
    $.ajax({

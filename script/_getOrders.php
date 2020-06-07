@@ -3,11 +3,11 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require("_access.php");
-access([1,2,5]);
+access([1,2,5,4]);
 require("dbconnection.php");
 require("../config.php");
 
-$branch = $_REQUEST['branch'];
+//$branch = $_REQUEST['branch'];
 $to_branch = $_REQUEST['to_branch'];
 $city = $_REQUEST['city'];
 $customer = $_REQUEST['customer'];

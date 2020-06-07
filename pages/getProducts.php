@@ -76,12 +76,13 @@ legend
       			          <thead>
       	  						<tr>
       										<th>صور</th>
-                                            <th>اسم المنتج</th>
-      										<th>السعر</th>
-      										<th>SKU</th>
+                                            <th>SKU</th>
+      										<th>تعديل</th>
+                                            <th>السعر</th>
       										<th>الكمية</th>
+      										<th>اسم المنتج</th>
       										<th>صفات المنتج</th>
-                                            <th>تعديل</th>
+
 
       						   </tr>
             	            </thead>
@@ -98,7 +99,7 @@ legend
 		</nav>
      	</div>
         <hr />
-          <fieldset><legend>التحديثات</legend>
+<!--          <fieldset><legend>التحديثات</legend>
           <div class="row kt-margin-b-20">
             <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
             	<label>افعل مع المحدد:</label>
@@ -133,7 +134,7 @@ legend
             	<input type="button" onclick="runAction()" class="form-control btn btn-success" value="نفذ" />
             </div>
           </div>
-          </fieldset>
+          </fieldset>-->
         </form>
 		<!--end: Datatable -->
 	</div>
@@ -441,24 +442,32 @@ $.ajax({
          );
      }
    }
+
    $.each(res.data,function(){
+       if(res.role != 4){
+         btn =    '<button type="button" class="btn btn-clean fa-2x text-info"    onclick="editProduct('+this.c_id+')" data-toggle="modal" data-target="#editProduct"><span class="flaticon-edit"></sapn></button>'+
+                  '<button type="button" class="btn btn-clean fa-2x text-danger"  onclick="deleteProduct('+this.c_id+')" data-toggle="modal" data-target="#deleteProduct"><span class="flaticon-delete"></sapn></button>'+
+                  '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket('+this.c_id+')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn> شراء</button>'+
+                  '';
+       }else{
+          btn = '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket('+this.c_id+')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn> شراء</button>';
+       }
       attribute = "";
       $.each(this.attribute,function(){
         attribute = attribute + "<b> "+this.name+"</b> : "+this.value+"&nbsp;&nbsp;&nbsp;&nbsp;";
       });
       $("#productTable").append(
        '<tr>'+
-            '<td><img src="img/product/'+this.path+'" width="60" align="middle" border="0" alt="" /></td>'+
-            '<td>'+this.name+'</td>'+
-            '<td>'+this.price+'</td>'+
+            '<td><div style="background-image:url(img/product/'+this.path+');" class="item-img-sm"></div></td>'+
             '<td>'+this.sku+'</td>'+
-            '<td>'+this.qty+'</td>'+
-            '<td>'+attribute+'</td>'+
             '<td width="150px">'+
-              '<button type="button" class="btn btn-clean fa-2x text-info"    onclick="editProduct('+this.id+')" data-toggle="modal" data-target="#editProduct"><span class="flaticon-edit"></sapn>'+
-              '<button type="button" class="btn btn-clean fa-2x text-danger"  onclick="deleteProduct('+this.id+')" data-toggle="modal" data-target="#deleteProduct"><span class="flaticon-delete"></sapn>'+
-              '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket('+this.c_id+')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn>'+
-            '</button></td>'+
+               btn+
+            '</td>'+
+            '<td>'+this.price+'</td>'+
+            '<td>'+this.qty+'</td>'+
+            '<td>'+this.name+'</td>'+
+            '<td>'+attribute+'</td>'+
+
        '</tr>');
      });
      var myTable= $('#tb-productTable').DataTable({

@@ -3,7 +3,10 @@
 <div id="kt_offcanvas_toolbar_profile" class="kt-offcanvas-panel">
 	<div class="kt-offcanvas-panel__head">
 		<h3 class="kt-offcanvas-panel__title">
-			Profile
+			الملف الشخصي
+		</h3>
+		<h3 class="kt-offcanvas-panel__title">
+			<a href="script/_logout.php">تسجيل الخروج</a>
 		</h3>
 		<a href="#" class="kt-offcanvas-panel__close" id="kt_offcanvas_toolbar_profile_close"><i class="flaticon2-delete"></i></a>
 	</div>

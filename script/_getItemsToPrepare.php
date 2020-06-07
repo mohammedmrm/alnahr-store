@@ -19,9 +19,13 @@ if(empty($status)){
 $start = $_REQUEST['start'];
 $end = $_REQUEST['end'];
 if(!empty($end)) {
-   $end =date('Y-m-d', strtotime($end. ' + 1 day'));
+  $end =  new DateTime($end);
+  $end->modify('+1 day');
+  $end = $end->format('Y-m-d');
 }else{
-  $end =date('Y-m-d', strtotime(' + 1 day'));
+  $end =  new DateTime(date('Y-m-d'));
+  $end->modify('+2 day');
+  $end = $end->format('Y-m-d');
 }
 $page = trim($_REQUEST['p']);
 if(empty($page) || $page <=0){
@@ -49,6 +53,7 @@ try{
                      group by images.product_id
             ) a on a.product_id = configurable_product.product_id
             where  basket.status=2 and";
+            $where = "";
             if($status >= 0){
              $filter .= " and basket_items.status = ".$status;
             }

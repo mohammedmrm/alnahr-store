@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2020 at 12:58 AM
+-- Generation Time: Jun 08, 2020 at 12:18 AM
 -- Server version: 5.7.20
 -- PHP Version: 7.1.11
 
@@ -133,14 +133,14 @@ CREATE TABLE `basket` (
 --
 
 INSERT INTO `basket` (`id`, `customer_name`, `customer_phone`, `city_id`, `town_id`, `address`, `date`, `note`, `staff_id`, `status`, `total_price`) VALUES
-(5, 'ahmed', '07822877759', 3, 37, '60 street', '2020-06-02 15:53:25', '', 1, 1, 0),
+(5, 'ahmed', '07822877759', 3, 37, '60 street', '2020-06-02 15:53:25', '', 1, 2, 0),
 (8, 'محمد علي', '07822816693', 1, 19, NULL, '2020-06-05 16:55:59', '', 40, 0, 0),
 (9, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:56:35', '', 40, 0, 0),
 (10, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:00', '', 40, 0, 0),
 (11, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:05', '', 40, 0, 0),
 (12, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:07', '', 40, 0, 0),
 (13, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:09', '', 40, 0, 0),
-(14, '', '', 0, 19, '', '2020-06-07 01:30:55', '', 28, 0, 0);
+(14, '', '', 0, 19, '', '2020-06-07 01:30:55', '', 28, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -159,6 +159,15 @@ CREATE TABLE `basket_items` (
   `staff_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `basket_items`
+--
+
+INSERT INTO `basket_items` (`id`, `configurable_product_id`, `basket_id`, `date`, `qty`, `status`, `storage_manager_id`, `staff_id`) VALUES
+(46, 1, 5, '2020-06-08 00:03:50', 1, 1, 1, 1),
+(47, 62, 5, '2020-06-08 00:04:28', 1, 1, 1, 1),
+(48, 62, 14, '2020-06-08 00:41:53', 1, 0, 0, 28);
+
 -- --------------------------------------------------------
 
 --
@@ -169,20 +178,24 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `title` varchar(200) NOT NULL,
   `parent_id` int(11) NOT NULL,
-  `des` varchar(500) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `des` varchar(500) DEFAULT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `note` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `title`, `parent_id`, `des`, `date`) VALUES
-(1, 'الحاسبات', -1, '', '2019-12-26 10:24:01'),
-(2, 'الشبكات', 1, '', '2019-12-26 10:57:04'),
-(3, 'البرامجيات', 1, '', '2019-12-26 10:57:16'),
-(4, 'تطبيقات الويب', 3, '', '2019-12-26 10:59:31'),
-(5, 'الهندسة', -1, '', '2019-12-29 09:59:53');
+INSERT INTO `category` (`id`, `title`, `parent_id`, `des`, `date`, `note`) VALUES
+(1, 'الحاسبات', -1, '', '2019-12-26 10:24:01', ''),
+(2, 'الشبكات', 1, '', '2019-12-26 10:57:04', ''),
+(3, 'البرامجيات', 1, '', '2019-12-26 10:57:16', ''),
+(4, 'تطبيقات الويب', 3, '', '2019-12-26 10:59:31', ''),
+(5, 'الهندسة', -1, '', '2019-12-29 09:59:53', ''),
+(6, 'ملابس', 3, NULL, '2020-06-08 01:13:28', NULL),
+(7, 'بناطيل', 1, NULL, '2020-06-08 01:14:02', NULL),
+(8, 'فساتين', 6, NULL, '2020-06-08 01:14:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -1523,13 +1536,13 @@ ALTER TABLE `basket`
 -- AUTO_INCREMENT for table `basket_items`
 --
 ALTER TABLE `basket_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `clients`
