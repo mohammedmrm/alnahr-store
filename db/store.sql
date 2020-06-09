@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2020 at 12:18 AM
+-- Generation Time: Jun 09, 2020 at 06:09 PM
 -- Server version: 5.7.20
 -- PHP Version: 7.1.11
 
@@ -75,38 +75,40 @@ CREATE TABLE `attribute_config` (
   `id` int(11) NOT NULL,
   `attribute_id` int(11) NOT NULL,
   `value` varchar(200) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `img` varchar(250) NOT NULL DEFAULT 'default.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `attribute_config`
 --
 
-INSERT INTO `attribute_config` (`id`, `attribute_id`, `value`, `date`) VALUES
-(1, 1, 'أحمر', '2020-05-24 19:06:54'),
-(2, 1, 'اخضر', '2020-05-24 19:06:57'),
-(3, 1, 'اصفر', '2020-05-24 19:07:02'),
-(4, 1, 'ازرق', '2020-05-24 19:07:06'),
-(5, 1, 'اسود', '2020-05-24 19:07:09'),
-(6, 1, 'رصاصي', '2020-05-24 19:07:14'),
-(7, 1, 'ارجواني', '2020-05-24 19:07:19'),
-(8, 1, 'ابيض', '2020-05-24 19:07:25'),
-(9, 2, '34', '2020-05-24 19:07:45'),
-(10, 2, '36', '2020-05-24 19:07:48'),
-(11, 2, '38', '2020-05-24 19:07:53'),
-(12, 2, '40', '2020-05-24 19:07:55'),
-(13, 2, '42', '2020-05-24 19:08:10'),
-(14, 2, '44', '2020-05-24 19:08:11'),
-(15, 2, '46', '2020-05-24 19:08:13'),
-(16, 2, '48', '2020-05-24 19:08:16'),
-(17, 2, '50', '2020-05-24 19:08:21'),
-(18, 2, '52', '2020-05-24 19:08:24'),
-(19, 2, '56', '2020-05-24 19:08:28'),
-(20, 2, '58', '2020-05-24 19:08:32'),
-(21, 2, '60', '2020-05-24 19:08:34'),
-(22, 3, 'كلاسك', '2020-05-24 19:08:47'),
-(23, 3, 'ضيق', '2020-05-24 19:09:26'),
-(24, 3, 'واسع', '2020-05-24 19:09:32');
+INSERT INTO `attribute_config` (`id`, `attribute_id`, `value`, `date`, `img`) VALUES
+(1, 1, 'أحمر', '2020-05-24 19:06:54', ''),
+(2, 1, 'اخضر', '2020-05-24 19:06:57', ''),
+(3, 1, 'اصفر', '2020-05-24 19:07:02', ''),
+(4, 1, 'ازرق', '2020-05-24 19:07:06', ''),
+(5, 1, 'اسود', '2020-05-24 19:07:09', ''),
+(6, 1, 'رصاصي', '2020-05-24 19:07:14', ''),
+(7, 1, 'ارجواني', '2020-05-24 19:07:19', ''),
+(8, 1, 'ابيض', '2020-05-24 19:07:25', ''),
+(9, 2, '34', '2020-05-24 19:07:45', ''),
+(10, 2, '36', '2020-05-24 19:07:48', ''),
+(11, 2, '38', '2020-05-24 19:07:53', ''),
+(12, 2, '40', '2020-05-24 19:07:55', ''),
+(13, 2, '42', '2020-05-24 19:08:10', ''),
+(14, 2, '44', '2020-05-24 19:08:11', ''),
+(15, 2, '46', '2020-05-24 19:08:13', ''),
+(16, 2, '48', '2020-05-24 19:08:16', ''),
+(17, 2, '50', '2020-05-24 19:08:21', ''),
+(18, 2, '52', '2020-05-24 19:08:24', ''),
+(19, 2, '56', '2020-05-24 19:08:28', ''),
+(20, 2, '58', '2020-05-24 19:08:32', ''),
+(21, 2, '60', '2020-05-24 19:08:34', ''),
+(22, 3, 'كلاسك', '2020-05-24 19:08:47', ''),
+(23, 3, 'ضيق', '2020-05-24 19:09:26', ''),
+(24, 3, 'واسع', '2020-05-24 19:09:32', ''),
+(29, 1, 'جوزي', '2020-06-08 19:49:41', '1/5ede6c25b9ec3.jpg');
 
 -- --------------------------------------------------------
 
@@ -164,9 +166,9 @@ CREATE TABLE `basket_items` (
 --
 
 INSERT INTO `basket_items` (`id`, `configurable_product_id`, `basket_id`, `date`, `qty`, `status`, `storage_manager_id`, `staff_id`) VALUES
-(46, 1, 5, '2020-06-08 00:03:50', 1, 1, 1, 1),
-(47, 62, 5, '2020-06-08 00:04:28', 1, 1, 1, 1),
-(48, 62, 14, '2020-06-08 00:41:53', 1, 0, 0, 28);
+(46, 1, 5, '2020-06-08 00:03:50', 2, 1, 1, 1),
+(47, 62, 5, '2020-06-08 00:04:28', 2, 1, 1, 1),
+(48, 62, 14, '2020-06-08 00:41:53', 2, 1, 1, 28);
 
 -- --------------------------------------------------------
 
@@ -188,14 +190,12 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `title`, `parent_id`, `des`, `date`, `note`) VALUES
-(1, 'الحاسبات', -1, '', '2019-12-26 10:24:01', ''),
+(1, 'الرئسي', -1, '', '2019-12-26 10:24:01', ''),
 (2, 'الشبكات', 1, '', '2019-12-26 10:57:04', ''),
-(3, 'البرامجيات', 1, '', '2019-12-26 10:57:16', ''),
-(4, 'تطبيقات الويب', 3, '', '2019-12-26 10:59:31', ''),
-(5, 'الهندسة', -1, '', '2019-12-29 09:59:53', ''),
-(6, 'ملابس', 3, NULL, '2020-06-08 01:13:28', NULL),
-(7, 'بناطيل', 1, NULL, '2020-06-08 01:14:02', NULL),
-(8, 'فساتين', 6, NULL, '2020-06-08 01:14:59', NULL);
+(9, 'ملابس', 1, NULL, '2020-06-08 19:04:59', NULL),
+(11, 'ملابس نسائي', 9, NULL, '2020-06-08 19:05:56', NULL),
+(12, 'ملابس رجالي', 9, NULL, '2020-06-08 19:06:05', NULL),
+(13, 'ملابس اطفال', 9, NULL, '2020-06-08 19:06:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -315,7 +315,7 @@ CREATE TABLE `configurable_product` (
   `product_id` int(11) NOT NULL,
   `buy_price` double NOT NULL,
   `price` int(11) NOT NULL,
-  `image_id` int(11) DEFAULT NULL,
+  `img` varchar(250) DEFAULT NULL,
   `qty` int(11) NOT NULL,
   `sku` varchar(250) NOT NULL,
   `location` varchar(200) DEFAULT NULL,
@@ -327,7 +327,7 @@ CREATE TABLE `configurable_product` (
 -- Dumping data for table `configurable_product`
 --
 
-INSERT INTO `configurable_product` (`id`, `product_id`, `buy_price`, `price`, `image_id`, `qty`, `sku`, `location`, `stock`, `sub_name`) VALUES
+INSERT INTO `configurable_product` (`id`, `product_id`, `buy_price`, `price`, `img`, `qty`, `sku`, `location`, `stock`, `sub_name`) VALUES
 (1, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (2, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (3, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
@@ -389,7 +389,25 @@ INSERT INTO `configurable_product` (`id`, `product_id`, `buy_price`, `price`, `i
 (59, 9, 12000, 24000, NULL, 2, 'Php course-اسود-48', 'a1', 1, 'Php course-اسود-48'),
 (60, 9, 12000, 24000, NULL, 2, 'Php course-رصاصي-48', 'a1', 1, 'Php course-رصاصي-48'),
 (61, 9, 12000, 24000, NULL, 1, 'Php course-ارجواني-48', 'a1', 1, 'Php course-ارجواني-48'),
-(62, 11, 30000, 40000, NULL, -1, 'Office ', 'A5', 0, 'Office ');
+(62, 11, 30000, 40000, NULL, -1, 'Office ', 'A5', 0, 'Office '),
+(63, 12, 16000, 20000, 'default.jpg', 500, 'New Items-34', 'B3', 1, 'New Items-34'),
+(64, 12, 16000, 20000, 'default.jpg', 500, 'New Items-36', 'B3', 1, 'New Items-36'),
+(65, 13, 20000, 30000, 'default.jpg', 1, 'ME and MY-أحمر', 'C2', 1, 'ME and MY-أحمر'),
+(66, 13, 20000, 30000, 'default.jpg', 1, 'ME and MY-جوزي', 'C2', 1, 'ME and MY-جوزي'),
+(67, 14, 10000, 40000, 'default.jpg', 60, 'Good Trouser-ازرق', 'S1', 1, 'Good Trouser-ازرق'),
+(68, 14, 10000, 40000, 'default.jpg', 60, 'Good Trouser-اسود', 'S1', 1, 'Good Trouser-اسود'),
+(69, 14, 10000, 40000, 'default.jpg', 60, 'Good Trouser-رصاصي', 'S1', 1, 'Good Trouser-رصاصي'),
+(70, 14, 10000, 40000, 'default.jpg', 60, 'Good Trouser-ابيض', 'S1', 1, 'Good Trouser-ابيض'),
+(71, 14, 10000, 40000, 'default.jpg', 60, 'Good Trouser-جوزي', 'S1', 1, 'Good Trouser-جوزي'),
+(72, 15, 16000, 20000, 'default.jpg', 50, 'Good Dress-أحمر', 'S2', 1, 'Good Dress-أحمر'),
+(73, 15, 16000, 20000, 'default.jpg', 50, 'Good Dress-جوزي', 'S2', 1, 'Good Dress-جوزي'),
+(74, 16, 20000, 40000, '16/5ede7cce005e0.jpg', 7, 'حذاء وردي-اسود', 'S1', 1, 'حذاء وردي-اسود'),
+(75, 16, 20000, 40000, '16/5ede7cce0191e.jpg', 7, 'حذاء وردي-رصاصي', 'S1', 1, 'حذاء وردي-رصاصي'),
+(76, 16, 20000, 40000, '16/5ede7cce02af1.jpg', 7, 'حذاء وردي-جوزي', 'S1', 1, 'حذاء وردي-جوزي'),
+(77, 17, 10000, 20000, '17/5ede7dee2e23f.png', 10, 'buitrkfmdl;-أحمر', 'gg', 1, 'buitrkfmdl;-أحمر'),
+(78, 18, 10000, 20000, '18/5ede7e482fd21.png', 4, 'Good Item-أحمر', '', 1, 'Good Item-أحمر'),
+(79, 18, 10000, 20000, '18/5ede7e4831181.jpg', 4, 'Good Item-اسود', '', 1, 'Good Item-اسود'),
+(80, 18, 10000, 20000, '18/5ede7e48328e2.png', 4, 'Good Item-جوزي', '', 1, 'Good Item-جوزي');
 
 -- --------------------------------------------------------
 
@@ -448,7 +466,14 @@ INSERT INTO `images` (`id`, `product_id`, `path`) VALUES
 (38, 11, '11/5edbc953d1e1d.png'),
 (39, 11, '11/5edbc953d298b.png'),
 (40, 11, '11/5edbc953d3b47.png'),
-(41, 11, '11/5edbc953d4700.png');
+(41, 11, '11/5edbc953d4700.png'),
+(42, 12, '12/5ede727168631.jpg'),
+(43, 13, '13/5ede7383ac8ac.png'),
+(44, 14, '14/5ede7422e0207.png'),
+(45, 15, '15/5ede7b4eefe57.png'),
+(46, 16, '16/5ede7ccdf3c56.jpg'),
+(47, 17, '17/5ede7dee2d3a0.jpg'),
+(48, 18, '18/5ede7e482f081.jpg');
 
 -- --------------------------------------------------------
 
@@ -613,15 +638,22 @@ CREATE TABLE `product` (
 INSERT INTO `product` (`id`, `name`, `type`, `des`, `category_id`, `simple_des`, `store_id`) VALUES
 (1, 'HP Computer', 2, NULL, 1, 'Good Quality ', 0),
 (2, 'Dell', 2, NULL, 1, '', 0),
-(3, 'lklkl', 2, NULL, 3, 'kjlkj', 0),
+(3, 'lklkl', 2, NULL, 1, 'kjlkj', 0),
 (4, 'Printer', 2, NULL, 1, '', 0),
 (5, 'Printer', 2, NULL, 1, '', 0),
 (6, 'Printer', 2, NULL, 1, '', 0),
 (7, 'Printer', 2, NULL, 1, '', 0),
 (8, 'Dress', 2, NULL, 1, '', 0),
 (9, 'Php course', 2, NULL, 2, 'this course is going to be provided for advances web developers', 0),
-(10, 'Office ', 1, 'some data', 3, 'word Excel', 9),
-(11, 'Office ', 1, 'some data', 3, 'word Excel', 9);
+(10, 'Office ', 1, 'some data', 1, 'word Excel', 9),
+(11, 'Office ', 1, 'some data', 1, 'word Excel', 9),
+(12, 'New Items', 2, 'New Items', 13, 'New Items', 9),
+(13, 'ME and MY', 2, '', 12, 'It new Brand', 9),
+(14, 'Good Trouser', 2, '', 12, 'Good Trouser', 9),
+(15, 'Good Dress', 2, '', 9, '', 9),
+(16, 'حذاء وردي', 2, '', 11, 'حذاء وردي', 9),
+(17, 'buitrkfmdl;', 2, '', 1, '', 9),
+(18, 'Good Item', 2, '', 9, '', 9);
 
 -- --------------------------------------------------------
 
@@ -867,7 +899,25 @@ INSERT INTO `sub_option` (`id`, `configurable_product_id`, `attribute_id`, `attr
 (140, 60, 1, 6),
 (141, 60, 2, 16),
 (142, 61, 1, 7),
-(143, 61, 2, 16);
+(143, 61, 2, 16),
+(144, 63, 2, 9),
+(145, 64, 2, 10),
+(146, 65, 1, 1),
+(147, 66, 1, 29),
+(148, 67, 1, 4),
+(149, 68, 1, 5),
+(150, 69, 1, 6),
+(151, 70, 1, 8),
+(152, 71, 1, 29),
+(153, 72, 1, 1),
+(154, 73, 1, 29),
+(155, 74, 1, 5),
+(156, 75, 1, 6),
+(157, 76, 1, 29),
+(158, 77, 1, 1),
+(159, 78, 1, 1),
+(160, 79, 1, 5),
+(161, 80, 1, 29);
 
 -- --------------------------------------------------------
 
@@ -888,13 +938,6 @@ CREATE TABLE `towns` (
 
 INSERT INTO `towns` (`id`, `city_id`, `name`, `center`) VALUES
 (3, 8, 'الفلوجة', 0),
-(4, 8, 'عانة', 0),
-(5, 8, 'حديثة', 0),
-(6, 8, 'الرطبة', 0),
-(7, 8, 'القائم', 0),
-(8, 8, 'راوة', 0),
-(9, 8, 'الخالدية', 0),
-(10, 8, 'العامرية', 0),
 (11, 8, 'الكرمة', 0),
 (12, 17, 'الحلة', 0),
 (13, 17, 'المحاويل', 0),
@@ -1524,13 +1567,13 @@ ALTER TABLE `attribute`
 -- AUTO_INCREMENT for table `attribute_config`
 --
 ALTER TABLE `attribute_config`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `basket_items`
@@ -1542,7 +1585,7 @@ ALTER TABLE `basket_items`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `clients`
@@ -1560,13 +1603,13 @@ ALTER TABLE `client_dev_price`
 -- AUTO_INCREMENT for table `configurable_product`
 --
 ALTER TABLE `configurable_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `mandop_stores`
@@ -1596,7 +1639,7 @@ ALTER TABLE `order_status`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -1620,7 +1663,7 @@ ALTER TABLE `stores`
 -- AUTO_INCREMENT for table `sub_option`
 --
 ALTER TABLE `sub_option`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT for table `towns`
