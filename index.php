@@ -223,6 +223,15 @@ License: You must have a valid license purchased only from https://themes.getboo
           width:25px;
           height:25px;
         }
+        .img-sm{
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          border-radius: 360px;
+          width:30px;
+          height:30px;
+        }
+
         </style>
 	</head>
 

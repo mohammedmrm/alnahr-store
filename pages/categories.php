@@ -68,10 +68,10 @@ $.ajax({
     $("#Category_table").addClass('loading');
   },
   success:function(res){
+   $("#Category_table").removeClass('loading');
    $("#tb-getAllCategories").DataTable().destroy();
    console.log(res);
    elem.html("");
-   $("#Category_table").removeClass('loading');
    $.each(res.data,function(){
      elem.append(
        '<tr>'+
@@ -83,16 +83,7 @@ $.ajax({
             '</button></td>'+
      '</tr>');
      });
-     var myTable= $('#tb-getAllCategories').DataTable({
-        "oLanguage": {
-        "sLengthMenu": "عرض_MENU_سجل",
-        "sSearch": "بحث:" ,
-        select: {
-        style: 'os',
-        selector: 'td:first-child'
-    }
-      }
-});
+     var myTable= $('#tb-getAllCategories').DataTable();
     },
    error:function(e){
     $("#Category_table").removeClass('loading');
@@ -120,8 +111,8 @@ getAllCategories($("#getAllCategoriesTable"));
 				<div class="kt-portlet__body">
 					<div class="form-group">
 						<label>الاسم التصنيف:</label>
-						<input type="name" id="e_Category_name" name="e_Category_name" class="form-control"  placeholder="ادخل الاسم الكامل">
-						<span class="form-text  text-danger" id="e_Category_name_err"></span>
+						<input type="name" id="e_name" name="e_name" class="form-control"  placeholder="">
+						<span class="form-text  text-danger" id="e_name_err"></span>
 					</div>
 	            </div>
 	            <div class="kt-portlet__foot kt-portlet__foot--solid">
@@ -146,8 +137,6 @@ getAllCategories($("#getAllCategoriesTable"));
 function editCategory(id){
   $(".text-danger").text("");
   $("#editCategoryid").val(id);
-  getCities($("#e_Category_city"));
-  getManagers($("#e_Category_manager"));
   $.ajax({
     url:"script/_getCategoryByID.php",
     data:{id: id},
@@ -158,10 +147,7 @@ function editCategory(id){
        $("#editCategoryForm").removeClass('loading');
       if(res.success == 1){
         $.each(res.data,function(){
-          $('#e_Category_name').val(this.name);
-          $('#e_Category_email').val(this.email);
-          $('#e_Category_phone').val(this.phone);
-          $('#e_Category_branch').selectpicker('val', this.branch_id);
+          $('#e_name').val(this.title);
         });
       }
       console.log(res);
@@ -220,6 +206,7 @@ function deleteCategory(id){
          console.log(res)
         } ,
         error:function(e){
+          toastr.error('خطأ');
           console.log(e);
         }
       });

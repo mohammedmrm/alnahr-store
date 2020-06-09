@@ -17,9 +17,8 @@ $name = trim($_REQUEST['name']);
 
 try{
   $count = "select count(*) as count from configurable_product left join product on configurable_product.product_id = product.id  ";
-  $query = "select *,a.path as path,configurable_product.id as c_id from configurable_product
+  $query = "select *,if(img is null or img = 'default.jpg',a.path,img) as path,configurable_product.id as c_id from configurable_product
             left join product on configurable_product.product_id = product.id
-
             left join (
              select  max(path) as path,product_id from images
              group by images.product_id

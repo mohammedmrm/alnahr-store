@@ -90,5 +90,5 @@ try{
    $data=["error"=>$ex,'q'=>$count];
    $success="0";
 }
-echo (json_encode(array("success"=>$success,"data"=>$data,"pages"=>$pages,"page"=>$page)));
+echo (json_encode(array($query,"success"=>$success,"data"=>$data,"pages"=>$pages,"page"=>$page)));
 ?>

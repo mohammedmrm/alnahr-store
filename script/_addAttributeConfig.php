@@ -16,7 +16,21 @@ $success = 0;
 $error = [];
 $name    = $_REQUEST['config'];
 $id    = $_REQUEST['attribute_id'];
-
+$img   = $_FILES['img'];
+$img_err =  "";
+$valid_file_extensions = array(".jpg", ".jpeg", ".png");
+if(isset($img['tmp_name'])) {
+   if($img['size'] >= "2048000"){
+      $img_err =  "صورة ذات حجم كبير";
+   }else{
+     $ext = strrchr($img["name"], ".");
+     if(in_array($ext, $valid_file_extensions) && @getimagesize($img["tmp_name"]) !== false){
+       $img_err =  "";
+     }else{
+      $img_err =  "صورة غير صالحة";
+     }
+   }
+}
 $v->addRuleMessages([
     'required' => 'الحقل مطلوب',
     'int'      => 'فقط الارقام مسموع بها',
@@ -29,10 +43,21 @@ $v->validate([
     'id'   => [$id, 'required|int'],
 ]);
 
-if($v->passes()) {
-  $sql = 'insert into attribute_config (attribute_id,value) values
-                             (?,?)';
-  $result = setData($con,$sql,[$id,$name]);
+if($v->passes() && $img_err ==  "") {
+  if($img['size'] <= 0) {
+    $imgPath = "default.jpg";
+  }else{
+    $imgName = uniqid();
+    $ext = strrchr($img["name"], ".");
+    mkdir("../img/attribute_config/".$id."/", 0700);
+    $destination = "../img/attribute_config/".$id."/".$imgName.".jpg";
+    $imgPath = $id."/".$imgName.$ext;
+    move_uploaded_file($img["tmp_name"], $destination);
+  }
+
+  $sql = 'insert into attribute_config (attribute_id,value,img) values
+                             (?,?,?)';
+  $result = setData($con,$sql,[$id,$name,$imgPath]);
   if($result > 0){
     $success = 1;
   }
@@ -42,5 +67,5 @@ if($v->passes()) {
            'id'=> implode($v->errors()->get('id')),
            ];
 }
-echo json_encode(['success'=>$success, 'error'=>$error,$_POST]);
+echo json_encode([$_FILES,'success'=>$success, 'error'=>$error,$_POST]);
 ?>

@@ -297,7 +297,6 @@ legend
 		<table class="table table-striped  table-bordered responsive nowrap"  id="tb-orders">
 			       <thead>
 	  						<tr>
-										<th>رقم الشحنه</th>
 										<th>رقم الوصل</th>
 										<th>اسم وهاتف العميل</th>
 										<th>هاتف المستلم</th>
@@ -697,11 +696,6 @@ $.ajax({
        nuseen_msg = "";
        notibg="";
      }
-     if(this.driver_id == 0){
-       icon = "<br /><span  data-toggle='kt-tooltip' data-placement='top' data-original-title='لم يتم احالة الطلب الى مندوب' class='fa-2x text-danger flaticon-truck'></span>";
-     }else{
-       icon = "<br /><span  data-toggle='kt-tooltip' data-placement='top' data-original-title='تم الاحالة الى مندوب' class='fa-2x text-success flaticon2-delivery-truck'></span>";
-     }
      date = this.date;
      d1 = new Date(date);
      d2 = new Date();
@@ -712,8 +706,7 @@ $.ajax({
      }
      $("#ordersTable").append(
        '<tr>'+
-            '<td>'+this.id+'</td>'+
-            '<td>'+this.order_no+icon+'</td>'+
+            '<td>'+this.order_no+'</td>'+
             '<td>'+this.client_name+'<br />'+(this.client_phone)+'</td>'+
             '<td>'+(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'</td>'+

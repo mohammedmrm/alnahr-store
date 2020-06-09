@@ -103,10 +103,21 @@ if($v->passes() && $img_err ==""){
         $i++;
     }
     if($type==2){
+      $m = 0;
       foreach($config_matrix as $val){
         //---insert each config
-        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,location,stock,sub_name) values(?,?,?,?,?,?,?,?)";
-        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku'],$val['location'],$val['stock'],$val['sub_name']]);
+        if($_FILES['config_matrix']['size'][$m]['img'] <= 0) {
+          $imgPath2 = "default.jpg";
+        }else{
+          $imgName = uniqid();
+          $ext = strrchr($_FILES['config_matrix']["name"][$m]['img'], ".");
+          mkdir("../img/product/".$res['id']."/", 0700);
+          $destination = "../img/product/".$res['id']."/".$imgName.$ext;
+          $imgPath2 = $res['id']."/".$imgName.$ext;
+          move_uploaded_file($_FILES['config_matrix']["tmp_name"][$m]['img'], $destination);
+        }
+        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,location,stock,sub_name,img) values(?,?,?,?,?,?,?,?,?)";
+        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku'],$val['location'],$val['stock'],$val['sub_name'],$imgPath2]);
         //--get data of last inserted config
         $sql = "select * from `configurable_product` where product_id=? and buy_price=? and sku=? order by id DESC limit 1";
         $res3 = getData($con,$sql,[$res['id'],$val['buy_price'],$val['sku']]);
@@ -118,6 +129,7 @@ if($v->passes() && $img_err ==""){
           $res4 = setData($con,$sql,[$res3['id'],$attributes[$j],$value]);
           $j++;
         }
+        $m++;
       }
     }else if($type == 1){
       $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,sub_name,location) values(?,?,?,?,?,?,?)";
@@ -139,5 +151,5 @@ if($v->passes() && $img_err ==""){
            'imgs'=>$img_err,
            ];
 }
-echo json_encode([$_REQUEST,'success'=>$success, 'error'=>$error]);
+echo json_encode([$_FILES,'success'=>$success, 'error'=>$error]);
 ?>

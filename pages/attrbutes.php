@@ -50,9 +50,6 @@ table.dataTable tr th.select-checkbox.selected::after {
 
 
             <!--begin::Page Vendors(used by this page) -->
-<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-                        <!--end::Page Vendors -->
-<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
                        <script type="text/javascript">
 function getattributes(){
 $.ajax({
@@ -103,7 +100,7 @@ getattributes();
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">اضافة وسم او صفه</h4>
         </div>
         <div class="modal-body">
@@ -140,7 +137,7 @@ getattributes();
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">اضافة فرع</h4>
         </div>
         <div class="modal-body">
@@ -177,7 +174,7 @@ getattributes();
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">اضافة فرع</h4>
         </div>
         <div class="modal-body">
@@ -214,7 +211,7 @@ getattributes();
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"> </button>
           <h4 class="modal-title">قيم الوسم</h4>
         </div>
         <div class="modal-body">
@@ -227,6 +224,10 @@ getattributes();
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                     	<label>قيمة الصفه</label>
                         <input type="text" id="config" name="config" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                    	<label>صورة</label>
+                        <input type="file" id="img" name="img" class="form-control"/>
                     </div>
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                     	<label>اضافه:</label><br>
@@ -246,6 +247,7 @@ getattributes();
   	  						<tr>
   										<th>ID</th>
   										<th>اسم الوسم</th>
+  										<th>صورة</th>
   										<th>القيمة</th>
   										<th>حذف</th>
                            </tr>
@@ -264,6 +266,10 @@ getattributes();
 
     </div>
 </div>
+<!--begin::Page Vendors(used by this page) -->
+<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+<!--begin::Page Scripts(used by this page) -->
+<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="js/getCities.js"></script>
 <script>
@@ -281,16 +287,16 @@ function addattributes(){
        console.log(res);
        if(res.success == 1){
          $("#kt_form input").val("");
-         Toast.success('تم الاضافة');
+         toastr.success('تم الاضافة');
          getattributes();
        }else{
            $("#name_err").text(res.error["name"]);
-           Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+           toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
     },
     error:function(e){
      console.log(e);
-     Toast.error('خطأ');
+     toastr.error('خطأ');
     }
   });
 }
@@ -324,16 +330,16 @@ function updateattributes(){
           console.log(res);
        if(res.success == 1){
          $("#kt_form input").val("");
-          Toast.success('تم التحديث');
+          toastr.success('تم التحديث');
           getattributes();
        }else{
            $("#e_name_err").text(res.error["name"]);
-           Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+           toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
 
        },
        error:function(e){
-        //Toast.error('خطأ');
+        //toastr.error('خطأ');
         console.log(e);
        }
     });
@@ -341,16 +347,16 @@ function updateattributes(){
 function deleteattributes(id){
   if(confirm("هل انت متاكد من الحذف")){
       $.ajax({
-        url:"script/_deleteTown.php",
+        url:"script/_deleteAttribute.php",
         type:"POST",
         data:{id:id},
         success:function(res){
           console.log(res);
          if(res.success == 1){
-           Toast.success('تم الحذف');
+           toastr.success('تم الحذف');
            getattributes();
          }else{
-           Toast.warning(res.msg);
+           toastr.warning(res.msg);
          }
         } ,
         error:function(e){
@@ -373,6 +379,7 @@ function getAttributesConfig(id){
            '<tr>'+
                 '<td>'+this.id+'</td>'+
                 '<td>'+this.value+'</td>'+
+                '<td><div style="background-image:url(img/attribute_config/'+this.img+')"  class="img-sm"></div></td>'+
                 '<td>'+this.date+'</td>'+
                 '<td>'+
                     '<button type="button" class="btn btn-link" onclick="editAttributeConfig('+this.id+')" data-toggle="modal" data-target="#editAttributeConfigModal"><span class="flaticon-edit"></sapn></button>'+
@@ -382,7 +389,10 @@ function getAttributesConfig(id){
            '</tr>');
         });
       }
-      $("#tb-attributeConfig").DataTable();
+      $("#tb-attributeConfig").DataTable({
+            pageLength: 5,
+            lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+      });
       console.log(res);
     },
     error:function(e){
@@ -391,10 +401,15 @@ function getAttributesConfig(id){
   });
 }
 function addAttributeConfig(){
+    var myform = document.getElementById('attributeConfigForm');
+    var fd = new FormData(myform);
     $.ajax({
        url:"script/_addAttributeConfig.php",
        type:"POST",
-       data:$("#attributeConfigForm").serialize(),
+       data:fd,
+       processData: false,  // tell jQuery not to process the data
+       contentType: false,
+       cache: false,
        beforeSend:function(){
 
        },
@@ -402,16 +417,16 @@ function addAttributeConfig(){
           console.log(res);
        if(res.success == 1){
          $("input[type='text']").val("");
-          //Toast.success('تم التحديث');
+          //toastr.success('تم التحديث');
           getAttributesConfig($("#attributeConfig_id").val());
        }else{
            $("#e_name_err").text(res.error["name"]);
-           //Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+           //toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
 
        },
        error:function(e){
-        //Toast.error('خطأ');
+        //toastr.error('خطأ');
         console.log(e);
        }
     })
@@ -447,11 +462,11 @@ function updateAttributeConfig(){
           console.log(res);
            if(res.success == 1){
              $("#kt_form input").val("");
-              Toast.success('تم التحديث');
+              toastr.success('تم التحديث');
                getAttributesConfig($("#attributeConfig_id").val());
            }else{
                $("#e_name_err").text(res.error["name"]);
-               Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
+               toastr.warning("هناك بعض المدخلات غير صالحة",'خطأ');
            }
 
        },
