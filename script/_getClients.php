@@ -1,6 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+error_reporting(0);
 require("_access.php");
 access([1,2,3,4,5,6]);
 $branch = $_REQUEST['branch'];
@@ -16,5 +17,5 @@ try{
    $data=["error"=>$ex];
    $success="0";
 }
-print_r(json_encode(array("success"=>$success,"data"=>$data,"Q"=>$query)));
+echo (json_encode(array("success"=>$success,"data"=>$data,"Q"=>$query)));
 ?>

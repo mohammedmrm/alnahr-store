@@ -75,6 +75,7 @@ legend
         <table class="table table-striped table-bordered table-hover table-checkable responsive no-wrap" id="tb-productTable">
       			          <thead>
       	  						<tr>
+      										<th><input  id="allselector" type="checkbox"></th>
       										<th>صور</th>
                                             <th>SKU</th>
       										<th>تعديل</th>
@@ -99,42 +100,25 @@ legend
 		</nav>
      	</div>
         <hr />
-<!--          <fieldset><legend>التحديثات</legend>
+         <fieldset><legend>التحديثات</legend>
           <div class="row kt-margin-b-20">
             <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
             	<label>افعل مع المحدد:</label>
             	<select id="action" onchange="disable()" name="action" class="selectpicker form-control kt-input" data-col-index="2">
             		<option value="">... اختر ...</option>
-            		<option value="asign">احالة المحدد الى مندوب</option>
-            		<option value="delete">حذف جميع الطلبات المحددة</option>
-            		<option value="status">تحديث الحالة الى</option>
-            		<option value="discount">خصم سعر توصيل المحدد</option>
-            		<option value="money_out">تم تسليم مبلغ جميع الطلبات المحددة</option>
-            		<option value="money_in">لم يتم تسليم مبلغ جميع الطلبات المحددة</option>
+            		<option value="delete">حذف جميع المنتجات المحددة</option>
             	</select>
             </div>
-            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-            	<label>المندوبين:</label>
-            	<select class="selectpicker form-control kt-input" data-live-search="true" name="driver_action" id="driver_action" data-col-index="2">
-            		<option value="">... اختر مندوب ...</option>
-            	</select>
-            </div>
-            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-            	<label>الحلات:</label>
-            	<select  id="status_action" name="status_action" class="selectpicker form-control kt-input" data-col-index="2">
-            		<option value="">... اختر حالة ...</option>
-            	</select>
-            </div>
-            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+<!--            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
             	<label>الخصم:</label>
             	<input type="number" class="form-control" value="0" step="250"  id="discount" name="discount"/>
-            </div>
+            </div>-->
             <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
             	<label>تنفيذ:</label>
             	<input type="button" onclick="runAction()" class="form-control btn btn-success" value="نفذ" />
             </div>
           </div>
-          </fieldset>-->
+          </fieldset>
         </form>
 		<!--end: Datatable -->
 	</div>
@@ -458,6 +442,7 @@ $.ajax({
       });
       $("#productTable").append(
        '<tr>'+
+            '<td><input type="checkbox" name="id[]" rowid="'+this.c_id+'"></td>'+
             '<td><div style="background-image:url(img/product/'+this.path+');" class="item-img-sm"></div></td>'+
             '<td>'+this.sku+'</td>'+
             '<td width="150px">'+
@@ -623,7 +608,7 @@ $('#end').datepicker({
 });
 function runAction(){
      $('input[name="ids\[\]"]', form).remove();
-      var form = $('#ordertabledata');
+      var form = $('#producttabledata');
       $.each($('input[name="id\[\]"]:checked'), function(){
                rowId = $(this).attr('rowid');
          form.append(
@@ -637,25 +622,30 @@ function runAction(){
       $.ajax({
         url:"script/_runAction.php",
         type:"POST",
-        data:$("#ordertabledata").serialize(),
+        data:$("#producttabledata").serialize(),
         success:function(res){
-          getorders();
+          getProducts();
           console.log(res);
           if(res.success == 1){
-            Toast.success("تم التحديث بنجاح");
+            toastr.success("تم التحديث بنجاح");
           }else{
-            Toast.warning("حدث خطاء! حاول مرة اخرى. تاكدد من تحديد عنصر واحد على اقل تقدير");
+            toastr.warning("حدث خطاء! حاول مرة اخرى. تاكدد من تحديد عنصر واحد على اقل تقدير");
           }
         },
         error:function(e){
-           Toast.error("خطأ!");
-          console.log(e);
+           toastr.error("خطأ!");
+           console.log(e);
         }
       });
 
       // Remove added elements
       //$('input[name="id\[\]"]', form).remove();
       }
+function disable(){
+  $('.selectpicker').selectpicker('refresh');
+  console.log($("#action").val());
+}
+
 </script>
 
 <div class="modal fade" id="editorderStatusModal" role="dialog">

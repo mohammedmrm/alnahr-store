@@ -45,12 +45,15 @@ try{
             ) b on b.order_no = orders.order_no";
 
   $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
-            cites.name as city,towns.name as town,
-            order_status.status as status_name,staff.name as staff_name,b.rep as repated
+            cites.name as city,towns.name as town,clients.phone as client_phone,mandop.name as mandop_name,
+            order_status.status as status_name,staff.name as staff_name,b.rep as repated,stores.name as store_name
             from orders
             left join cites on  cites.id = orders.city_id
             left join towns on  towns.id = orders.town_id
             left join staff on  staff.id = orders.manager_id
+            left join stores on  stores.id = orders.store_id
+            left join clients on  clients.id = stores.client_id
+            left join staff  mandop on  staff.id = orders.mandop_id
             left join order_status on  order_status.id = orders.order_status_id
             left join (
              select order_no,count(*) as rep from orders
@@ -151,7 +154,8 @@ try{
           count(orders.order_no) as orders
           from orders
 
-          left JOIN client_dev_price on client_dev_price.client_id = orders.client_id AND client_dev_price.city_id = orders.city_id
+          left JOIN stores on stores.id = orders.store_id
+          left JOIN client_dev_price on client_dev_price.client_id = stores.client_id AND client_dev_price.city_id = orders.city_id
           left join (
              select order_no,count(*) as rep from orders
               GROUP BY order_no
@@ -163,40 +167,7 @@ if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
     $sqlt .= " ".$filter;
 }
-$total = getData($con,$sqlt);
-
-/*  $i = 0;
-foreach($data as $k=>$v){
-        $total['income'] += $data[$i]['new_price'];
-        $sql = "select * from client_dev_price where client_id=? and city_id=?";
-        $dev_price  = getData($con,$sql,[$v['client_id'],$v['city_id']]);
-        if(count($dev_price) > 0){
-           $dev_p = $dev_price[0]['price'];
-        }else{
-          if($v['city_id'] == 1){
-           $dev_p = $config['dev_b'];
-          }else{
-           $dev_p = $config['dev_o'];
-          }
-        }
-        $data[$i]['dev_price'] = $dev_p;
-        $data[$i]['client_price'] = ($data[$i]['new_price'] -  $dev_p) + $data[$i]['discount'];
-
-        if($v['with_dev'] == 1){
-          $data[$i]['with_dev'] = 'نعم';
-        }else{
-        $data[$i]['with_dev'] = 'لا';
-        }
-        if($v['money_status'] == 1){
-          $data[$i]['money_status1'] = 'تم تسليم المبلغ للعميل';
-        }else{
-        $data[$i]['money_status1'] = 'لم يتم تسليم المبلغ';
-        }
-  $total['discount'] += $data[$i]['discount'];
-  $total['dev_price'] += $dev_p - $data[$i]['discount'];
-  $total['client_price'] += $data[$i]['client_price'];
-  $i++;
-}*/
+ $total = getData($con,$sqlt);
  $total[0]['orders'] = $orders;
 if($store >=1){
  $total[0]['store'] = $data[0]['store_name'];

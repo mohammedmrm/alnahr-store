@@ -68,7 +68,7 @@ legend
   font-size: 18px;
 }
 #total-section {
-  background-color: #242939;
+  background-color: #660099;
   border-radius: 5px;
   box-shadow: 0px 0px 0px #444444;
   margin-top:5px;
@@ -223,7 +223,7 @@ legend
             </div>
           </div>
           <div class="row kt-margin-b-20">
-            <div class="col-lg-1 kt-margin-b-10-tablet-and-mobile">
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
             	<label>رقم الوصل:</label>
             	<input id="order_no" name="order_no" value="<?php if(!empty($_GET['order_no'])){ echo $_GET['order_no'];} ?>" onkeyup="getorders()" type="text" class="form-control kt-input" placeholder="" data-col-index="0">
             </div>
@@ -275,22 +275,26 @@ legend
 		<!--begin: Datatable -->
         <div class="" id="section-to-print">
           <div class="col-md-12" id="">
-          <div class="row kt-margin-b-20 text-white" id="total-section">
-               <div class="col-sm-6 kt-margin-b-10-tablet-and-mobile">
-                 <div class="row kt-margin-b-20">
-                    <label>الصفحه او (Page Or Store):&nbsp;</label><label id="total-client"> لم يتم تحديد عميل </label>
-                 </div>
+          <div class="row text-white" id="total-section">
+               <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
                  <div class="row">
-                    <label>المبلغ الصافي:&nbsp;</label><label id="total-price"> 0.0 </label>
+                    <label>المبلغ الصافي للعملاء:&nbsp;</label><label id="total-price"> 0.0 </label>
                  </div>
                </div>
-               <div class="col-sm-6 kt-margin-b-10-tablet-and-mobile">
+               <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
                    <div class="row kt-margin-b-20">
                     <label>مجوع الخصم:&nbsp;</label><label id="total-discount"> 0.0 </label>
                    </div>
+               </div>
+               <div class="col-sm-2 kt-margin-b-10-tablet-and-mobile">
                    <div class="row kt-margin-b-20">
                     <label>عدد الطلبات:&nbsp;</label><label id="total-orders"> 0 </label>
                    </div>
+               </div>
+               <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
+                 <div class="row">
+                    <label>الصفحة:&nbsp;</label><label id="total-store"></label>
+                 </div>
                </div>
           </div>
           </div>
@@ -636,6 +640,10 @@ $.ajax({
     $('#branch').attr('disabled',"disabled");
     $('#branch').selectpicker('refresh');
    }
+   $("#total-store").html(res.total[0].store_name);
+   $("#total-price").text(formatMoney(res.total[0].client_price));
+   $("#total-discount").text(formatMoney(res.total[0].discount));
+   $("#total-orders").text(res.total[0].orders);
 
    if(res.pages >= 1){
      if(res.page > 1){
@@ -679,6 +687,7 @@ $.ajax({
          );
      }
    }
+
    $.each(res.data,function(){
      if(this.invoice_id > 0 ){
          inv = '<a href="invoice/'+this.invoice_path+'" target="_blank" style="color:#FFFFFF;"> | رقم الكشف: '+'<b>'+this.invoice_id+'</b></a>';
@@ -707,7 +716,7 @@ $.ajax({
      $("#ordersTable").append(
        '<tr>'+
             '<td>'+this.order_no+'</td>'+
-            '<td>'+this.client_name+'<br />'+(this.client_phone)+'</td>'+
+            '<td>'+this.store_name+'<br />'+(this.client_phone)+'</td>'+
             '<td>'+(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'</td>'+
             '<td>'+date+'</td>'+
@@ -731,7 +740,7 @@ $.ajax({
         '</tr>');
      });
 
-/*     var myTable= $('#tb-orders').DataTable({
+    var myTable= $('#tb-orders').DataTable({
       "oLanguage": {
         "sLengthMenu": "عرض_MENU_سجل",
         "sSearch": "بحث:"
@@ -739,7 +748,7 @@ $.ajax({
        "bPaginate": false,
        "bLengthChange": false,
        "bFilter": false,
-      });*/
+      });
     },
    error:function(e){
     $("#section-to-print").removeClass('loading');

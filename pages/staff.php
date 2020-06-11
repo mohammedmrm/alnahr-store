@@ -346,6 +346,22 @@ getStaff($("#staffTable"));
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                     	<label>الصفحة:</label>
                         <select data-live-search="true" class="form-control selectpicker" id="store" name="store"></select>
+                        <span class="text-muted text-danger" id="store_err"></span>
+                    </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                      <label>نبسة على المبلغ الكلي:</label>
+                      <div class="input-group">
+                      	  <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                          <input  type="number" value="0" step="1" max="100" min="0" class="form-control" id="earnings_total" name="earnings_total"/>
+                      </div>
+                      <span class="text-muted text-danger" id="total_err"></span>
+                    </div>
+                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                    	<label>مبلغ ثابت</label>
+                        <input  type="text" value="0" step="250" class="form-control" id="earnings_fix" name="earnings_fix"/>
+                        <span class="text-muted text-danger" id="fix_err"></span>
                     </div>
                     <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
                     	<label>اضافه:</label><br>
@@ -356,6 +372,7 @@ getStaff($("#staffTable"));
                     <div class="col-lg-4 kt-margin-b-10-tablet-and-mobile">
                     	<label>اسم المندوب:</label><br>
                     	<label id="mandop_name"></label><br>
+                        <span class="text-muted text-danger" id="mandop_err"></span>
                     </div>
                   </div>
                   </fieldset>
@@ -366,11 +383,12 @@ getStaff($("#staffTable"));
 										<th>ID</th>
 										<th>العميل</th>
 										<th>الصفحة</th>
+										<th>مبلغ ثابت</th>
+										<th>النسبة %</th>
 										<th>حذف</th>
                            </tr>
       	            </thead>
-                    <tbody id="mandopPages">
-                    </tbody>
+                    <tbody id="mandopPages"></tbody>
             		</table>
             		<!--end: Datatable -->
                     <input type="hidden" value="" id="mandop_id" name="mandop_id" />
@@ -506,7 +524,7 @@ function deleteStaff(id){
       });
   }
 }
-$("#tb-mandopPages").DataTable();
+//$("#tb-mandopPages").DataTable();
 function getMandopPages(id){
       $('#mandop_id').val(id);
       $.ajax({
@@ -514,28 +532,30 @@ function getMandopPages(id){
         type:"POST",
         data:{id:id},
         beforeSend:function(){
-          $("#tb-mandopPages").DataTable().destroy();
+
         },
         success:function(res){
+          console.log(res);
+         $("#tb-mandopPages").DataTable().destroy();
          if(res.success == 1){
           $('#mandopPages').html("");
           $('#mandop_name').text(res.mandop_info.name);
-
           $.each(res.data,function(){
             $('#mandopPages').append(
             '<tr>'+
               '<td>'+this.id+'</td>'+
               '<td>'+this.client_name+'</td>'+
               '<td>'+this.store_name+'</td>'+
+              '<td>'+this.earnings_fix+'</td>'+
+              '<td>%'+this.earnings_total+'</td>'+
               '<td><button type="button" onclick="deleteMandopPage('+this.id+')" class="btn btn-icon btn-danger"><span class="flaticon-delete"></span></button></td>'+
             '</tr>'
             );
           });
-          $("#tb-mandopPages").DataTable();
          }else{
 
          }
-         console.log(res)
+         //$("#tb-mandopPages").DataTable();
         } ,
         error:function(e){
           console.log(e);
@@ -558,6 +578,10 @@ function setTownToMandop(){
            getAllunAssignedPages($("#store"));
          }else{
            toastr.warning(res.msg);
+           $("#mandop_err").text(res.error[0]['mandop']);
+           $("#store_err").text(res.error[0]['store']);
+           $("#fix_err").text(res.error[0]['earnings_fix']);
+           $("#total_err").text(res.error[0]['earnings_total']);
          }
          console.log(res)
         } ,

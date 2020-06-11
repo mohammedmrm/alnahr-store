@@ -14,7 +14,17 @@ $v = new Violin;
 $success = 0;
 $mandop    = $_REQUEST['mandop_id'];
 $store   = $_REQUEST['store'];
+$earnings_fix   = $_REQUEST['earnings_fix'];
+$earnings_total   = $_REQUEST['earnings_total'];
 
+$v->addRuleMessage('isPrice', 'المبلغ غير صحيح');
+
+$v->addRule('isPrice', function($value, $input, $args) {
+  if(preg_match("/^(0|[1-9]\d*)(\.\d{2})?$/",$value)){
+    $x=(bool) 1;
+  }
+  return   $x;
+});
 $v->addRuleMessages([
     'required' => ' الحقل مطلوب',
     'int'      => ' فقط الارقام مسموح بها',
@@ -25,30 +35,34 @@ $v->addRuleMessages([
 ]);
 
 $v->validate([
-    'mandop' => [$mandop,'required|int'],
+    'mandop'  => [$mandop,'required|int'],
     'store'   => [$store,  'required|int'],
+    'earnings_total' => [$earnings_total,'int|min(1)|max(2)'],
+    'earnings_fix'   => [$earnings_fix,  'isPrice'],
 ]);
 $msg = "";
 if($v->passes() ) {
-  $sql = "select * from mandop_stores where store_id=?";
-  $res = getData($con,$sql,[$store]);
+  $sql = "select * from mandop_stores where store_id=? and mandop_id=?";
+  $res = getData($con,$sql,[$store,$mandop]);
   if(count($res) < 1){
-      $sql = 'insert into mandop_stores (mandop_id,store_id,manager_id) values (?,?,?)';
-      $result = setData($con,$sql,[$mandop,$store,$_SESSION['userid']]);
+      $sql = 'insert into mandop_stores (mandop_id,store_id,manager_id,earnings_fix,earnings_total) values (?,?,?,?,?)';
+      $result = setData($con,$sql,[$mandop,$store,$_SESSION['userid'],$earnings_fix,$earnings_total]);
       if($result > 0){
         $success = 1;
         $msg = "تم الاضافة";
       }else{
-         $msg = "!خطأ";
+        $msg = "!خطأ";
       }
   }else{
-    $msg = "تم تحديد مندوب للبيج مسبقاً";
+    $msg = "تم تسجيل السوق مسبقأ";
   }
 
 }else{
   $error = [
-           'driver_err'=> implode($v->errors()->get('driver')),
-           'town_err'=>implode($v->errors()->get('town')),
+           'mandop'=> implode($v->errors()->get('mandop')),
+           'store'=>implode($v->errors()->get('store')),
+           'earnings_total'=>implode($v->errors()->get('earnings_total')),
+           'earnings_fix'=>implode($v->errors()->get('earnings_fix')),
            ];
  $msg = "خطأ";
 }

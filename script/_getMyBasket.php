@@ -9,8 +9,9 @@ try{
   $success="1";
   $i=0;
   foreach($data as $v){
-    $sql ="select * from basket_items
+    $sql ="select *,if(sub_name is null or sub_name = '',product.name,sub_name) as sub_name, basket_items.qty as bi_qty from basket_items
             left join configurable_product on configurable_product.id = basket_items.configurable_product_id
+            left join product on product.id = configurable_product.product_id
             left join (
                      select  max(path) as path,product_id from images
                      group by images.product_id

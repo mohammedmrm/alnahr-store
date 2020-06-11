@@ -9,7 +9,7 @@ $query = "select
            stores.name as store, stores.id as id,clients.name as client_name
            from stores
            left join clients on clients.id = stores.client_id
-           where stores.id NOT in (SELECT store_id from mandop_stores) ";
+           ";
 
 try{
 

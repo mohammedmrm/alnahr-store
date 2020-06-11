@@ -34,12 +34,22 @@ function getMyBasket(){
      $.each(res.data,function(){
              status = this.status;
              if(status == 1){
-               btn = `<button type="button" onclick="sendBasket(`+this.id+`)" class="btn  btn-success">ارسال<i class="flaticon2-arrow-up"></i></button>
+             btn = ` <div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">الخصم</span>
+							</div>
+							<input type="text" value="0" class="form-control" id="discount" name="discount"/>
+							<div class="input-group-append">
+								<span class="input-group-text">دينار</span>
+							</div>
+			          </div><br />
+                      <button type="button" onclick="sendBasket(`+this.id+`,$(this).parents('form:first'))" class="btn  btn-success">ارسال<i class="flaticon2-arrow-up"></i></button>
                       <button type="reset"  onclick="emptyBasket(`+this.id+`)" class="btn btn-danger">افراغ<i class="flaticon2-open-box"></i></button>`;
              }else if(status == 2){
                btn = `<button type="button" onclick="cancelBasket(`+this.id+`)" class="btn  btn-info">الغأ<i class="flaticon-cancel"></i></button>`;
              }
-        basket = `<div class="col-md-4">
+        basket = `<form class="col-md-4">
+                  <div class="col-md-12">
                    <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
@@ -49,7 +59,7 @@ function getMyBasket(){
                     </div>
                     <div class="kt-portlet__body">
                     `;
-
+        total = 0;
         $.each(this.items,function(){
              item_btn = "";
              if(status== 1){
@@ -58,14 +68,9 @@ function getMyBasket(){
               <button type="button" onclick="increaseQTY(`+this.configurable_product_id+`)" class="btn btn-icon text-success"><i class="flaticon-add"></i></button>`
               ;
              }else if(status == 2){
-              item_btn =
-              `<button type="button" onclick="increaseQTY(`+this.configurable_product_id+`)" class="btn btn-icon text-success"><i class="flaticon-add"></i></button>`
-              ;
+              item_btn ="";
              }else{
-              item_btn =
-              `<button type="button" onclick="deleteItemFromBasket(`+this.configurable_product_id+`)" class="btn btn-icon text-danger"><i class="flaticon-delete"></i></button>
-              <button type="button" onclick="increaseQTY(`+this.configurable_product_id+`)" class="btn btn-icon text-success"><i class="flaticon-add"></i></button>`
-              ;
+              item_btn ="";
              }
             basket +=`<div class="row item">
                       <div class="col-3 img-div" style="background-image:url(img/product/`+this.path+`)">
@@ -77,26 +82,30 @@ function getMyBasket(){
                           <div class="">
                                `+this.price+` دينار
                           </div>
+                          <div class="">
+                               `+this.bi_qty+` قطعه
+                          </div>
                       </div>
                       <div class="col-2">
                        `+item_btn+`
                       </div>
                       </div><hr />`
+                      total = total + Number(this.price);
         });
         basket +=`
                </div>
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">
                         <div class="row">
-                            <div class="col-lg-3 col-xl-3">
-                            </div>
-                            <div class="col-lg-9 col-xl-9">
+                            <div class="col-lg-12 col-xl-12">
+                               <span class="fa-2x">`+total+`IQD</span><br />
                                `+btn+`
                             </div>
                         </div>
                     </div>
                 </div>
-        </div></div>`;
+        </div></div>
+        </form>`;
         $("#baskets").append(basket);
      });
 
@@ -131,11 +140,11 @@ function emptyBasket(id){
   });
 }
 
-function sendBasket(id){
+function sendBasket(id,ele){
   $(".text-danger").text("");
   $.ajax({
     url:"script/_sendBasket.php",
-    data:{id: id},
+    data:ele.serialize()+"&id="+id,
     beforeSend:function(){
       $("#editProductForm").addClass('loading');
     },
