@@ -90,7 +90,7 @@ function getMyBasket(){
                        `+item_btn+`
                       </div>
                       </div><hr />`
-                      total = total + Number(this.price);
+                      total = total + (Number(this.price) * Number(this.bi_qty));
         });
         basket +=`
                </div>

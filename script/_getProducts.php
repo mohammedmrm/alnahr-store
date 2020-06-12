@@ -17,7 +17,7 @@ $name = trim($_REQUEST['name']);
 
 try{
   $count = "select count(*) as count from configurable_product left join product on configurable_product.product_id = product.id  ";
-  $query = "select *,stores.name as store_name,if(img is null or img = 'default.jpg',a.path,img) as path,configurable_product.id as c_id from configurable_product
+  $query = "select configurable_product.*,product.*,stores.name as store_name,if(img is null or img = 'default.jpg',a.path,img) as path,configurable_product.id as c_id from configurable_product
             left join product on configurable_product.product_id = product.id
             left join stores on product.store_id = stores.id
             left join (

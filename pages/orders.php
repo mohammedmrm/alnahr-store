@@ -245,7 +245,7 @@ legend
             	<label>حالة تسليم المبلغ للعميل:</label>
                 <select name="money_status" onchange="getorders()" class="selectpicker form-control kt-input" data-col-index="2">
             		<option value="">... اختر...</option>
-            		<option value="1">تم تسليم المبلغ</option>
+            		<option value="1">تم تسليم </option>
             		<option value="0">لم يتم تسليم المبلغ</option>
                 </select>
             </div>
@@ -261,13 +261,17 @@ legend
           <div class="kt-separator kt-separator--border-dashed kt-separator--space-md"></div>
           </div>
           <div class="row kt-margin-b-20">
-            <div class="col-lg-1 kt-margin-b-10-tablet-and-mobile">
-                	<label class="">توليد كشف:</label><br />
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                	<br />
                     <input  id="invoicebtn" name="invoicebtn" type="button" value="كشف" onclick="makeInvoice()" class="btn btn-danger" placeholder="" data-col-index="1">
             </div>
-            <div class="col-lg-1 kt-margin-b-10-tablet-and-mobile">
-                	<label class="">تحميل التقرير:</label><br />
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                	<br />
                     <input id="download" name="download" type="button" value="تحميل التقرير" data-toggle="modal" data-target="#reportOptionsModal" class="btn btn-success" placeholder="" data-col-index="1">
+            </div>
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                    <br />
+                    <input id="downloadReceipts" name="downloadReceipts" type="button" onclick="download_Receipts()" value="تحميل الوصولات"  class="btn btn-warning" placeholder="" data-col-index="1">
             </div>
           </div>
           </fieldset>
@@ -420,8 +424,8 @@ legend
                   <div class="form-group">
   						<label>الفرع المرسل له:</label>
   						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_branch_to" id="e_branch_to"  value="">
-                          </select>
-                          <span class="form-text text-danger" id="e_branch_to_err"></span>
+                        </select>
+                        <span class="form-text text-danger" id="e_branch_to_err"></span>
   				</div>
                   <div class="form-group">
       				<label>ملاحظات</label>
@@ -606,17 +610,20 @@ legend
 <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
 <!--begin::Page Scripts(used by this page) -->
 <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
-<script src="js/getBraches.js" type="text/javascript"></script>
 <script src="js/getClients.js" type="text/javascript"></script>
 <script src="js/getStores.js" type="text/javascript"></script>
 <script src="js/getorderStatus.js" type="text/javascript"></script>
 <script src="js/getCities.js" type="text/javascript"></script>
 <script src="js/getTowns.js" type="text/javascript"></script>
 <script src="js/getManagers.js" type="text/javascript"></script>
-<script src="js/getAllDrivers.js" type="text/javascript"></script>
 <script type="text/javascript">
 getStores($("#store"));
 getStores($("#e_store_id"));
+function download_Receipts(){
+    var domain = "script/downloadReceipts.php?";
+    var data = $("#ordertabledata").serialize();
+    window.open(domain + data, '_blank');
+}
 function getorders(){
 $.ajax({
   url:"script/_getOrders.php",
@@ -624,8 +631,6 @@ $.ajax({
   data:$("#ordertabledata").serialize(),
   beforeSend:function(){
     $("#section-to-print").addClass('loading');
-
-
   },
   success:function(res){
    console.log(res);
@@ -871,9 +876,8 @@ function OrderReceipt(id){
 function frameLoaded(){
   $('#receiptIframe').parent().removeClass('loading');
 }
-  getBraches($("#e_branch"));
-  getBraches($("#e_branch_to"));
-  getCities($("#e_city"));
+
+getCities($("#e_city"));
 function editOrder(id){
 
   $("#editOrderid").val(id);
@@ -1038,8 +1042,6 @@ $('#e_date').datepicker({
     pickerPosition: 'bottom-left',
 });
 
-getBraches($("#branch"));
-getBraches($("#to_branch"));
 getorderStatus($("#orderStatus"));
 getorderStatus($("#status_action"));
 getCities($("#city"));
@@ -1114,11 +1116,7 @@ function OrderTracking(id){
      }
    });
 }
-function downloadReport(){
-var domain = "script/downloadOrdersReport.php?";
-var data = $("#ordertabledata").serialize()+'&pageDir='+$("#pageDir").val()+'&reportType='+$("#reportType").val()+'&space='+$("#space").val()+'&fontSize='+$("#fontSize").val();
-window.open(domain + data, '_blank');
-}
+
 function makeInvoice() {
   if($("#orderStatus").val() == 4 || $("#orderStatus").val() == 6 ||  $("#orderStatus").val() == 9 || $("#orderStatus").val() == 10 || $("#orderStatus").val() == 11  || $("#orderStatus").val() == 7){
     if(Number($("#store").val()) > 0){

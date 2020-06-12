@@ -101,6 +101,7 @@ legend
 		</nav>
      	</div>
         <hr />
+        <?php if($_SESSION['role'] != 4){?>
          <fieldset><legend>التحديثات</legend>
           <div class="row kt-margin-b-20">
             <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
@@ -120,6 +121,7 @@ legend
             </div>
           </div>
           </fieldset>
+         <?php } ?>
         </form>
 		<!--end: Datatable -->
 	</div>
@@ -437,6 +439,12 @@ $.ajax({
        }else{
           btn = '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket('+this.c_id+')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn> شراء</button>';
        }
+       if(this.qty <= 0){
+         btn =    '<button type="button" class="btn btn-clean text-info"    onclick="editProduct('+this.c_id+')" data-toggle="modal" data-target="#editProduct"><span class="flaticon-edit"></sapn></button>'+
+                  '<button type="button" class="btn btn-clean text-danger"  onclick="deleteProduct('+this.c_id+')" data-toggle="modal" data-target="#deleteProduct"><span class="flaticon-delete"></sapn></button>'+
+                  '<span type="button" class="text-warning">غير متوفر</span>'+
+                  '';
+       }
       attribute = "";
       $.each(this.attribute,function(){
         attribute = attribute + "<b> "+this.name+"</b> : "+this.value+"&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -526,7 +534,7 @@ $.ajax({
     if(res.success == 1){
       getBasketByStaff($('#basket'));
       getBasketByStaff($('#e_basket_id'));
-      toastr.error("تم انشاء السلة");
+      toastr.success("تم انشاء السلة");
     }else{
       $("#customer_name_err").text(res.error.customer_name);
       $("#customer_phone_err").text(res.error.customer_phone);
