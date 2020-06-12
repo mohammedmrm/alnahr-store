@@ -64,8 +64,8 @@ function getMyBasket(){
              item_btn = "";
              if(status== 1){
               item_btn =
-              `<button type="button" onclick="deleteItemFromBasket(`+this.configurable_product_id+`)" class="btn btn-icon text-danger"><i class="flaticon-delete"></i></button>
-              <button type="button" onclick="increaseQTY(`+this.configurable_product_id+`)" class="btn btn-icon text-success"><i class="flaticon-add"></i></button>`
+              `<button type="button" onclick="deleteItemFromBasket(`+this.bi_id+`,`+this.basket_id+`)" class="btn btn-icon text-danger"><i class="flaticon-delete"></i></button>
+              <button type="button" onclick="increaseItem(`+this.bi_id+`,`+this.basket_id+`)" class="btn btn-icon text-success"><i class="flaticon-add"></i></button>`
               ;
              }else if(status == 2){
               item_btn ="";
@@ -98,7 +98,7 @@ function getMyBasket(){
                     <div class="kt-form__actions">
                         <div class="row">
                             <div class="col-lg-12 col-xl-12">
-                               <span class="fa-2x">`+total+`IQD</span><br />
+                               <span class="fa-2x">`+total+` دينار</span><br />
                                `+btn+`
                             </div>
                         </div>
@@ -211,5 +211,31 @@ function deleteItemFromBasket(id){
       console.log(e);
     }
   });
+}
+function increaseItem(id,basket_id){
+    $.ajax({
+      url:"script/_increaseItemQtyInBasket.php",
+      type:"POST",
+      beforeSend:function(){
+        $("#tb-basketItemsTable").addClass('loading');
+      },
+      data:{id:id},
+      success:function(res){
+        $("#tb-basketItemsTable").removeClass('loading');
+        console.log(res);
+        if(res.success == 1){
+          toastr.success("تم زيادة الكمية (1)");
+          getMyBasket();
+        }else{
+          $("#basked_id_err").text(res.error.basket);
+          toastr.warning("يوجد بعض الاخطاء");
+        }
+      },
+      error:function(e){
+        $("#tb-basketItemsTable").removeClass('loading');
+        toastr.error("خطأ");
+        console.log(e);
+      }
+    });
 }
 </script>

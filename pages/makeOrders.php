@@ -96,7 +96,7 @@ function getBasketForPerpare(store){
      $("#basketsTable").append(
        '<tr>'+
             '<td>'+this.id+'</td>'+
-            '<td>'+this.coustomer_name+'<br />'+(this.client_phone)+'</td>'+
+            '<td>'+this.customer_name+'</td>'+
             '<td>'+(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'/'+this.address+'</td>'+
             '<td>'+this.items+'</td>'+
@@ -266,7 +266,7 @@ function setBasketToOrders(id,order_no){
       type:"POST",
       beforeSend:function(){
       },
-      data:{id:id,order_no:order_no},
+      data:{id:id},
       success:function(res){
         console.log(res);
         if(res.success == 1){
@@ -413,11 +413,7 @@ function setOrderNo (id){
            <form class="kt-form kt-form--label-right" id="basketItemsForm">
                     <fieldset>
                           <div class="from-group col-lg-2">
-                           <label>رقم الوصب</label>
-                           <input type="text" class="form-control" id="order_no" name="order_no"/>
-                          </div>
-                          <div class="from-group col-lg-2">
-                           <input type="button" class="btn btn-info" value="ارسال الطلبية" onclick="setBasketToOrders($('#set_basket_id').val(),$('#order_no').val())"/>
+                           <input type="button" class="btn btn-info" value="ارسال الطلبية" onclick="setBasketToOrders($('#set_basket_id').val())"/>
                           </div>
                           <input type="hidden" class="from-control" id="set_basket_id" name="set_basket_id"/>
 

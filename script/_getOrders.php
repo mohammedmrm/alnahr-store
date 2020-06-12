@@ -53,7 +53,7 @@ try{
             left join staff on  staff.id = orders.manager_id
             left join stores on  stores.id = orders.store_id
             left join clients on  clients.id = stores.client_id
-            left join staff  mandop on  staff.id = orders.mandop_id
+            left join staff  mandop on  mandop.id = orders.mandop_id
             left join order_status on  order_status.id = orders.order_status_id
             left join (
              select order_no,count(*) as rep from orders
@@ -179,5 +179,5 @@ if($store >=1){
    $total=["error"=>$ex];
    $success="0";
 }
-echo json_encode(array($_REQUEST,"success"=>$success,"data"=>$data,'total'=>$total,"pages"=>$pages,"page"=>$page));
+echo json_encode(array($query,"success"=>$success,"data"=>$data,'total'=>$total,"pages"=>$pages,"page"=>$page));
 ?>

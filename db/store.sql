@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2020 at 06:09 PM
+-- Generation Time: Jun 12, 2020 at 11:51 AM
 -- Server version: 5.7.20
 -- PHP Version: 7.1.11
 
@@ -127,22 +127,23 @@ CREATE TABLE `basket` (
   `note` varchar(250) DEFAULT NULL,
   `staff_id` int(11) NOT NULL,
   `status` int(11) DEFAULT '0' COMMENT '0 emty 1 fulling  2 ready 3 prepared',
-  `total_price` double NOT NULL DEFAULT '0'
+  `total_price` double NOT NULL DEFAULT '0',
+  `discount` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `basket`
 --
 
-INSERT INTO `basket` (`id`, `customer_name`, `customer_phone`, `city_id`, `town_id`, `address`, `date`, `note`, `staff_id`, `status`, `total_price`) VALUES
-(5, 'ahmed', '07822877759', 3, 37, '60 street', '2020-06-02 15:53:25', '', 1, 2, 0),
-(8, 'محمد علي', '07822816693', 1, 19, NULL, '2020-06-05 16:55:59', '', 40, 0, 0),
-(9, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:56:35', '', 40, 0, 0),
-(10, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:00', '', 40, 0, 0),
-(11, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:05', '', 40, 0, 0),
-(12, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:07', '', 40, 0, 0),
-(13, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:09', '', 40, 0, 0),
-(14, '', '', 0, 19, '', '2020-06-07 01:30:55', '', 28, 2, 0);
+INSERT INTO `basket` (`id`, `customer_name`, `customer_phone`, `city_id`, `town_id`, `address`, `date`, `note`, `staff_id`, `status`, `total_price`, `discount`) VALUES
+(8, 'محمد علي', '07822816693', 1, 19, NULL, '2020-06-05 16:55:59', '', 40, 0, 0, 0),
+(9, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:56:35', '', 40, 0, 0, 0),
+(10, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:00', '', 40, 0, 0, 0),
+(11, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:05', '', 40, 0, 0, 0),
+(12, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:07', '', 40, 0, 0, 0),
+(13, 'محمد علي', '07822816693', 1, 19, 'Hillah - 30st - Al Gadeer District', '2020-06-05 16:57:09', '', 40, 0, 0, 0),
+(14, '', '', 0, 19, '', '2020-06-07 01:30:55', '', 28, 2, 0, 0),
+(24, 'Ali Ahmed', '07822816693', 5, 280, 'Hillah - 30st - Al Gadeer District', '2020-06-11 21:57:11', '', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -166,9 +167,20 @@ CREATE TABLE `basket_items` (
 --
 
 INSERT INTO `basket_items` (`id`, `configurable_product_id`, `basket_id`, `date`, `qty`, `status`, `storage_manager_id`, `staff_id`) VALUES
-(46, 1, 5, '2020-06-08 00:03:50', 2, 1, 1, 1),
-(47, 62, 5, '2020-06-08 00:04:28', 2, 1, 1, 1),
-(48, 62, 14, '2020-06-08 00:41:53', 2, 1, 1, 28);
+(48, 62, 14, '2020-06-08 00:41:53', 1, 1, 1, 28),
+(53, 4, 16, '2020-06-11 21:16:04', 1, 1, 1, 1),
+(54, 77, 16, '2020-06-11 21:16:22', 1, 1, 1, 1),
+(55, 63, 17, '2020-06-11 21:22:38', 1, 1, 1, 1),
+(56, 61, 17, '2020-06-11 21:23:07', 1, 1, 1, 1),
+(57, 63, 18, '2020-06-11 21:28:28', 1, 1, 1, 1),
+(58, 61, 18, '2020-06-11 21:28:39', 1, 1, 1, 1),
+(59, 61, 19, '2020-06-11 21:36:38', 1, 1, 1, 1),
+(60, 63, 20, '2020-06-11 21:41:50', 1, 1, 1, 1),
+(63, 63, 22, '2020-06-11 21:46:47', 1, 1, 1, 1),
+(64, 63, 21, '2020-06-11 21:52:22', 1, 1, 1, 1),
+(65, 63, 23, '2020-06-11 21:54:18', 1, 1, 1, 1),
+(67, 63, 25, '2020-06-11 22:00:31', 1, 1, 1, 1),
+(68, 63, 24, '2020-06-11 22:03:14', 1, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -307,6 +319,22 @@ INSERT INTO `client_dev_price` (`id`, `city_id`, `client_id`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `companies`
+--
+
+CREATE TABLE `companies` (
+  `id` int(11) NOT NULL,
+  `logo` varchar(150) NOT NULL,
+  `text1` varchar(500) DEFAULT NULL,
+  `text2` varchar(500) DEFAULT NULL,
+  `name` varchar(200) NOT NULL,
+  `phone` varchar(16) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `configurable_product`
 --
 
@@ -328,17 +356,14 @@ CREATE TABLE `configurable_product` (
 --
 
 INSERT INTO `configurable_product` (`id`, `product_id`, `buy_price`, `price`, `img`, `qty`, `sku`, `location`, `stock`, `sub_name`) VALUES
-(1, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
+(1, 1, 500000, 700000, NULL, -4, '3322143', NULL, 0, ''),
 (2, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
-(3, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
+(3, 1, 500000, 700000, NULL, 0, '3322143', NULL, 0, ''),
 (4, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (5, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (6, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (7, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
 (8, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
-(9, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
-(10, 1, 500000, 700000, NULL, 4, '3322143', NULL, 0, ''),
-(11, 2, 120000, 150000, NULL, 6, '12324', NULL, 0, ''),
 (12, 2, 120000, 150000, NULL, 6, '12324', NULL, 0, ''),
 (13, 2, 120000, 150000, NULL, 6, '12324', NULL, 0, ''),
 (14, 2, 120000, 150000, NULL, 6, '12324', NULL, 0, ''),
@@ -486,15 +511,18 @@ CREATE TABLE `mandop_stores` (
   `mandop_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `manager_id` int(11) NOT NULL
+  `manager_id` int(11) NOT NULL,
+  `earnings_fix` double NOT NULL DEFAULT '0',
+  `earnings_total` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `mandop_stores`
 --
 
-INSERT INTO `mandop_stores` (`id`, `mandop_id`, `store_id`, `date`, `manager_id`) VALUES
-(5, 28, 9, '2020-06-07 00:40:23', 1);
+INSERT INTO `mandop_stores` (`id`, `mandop_id`, `store_id`, `date`, `manager_id`, `earnings_fix`, `earnings_total`) VALUES
+(9, 28, 9, '2020-06-09 22:36:47', 1, 10, 0),
+(10, 29, 9, '2020-06-09 22:38:46', 1, 0, 10);
 
 -- --------------------------------------------------------
 
@@ -516,25 +544,29 @@ CREATE TABLE `orders` (
   `money_status` int(11) NOT NULL DEFAULT '0',
   `manager_id` int(11) NOT NULL,
   `order_no` bigint(20) NOT NULL,
-  `staff_id` int(11) NOT NULL,
+  `mandop_id` int(11) NOT NULL,
   `confirm` int(11) NOT NULL DEFAULT '1',
   `dev_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `discount` double NOT NULL DEFAULT '0'
+  `discount` double NOT NULL DEFAULT '0',
+  `store_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `total_price`, `delivery_company_id`, `city_id`, `town_id`, `address`, `customer_phone`, `customer_name`, `note`, `order_status_id`, `money_status`, `manager_id`, `order_no`, `staff_id`, `confirm`, `dev_date`, `date`, `discount`) VALUES
-(11, 0, 0, 1, 19, 'الكرادة خارج ', '07822816693', 'حسن جاسم', '', 1, 0, 1, 9906986, 1, 1, '2020-06-05 18:44:29', '2020-06-05 19:02:23', 0),
-(12, 0, 0, 1, 19, 'المنصور', '07822816693', 'حسن جاسم', '', 1, 0, 1, 3453, 1, 1, '2020-06-05 18:44:29', '2020-06-05 19:02:23', 0),
-(13, 0, 0, 1, 19, NULL, '07822816693', 'محمد علي', '', 1, 0, 40, 9906986, 40, 1, '2020-06-05 18:44:29', '2020-06-05 19:02:23', 0),
-(14, 0, 0, 1, 19, NULL, '07822816693', 'محمد علي', '', 1, 0, 40, 9906986, 40, 1, '2020-06-05 18:44:29', '2020-06-05 19:02:23', 0),
-(15, 0, 0, 9, 42, NULL, '', 'ali', '', 1, 0, 1, 378, 1, 1, '2020-06-05 23:26:30', '2020-06-05 23:26:30', 0),
-(16, 0, 0, 6, 40, NULL, '', 'Hasan', '', 1, 0, 1, 797, 1, 1, '2020-06-05 23:31:59', '2020-06-05 23:31:59', 0),
-(17, 0, 0, 17, 12, 'Hillah - 30st - Al Gadeer District', '07822816693', 'محمد رضا', '', 1, 0, 1, 1050, 28, 1, '2020-06-07 01:42:30', '2020-06-07 01:42:30', 0);
+INSERT INTO `orders` (`id`, `total_price`, `delivery_company_id`, `city_id`, `town_id`, `address`, `customer_phone`, `customer_name`, `note`, `order_status_id`, `money_status`, `manager_id`, `order_no`, `mandop_id`, `confirm`, `dev_date`, `date`, `discount`, `store_id`) VALUES
+(1, 0, 0, 1, 24, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali Jasam', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:24:00', '2020-06-11 21:24:00', 0, 0),
+(2, 0, 0, 1, 24, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali Jasam', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:24:00', '2020-06-11 21:24:00', 0, 0),
+(3, 0, 0, 6, 40, 'Hillah - 30st - Al Gadeer District', '07822816693', 'علي جاسم ', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:29:04', '2020-06-11 21:29:04', 0, 0),
+(4, 0, 0, 6, 40, 'Hillah - 30st - Al Gadeer District', '07822816693', 'علي جاسم ', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:29:04', '2020-06-11 21:29:04', 0, 0),
+(5, 0, 0, 7, 41, 'Hillah - 30st - Al Gadeer District', '07822816693', 'علي احمد', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:40:37', '2020-06-11 21:40:37', 0, 0),
+(6, 0, 0, 4, 34, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:42:03', '2020-06-11 21:42:03', 0, 0),
+(7, 0, 0, 6, 40, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali2', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:48:42', '2020-06-11 21:48:42', 0, 0),
+(8, 0, 0, 4, 34, 'Piazza S. Francesco, 19', '3497584501', 'ali', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:52:41', '2020-06-11 21:52:41', 0, 0),
+(9, 0, 0, 5, 39, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 21:55:58', '2020-06-11 21:55:58', 0, 0),
+(10, 0, 0, 4, 34, 'Hillah - 30st - Al Gadeer District', '07822816693', 'Ali ', '', 1, 0, 1, 5000, 1, 1, '2020-06-11 22:01:29', '2020-06-11 22:01:29', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -551,37 +583,8 @@ CREATE TABLE `order_items` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `order_id` int(11) NOT NULL,
   `storage_manager_id` int(11) DEFAULT NULL,
-  `staff_id` int(11) NOT NULL
+  `mandop_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `order_items`
---
-
-INSERT INTO `order_items` (`id`, `configurable_product_id`, `price`, `discount`, `qty`, `date`, `order_id`, `storage_manager_id`, `staff_id`) VALUES
-(1, 1, 0, NULL, 3, '2020-06-05 00:50:19', 11, NULL, 0),
-(2, 1, 1, NULL, 2, '2020-06-05 00:55:10', 12, NULL, 0),
-(3, 3, 40, NULL, 1, '2020-06-05 18:30:21', 13, NULL, 40),
-(4, 3, 40, NULL, 1, '2020-06-05 18:30:21', 13, NULL, 40),
-(5, 1, 40, NULL, 1, '2020-06-05 18:33:19', 14, NULL, 40),
-(6, 1, 1, NULL, 1, '2020-06-05 23:26:30', 15, NULL, 1),
-(7, 2, 1, NULL, 1, '2020-06-05 23:26:30', 15, NULL, 1),
-(8, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(9, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(10, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(11, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(12, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(13, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(14, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(15, 2, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(16, 60, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(17, 60, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(18, 60, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(19, 60, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(20, 60, 1, NULL, 1, '2020-06-05 23:26:31', 15, NULL, 1),
-(21, 61, 1, NULL, 1, '2020-06-05 23:31:59', 16, NULL, 1),
-(22, 62, 28, NULL, 1, '2020-06-07 01:42:30', 17, NULL, 1),
-(23, 62, 28, NULL, 1, '2020-06-07 01:42:30', 17, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -636,15 +639,15 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `type`, `des`, `category_id`, `simple_des`, `store_id`) VALUES
-(1, 'HP Computer', 2, NULL, 1, 'Good Quality ', 0),
-(2, 'Dell', 2, NULL, 1, '', 0),
-(3, 'lklkl', 2, NULL, 1, 'kjlkj', 0),
-(4, 'Printer', 2, NULL, 1, '', 0),
-(5, 'Printer', 2, NULL, 1, '', 0),
-(6, 'Printer', 2, NULL, 1, '', 0),
-(7, 'Printer', 2, NULL, 1, '', 0),
-(8, 'Dress', 2, NULL, 1, '', 0),
-(9, 'Php course', 2, NULL, 2, 'this course is going to be provided for advances web developers', 0),
+(1, 'HP Computer', 2, NULL, 1, 'Good Quality ', 10),
+(2, 'Dell', 2, NULL, 1, '', 10),
+(3, 'lklkl', 2, NULL, 1, 'kjlkj', 10),
+(4, 'Printer', 2, NULL, 1, '', 10),
+(5, 'Printer', 2, NULL, 1, '', 10),
+(6, 'Printer', 2, NULL, 1, '', 10),
+(7, 'Printer', 2, NULL, 1, '', 10),
+(8, 'Dress', 2, NULL, 1, '', 10),
+(9, 'Php course', 2, NULL, 2, 'this course is going to be provided for advances web developers', 10),
 (10, 'Office ', 1, 'some data', 1, 'word Excel', 9),
 (11, 'Office ', 1, 'some data', 1, 'word Excel', 9),
 (12, 'New Items', 2, 'New Items', 13, 'New Items', 9),
@@ -654,6 +657,28 @@ INSERT INTO `product` (`id`, `name`, `type`, `des`, `category_id`, `simple_des`,
 (16, 'حذاء وردي', 2, '', 11, 'حذاء وردي', 9),
 (17, 'buitrkfmdl;', 2, '', 1, '', 9),
 (18, 'Good Item', 2, '', 9, '', 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `receipts`
+--
+
+CREATE TABLE `receipts` (
+  `id` int(11) NOT NULL,
+  `from_receipt` bigint(20) NOT NULL,
+  `to_receipt` bigint(20) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `receipts`
+--
+
+INSERT INTO `receipts` (`id`, `from_receipt`, `to_receipt`, `company_id`, `date`) VALUES
+(2, 3000, 3000, 0, '2020-06-11 18:27:33'),
+(3, 5000, 6000, 0, '2020-06-11 19:32:43');
 
 -- --------------------------------------------------------
 
@@ -737,7 +762,8 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`id`, `client_id`, `name`, `date`, `note`) VALUES
-(9, 1, 'Samrt ', '2020-05-15 16:03:24', '');
+(9, 1, 'Samrt ', '2020-05-15 16:03:24', ''),
+(10, 1, 'البروفيسور', '2020-06-11 21:11:51', '');
 
 -- --------------------------------------------------------
 
@@ -1482,6 +1508,12 @@ ALTER TABLE `client_dev_price`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `companies`
+--
+ALTER TABLE `companies`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `configurable_product`
 --
 ALTER TABLE `configurable_product`
@@ -1521,6 +1553,12 @@ ALTER TABLE `order_status`
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `receipts`
+--
+ALTER TABLE `receipts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1573,13 +1611,13 @@ ALTER TABLE `attribute_config`
 -- AUTO_INCREMENT for table `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `basket_items`
 --
 ALTER TABLE `basket_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -1600,6 +1638,12 @@ ALTER TABLE `client_dev_price`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
+-- AUTO_INCREMENT for table `companies`
+--
+ALTER TABLE `companies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `configurable_product`
 --
 ALTER TABLE `configurable_product`
@@ -1615,19 +1659,19 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `mandop_stores`
 --
 ALTER TABLE `mandop_stores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_status`
@@ -1640,6 +1684,12 @@ ALTER TABLE `order_status`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `receipts`
+--
+ALTER TABLE `receipts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -1657,7 +1707,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `sub_option`

@@ -83,6 +83,7 @@ legend
       										<th>الكمية</th>
       										<th>اسم المنتج</th>
       										<th>صفات المنتج</th>
+      										<th>السوق</th>
 
 
       						   </tr>
@@ -452,6 +453,7 @@ $.ajax({
             '<td>'+this.qty+'</td>'+
             '<td>'+this.name+'</td>'+
             '<td>'+attribute+'</td>'+
+            '<td>'+this.store_name+'</td>'+
 
        '</tr>');
      });

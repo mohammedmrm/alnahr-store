@@ -7,8 +7,12 @@ access([1,5,3]);
 require("dbconnection.php");
 $store = $_REQUEST['store'];
 try{
-  $query = "select * from basket
+  $query = "select *,date_format(basket.date,'%Y-%m-%d') as date,
+            cites.name as city,towns.name as town,staff.name as mandop_name
+            from basket
             left join staff on staff.id = basket.staff_id
+            left join cites on  cites.id = basket.city_id
+            left join towns on  towns.id = basket.town_id
             left join (
                    select count(*) as items,basket_id from basket_items group by basket_id
             ) a on a.basket_id = basket.id
