@@ -271,6 +271,7 @@ function setBasketToOrders(id,order_no){
         console.log(res);
         if(res.success == 1){
           toastr.success('تم تسجيل الطلب');
+          getBasketForPerpare();
         }else{
           toastr.warning(res.msg);
         }

@@ -2,7 +2,7 @@
 try{
 
 $con = new PDO('mysql:host=localhost;dbname=store', "root",
-"root", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'"));
+"", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'"));
 //$con->exec("SET CHARACTER SET UTF8");
 $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(PDOException  $e ){

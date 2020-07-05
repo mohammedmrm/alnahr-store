@@ -655,7 +655,26 @@ function disable(){
   $('.selectpicker').selectpicker('refresh');
   console.log($("#action").val());
 }
-
+function deleteProduct(id){
+      $.ajax({
+        url:"script/_runAction.php",
+        type:"POST",
+        data:'action=delete&ids[]='+id,
+        success:function(res){
+          getProducts();
+          console.log(res);
+          if(res.success == 1){
+            toastr.success("تم حذف المنتج");
+          }else{
+            toastr.warning("حدث خطاء! حاول مرة اخرى.");
+          }
+        },
+        error:function(e){
+           toastr.error("خطأ!");
+           console.log(e);
+        }
+      });
+}
 </script>
 
 <div class="modal fade" id="editorderStatusModal" role="dialog">

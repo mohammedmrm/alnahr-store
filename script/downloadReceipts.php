@@ -1,5 +1,4 @@
 <?php
-ini_set('max_execution_time', 2000);
 ob_start();
 session_start();
 error_reporting(0);
@@ -21,7 +20,11 @@ $status = $_REQUEST['orderStatus'];
 $repated = $_REQUEST['repated'];
 $start = trim($_REQUEST['start']);
 $end = trim($_REQUEST['end']);
-
+if($city == 1){
+  $dev_p = $config['dev_b'];
+}else{
+  $dev_p = $config['dev_o'];
+}
 $reportType = $_REQUEST['reportType'];
 if($reportType != 1 && $reportType !=2 && $reportType!=3 ){
    $reportType = 1;
@@ -202,7 +205,7 @@ $pdf->setHeaderFont(Array('aealarabiya', '', 12));
 
 
 // set margins
-$pdf->SetMargins(10, 30,10, 10);
+$pdf->SetMargins(10, 20,10, 10);
 $pdf->SetHeaderMargin(5);
 //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
@@ -271,7 +274,7 @@ $tbl = '
   </tr>
   <tr>
     <td colspan="2"  class="title">المبلغ مع التوصيل</td>
-    <td colspan="4" align="center">'.number_format($data['price']).' دينار</td>
+    <td colspan="4" align="center">'.number_format($data['total_price']+$dev_p).' دينار</td>
   </tr>
 </table>
 ';
@@ -354,13 +357,14 @@ $pdf->SetFont('aealarabiya', '', 9);
 
 $pdf->writeHTML("<br /><br /><hr>".$comp, true, false, false, false, '');
 $pdf->SetTextColor(55,55,55);
-$pdf->setRTL(false);
+//$pdf->setRTL(false);
 $pdf->SetFont('aealarabiya', '', 10);
-$del = "<br /><hr />صممم و طور من قبل شركة <b><u>النهر</u></b> للحلول البرمجية<br /> 07722877759 , itpcentre@gamil.com, www.alnahr.net";
+$del = "<br /><hr />صممم و طور من قبل شركة <b><u>النهر</u></b> للحلول البرمجية<br /> 07722877759";
 $pdf->writeHTML($del, true, false, false, false, '');
 //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
 $style['position'] = '';
-$pdf->write2DBarcode($id, 'QRCODE,M',70, 130, 40, 40, $style, 'N');
+$pdf->setRTL(false);
+$pdf->write2DBarcode($id, 'QRCODE,M',70, 120, 40, 40, $style, 'N');
 
 }
 

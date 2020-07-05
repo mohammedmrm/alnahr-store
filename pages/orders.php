@@ -11,7 +11,6 @@ include("config.php");
 fieldset {
 		border: 1px solid #ddd !important;
 		margin: 0;
-		xmin-width: 0;
 		padding: 10px;
 		position: relative;
 		border-radius:4px;
@@ -313,11 +312,8 @@ legend
 										<th>تعديل</th>
 										<th>الحاله</th>
                                         <th>المدخل</th>
-										<th>مبلغ الوصل</th>
 										<th>مبلغ التوصيل</th>
-										<th>المبلغ المستلم</th>
-										<th>المبلغ الصافي للعميل</th>
-										<th>المندوب</th>
+									    <th>المندوب</th>
                             </tr>
       	            </thead>
                             <tbody id="ordersTable">
@@ -737,10 +733,7 @@ $.ajax({
             '</td>'+
             '<td>'+this.status_name+'</td>'+
             '<td>'+this.staff_name+'</td>'+
-            '<td>'+formatMoney(this.price)+'</td>'+
-            '<td>'+formatMoney(this.dev_price)+'</td>'+
-            '<td>'+formatMoney(this.new_price)+'</td>'+
-            '<td>'+formatMoney(this.client_price)+'</td>'+
+            '<td>'+formatMoney(this.total_price)+'</td>'+
             '<td>'+this.mandop_name+'</td>'+
         '</tr>');
      });

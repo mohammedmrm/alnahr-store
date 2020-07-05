@@ -103,6 +103,7 @@ License: You must have a valid license purchased only from https://themes.getboo
         body {
            background-color: #F0F8FF;
            overflow-x: hidden;
+            overflow-y: scroll !important;
         }
 
         body,body * :not([type="tel"]):not(.other):not(td):not(th) {

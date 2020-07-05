@@ -221,7 +221,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 						<div class="kt-separator kt-separator--height-xs"></div>
 						<div class="kt-form__section kt-form__section--first">
                         <div class="from-group" >
-                            <select onchange="getAttributesConfig()" multiple class="selectpicker" id="attributes" name="attributes[]"></select>
+                            <select title="اختر  صفات المنتج" onchange="getAttributesConfig()" multiple class="selectpicker" id="attributes" name="attributes[]"></select>
                         </div>
 						</div>
 					</div>
@@ -425,7 +425,12 @@ function addProduct(){
      processData: false,  // tell jQuery not to process the data
      contentType: false,
    	 cache: false,
+      beforeSend:function(){
+        $("#addProductForm").addClass('loading');
+        $("#addProductForm .text-danger").text('');
+      },
      success:function(res){
+       $("#addProductForm").removeClass('loading');
        console.log(res);
        if(res.success == 1){
          getAllProducts($("#getAllProductsTable"));
@@ -445,6 +450,7 @@ function addProduct(){
 
      },
      error:function(e){
+       $("#addProductForm").removeClass('loading');
        console.log(e);
        toastr.error('تأكد من المدخلات','خطأ');
      }
@@ -570,12 +576,23 @@ function bluid(veiwID,veiw,rows){
   $(".selectpicker").selectpicker('refresh');
 }
 function updateInitVal(){
-  $('[qty="qty"]').val($("#qty_init").val());
+  if($("#qty_init").val() != ""){
+   $('[qty="qty"]').val($("#qty_init").val());
+  }
+  if($("#price_init").val() != ""){
   $('[price="price"]').val($("#price_init").val());
+  }
+  if($("#buy_price_init").val() != ""){
   $('[buy_price="buy_price"]').val($("#buy_price_init").val());
-  $('[location="location"]').val($("#location_init").val());
-  $('[stock="stock"]').val($("#stock_init").val());
+  }
+  if($("#location_init").val() != ""){
+    $('[location="location"]').val($("#location_init").val());
+  }
+  if($("#stock_init").val() != ""){
+    $('[stock="stock"]').val($("#stock_init").val());
+  }
   $(".selectpicker").selectpicker('refresh');
+
 }
 function toggloConfigrationBtn(ele){
  if(ele.val() == 1){

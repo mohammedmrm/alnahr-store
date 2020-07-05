@@ -74,7 +74,7 @@ if($v->passes()) {
       if($msg == ""){
               foreach($stores as $store){
                   //--- prepare the order
-                  $sqllll ="SELECT basket_items.* FROM basket_items
+                  $sqllll ="SELECT basket_items.*,configurable_product.price as p_price FROM basket_items
                                       left join configurable_product on configurable_product_id = configurable_product.id
                                       left join product on configurable_product.product_id = product.id
                                       where basket_id = ? and store_id=?";
@@ -83,7 +83,7 @@ if($v->passes()) {
                   $iiii[]=$items;
                   $total = 0;
                   foreach($items as $it){
-                     $total += $it['price']*$it['qty'];
+                     $total += ((float)$it['p_price'])*((int)$it['qty']);
                   }
                   $sql="select * from receipts where company_id=? and (to_receipt - from_receipt ) >= ? limit 1";
                   $order_no = getData($con,$sql,[$company,$required_receipts]);
@@ -129,5 +129,5 @@ if($v->passes()) {
            ];
   $success = 0;
 }
-echo json_encode([$iiii,$stores,$id,'success'=>$success,'error'=>$error,'msg'=>$msg]);
+echo json_encode([$items,$total,$stores,$id,'success'=>$success,'error'=>$error,'msg'=>$msg]);
 ?>
