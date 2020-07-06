@@ -355,6 +355,91 @@ legend
 
     </div>
   </div>
+<div class="modal fade" id="editProduct" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"></button>
+          <h4 class="modal-title">تعديل منتج</h4>
+        </div>
+        <div class="modal-body">
+    <!--Begin:: App Content-->
+    <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
+        <div class="kt-portlet">
+            <form class="kt-form kt-form--label-right" id="editProductForm">
+                <div class="kt-portlet__body">
+                    <div class="kt-section kt-section--first">
+                        <div class="kt-section__body">
+                            <div class="form-group row">
+                                <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
+                                	<label>صوره</label>
+                                    <input type="file" class="form-control" id="e_img" name="e_img" />
+                                    <span class="form-text text-danger" id="e_customer_name_err"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                	<label>اسم المنتج</label>
+                                    <input type="text" class="form-control" id="e_name" name="e_name" />
+                                    <span class="form-text text-danger" id="e_name_err"></span>
+                                </div>
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                   <label>SKU</label><br />
+                                	<input type="text" class="form-control"  id="e_sku" name="e_sku" />
+                                    <span class="form-text text-danger" id="e_sku_err"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                	<label>سعر الشراء</label>
+                                    <input type="text" class="form-control" id="e_buy_price" name="e_buy_price" />
+                                    <span class="form-text text-danger" id="e_buy_price_err"></span>
+                                </div>
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                   <label>سعر البيع</label><br />
+                                	<input type="text" class="form-control"  id="e_price" name="e_price" />
+                                    <span class="form-text text-danger" id="e_price_err"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                	<label>الكميه</label>
+                                    <input type="number" class="form-control" id="e_qty" name="e_qty" />
+                                    <span class="form-text text-danger" id="e_qty_err"></span>
+                                </div>
+                                <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                                   <label>الموقع</label><br />
+                                	<input type="text" class="form-control"  id="e_location" name="e_location" />
+                                    <span class="form-text text-danger" id="e_location_err"></span>
+                                </div>
+                                <input type="hidden" id="e_product_id" name="e_product_id" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions">
+                        <div class="row">
+                            <div class="col-lg-3 col-xl-3">
+                            </div>
+                            <div class="col-lg-9 col-xl-9">
+                                <button type="button" onclick="updateProduct()" class="btn btn-danger">تحديث معلومات المنتج</button>&nbsp;
+                                <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--End:: App Content-->
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 <!--begin::Page Vendors(used by this page) -->
 <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
@@ -674,6 +759,75 @@ function deleteProduct(id){
            console.log(e);
         }
       });
+}
+function editProduct(id){
+      $.ajax({
+        url:"script/_getProduct.php",
+        type:"POST",
+        data:{id:id},
+        success:function(res){
+          getProducts();
+          console.log(res);
+
+          if(res.success == 1){
+            $.each(res.data,function(){
+                $("#e_name").val(this.sub_name);
+                $("#e_sku").val(this.sku);
+                $("#e_qty").val(this.qty);
+                $("#e_location").val(this.location);
+                $("#e_buy_price").val(this.buy_price);
+                $("#e_price").val(this.price);
+                $("#e_product_id").val(id);
+            });
+          }else{
+            toastr.warning("حدث خطاء! حاول مرة اخرى.");
+          }
+
+        },
+        error:function(e){
+           toastr.error("خطأ!");
+           console.log(e);
+        }
+      });
+}
+function updateProduct() {
+var myform = document.getElementById('editProductForm');
+var fd = new FormData(myform);
+$.ajax({
+  url:"script/_updateConfigrableProduct.php",
+  type:"POST",
+  beforeSend:function(){
+    $("#editProductForm").addClass('loading');
+  },
+  data:fd,
+  processData: false,  // tell jQuery not to process the data
+  contentType: false,
+  cache: false,
+  success:function(res){
+    $("#editProductForm").removeClass('loading');
+    console.log(res);
+    if(res.success == 1){
+      $('#editProductModal').modal('hide');
+      getProducts();
+      toastr.success("تم تحديث المنتج");
+    }else{
+      $("#e_product_id_err").text(res.error.id);
+      $("#e_name_err").text(res.error.name);
+      $("#e_sku_err").text(res.error.sku);
+      $("#e_qty_err").text(res.error.qty);
+      $("#e_price_err").text(res.error.price);
+      $("#e_buy_price_err").text(res.error.buy_price);
+      $("#e_location_err").text(res.error.location);
+      $("#e_img_err").text(res.error.img);
+      toastr.warning("يوجد بعض الاخطاء");
+    }
+  },
+  error:function(e){
+    $("#editProductForm").removeClass('loading');
+    toastr.error("خطأ");
+    console.log(e);
+  }
+});
 }
 </script>
 
