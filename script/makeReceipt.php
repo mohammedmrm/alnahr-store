@@ -9,38 +9,15 @@ require_once("dbconnection.php");
 
 require("../config.php");
 
-$city = $_REQUEST['city'];
-$customer = $_REQUEST['customer'];
-$order = $_REQUEST['order_no'];
-$client= $_REQUEST['client'];
-$store= $_REQUEST['store'];
-$driver = $_REQUEST['driver'];
-$invoice= $_REQUEST['invoice'];
-$status = $_REQUEST['orderStatus'];
-$repated = $_REQUEST['repated'];
-$start = trim($_REQUEST['start']);
-$end = trim($_REQUEST['end']);
+$id=$_REQUEST['id'];
+
 if($city == 1){
   $dev_p = $config['dev_b'];
 }else{
   $dev_p = $config['dev_o'];
 }
-$reportType = $_REQUEST['reportType'];
-if($reportType != 1 && $reportType !=2 && $reportType!=3 ){
-   $reportType = 1;
-}
-$pageDir = $_REQUEST['pageDir'];
-if($pageDir != 'L' && $pageDir !='P' ){
-   $pageDir = 'L';
-}
-$space = $_REQUEST['space'];
-if($space < 0 || $space > 30 || empty($space)){
-   $space = 10;
-}
-$fontSize = $_REQUEST['fontSize'];
-if($fontSize < 5 || $fontSize > 100 || empty($fontSize)){
-   $fontSize = 12;
-}
+
+
 $sty= <<<EOF
 <style>
   .title {
@@ -75,17 +52,8 @@ if(!empty($end)) {
 }
 
 try{
-  $count = "select count(*) as count,
-               SUM(IF (city_id = 1,1,0)) as  b_orders,
-               SUM(IF (city_id > 1,1,0)) as  o_orders
-            from orders
-            left join (
-             select order_no,count(*) as rep from orders
-              GROUP BY order_no
-              HAVING COUNT(orders.id) > 1
-            ) b on b.order_no = orders.order_no
-           ";
-  $query = "select orders.*,count(order_items.id) as items, date_format(orders.date,'%Y-%m-%d') as dat,
+
+  $query = "select orders.*,count(order_items.id) as items,date_format(orders.date,'%Y-%m-%d') as dat,
             stores.name as store_name,
             cites.name as city ,towns.name as town,staff.name as driver_name
             from orders
@@ -94,76 +62,9 @@ try{
             left join staff on  staff.id = orders.mandop_id
             left join stores on  stores.id = orders.store_id
             left join order_items on  order_items.order_id = orders.id
-            left join (
-             select order_no,count(*) as rep from orders
-              GROUP BY order_no
-              HAVING COUNT(orders.id) > 1
-            ) b on b.order_no = orders.order_no
-            ";
-   $where = "where";
-   $filter = " and orders.confirm = 1";
+            where orders.id = ? group by orders.id";
 
-  if($driver >= 1){
-   $filter .= " and driver_id =".$driver;
-  }
-
-  if($repated == 1){
-   $filter .= " and b.rep >= 2";
-  }else if($repated == 2){
-   $filter .= " and b.rep == null";
-  }
-
-  if($invoice == 1){
-    $filter .= " and (orders.invoice_id ='' or orders.invoice_id =0)";
-  }else if($invoice == 2){
-    $filter .= " and (orders.invoice_id !='' and orders.invoice_id != 0)";
-  }
-  if($city >= 1){
-    $filter .= " and city_id=".$city;
-  }
-  if(($money_status == 1 || $money_status == 0) && $money_status !=""){
-    $filter .= " and money_status='".$money_status."'";
-  }
-  if($client >= 1){
-    $filter .= " and client_id=".$client;
-  }
-  if($store>= 1){
-    $filter .= " and store_id=".$store;
-  }
-  if(!empty($customer)){
-    $filter .= " and (customer_name like '%".$customer."%' or
-                      customer_phone like '%".$customer."%')";
-  }
-  if(!empty($order)){
-    $filter .= " and orders.order_no like '%".$order."%'";
-  }
-  if($status >= 1){
-    $filter .= " and order_status_id =".$status;
-  }
-  if($status == 4 || $status == 9){
-    $filter .= " or order_status_id = 6";
-  }
-  function validateDate($date, $format = 'Y-m-d')
-    {
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
-    }
-  if(validateDate($start) && validateDate($end)){
-      $filter .= " and orders.date between '".$start."' AND '".$end."'";
-     }
-  if($filter != ""){
-    $filter = preg_replace('/^ and/', '', $filter);
-    $filter = $where." ".$filter;
-    $count .= " ".$filter;
-    $query .= " ".$filter." group by orders.id order by city_id,town_id,orders.id";
-  }else{
-    $query .=" group by orders.id order by city_id,town_id,orders.id";
-  }
-  $count = getData($con,$count);
-  $orders = $count[0]['count'];
-  $total['b_orders'] = $count[0]['b_orders'];
-  $total['o_orders'] = $count[0]['o_orders'];
-  $datas = getData($con,$query);
+  $datas = getData($con,$query,[$id]);
   $success="1";
 
 } catch(PDOException $ex) {
@@ -311,7 +212,7 @@ $id =
       '"address":'.'"'.$data['address'].'",'.
       '"customer_name":'.'"'.$data['customer_name'].'",'.
       '"customer_phone":'.'"'.$data['customer_phone'].'",'.
-      '"price":'.'"'.$data['total_price']+$dev_p-$data['discount'].'",'.
+      '"price":'.'"'.$data['price']+$dev_p-$data['discount'].'",'.
       '"note":'.'"'.$data['note'].'"
     }
 }

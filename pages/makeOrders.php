@@ -260,18 +260,53 @@ function increaseItem(id,basket_id){
       }
     });
 }
-function setBasketToOrders(id,order_no){
+function setBasketToOrders(id){
     $.ajax({
       url:"script/_setBasketToOrders.php",
       type:"POST",
       beforeSend:function(){
+        $("#basketOrdersForm").addClass("loading");
       },
-      data:{id:id},
+      data:$("#basketOrdersForm").serialize()+"&id="+id,
       success:function(res){
+        $("#basketOrdersForm").removeClass("loading");
         console.log(res);
         if(res.success == 1){
           toastr.success('تم تسجيل الطلب');
-          getBasketForPerpare();
+          getBasketForPerpare('');
+        }else{
+          toastr.warning(res.msg);
+        }
+      },
+      error:function(e){
+        $("#basketOrdersForm").removeClass("loading");
+        toastr.error("خطأ");
+        console.log(e);
+      }
+    });
+}
+function setOrderNo (id){
+  $('#set_basket_id').val(id);
+    $.ajax({
+      url:"script/_getPossibleBasketOrders.php",
+      type:"POST",
+      beforeSend:function(){
+      },
+      data:$("#basketOrdersForm").serialize()+ "&id="+id,
+      success:function(res){
+        console.log(res);
+        $("#basketOrdersTable").html("");
+        if(res.success == 1){
+           $.each(res.data,function(){
+            $("#basketOrdersTable").append(
+            '<tr>'+
+                '<td>'+this.store_name+'</td>'+
+                '<td>'+this.items+'</td>'+
+                '<td>'+this.price+'</td>'+
+                '<td><input type="text" name="order_nos[]" class="form-control"/></td>'+
+            '</tr>'
+            );
+           });
         }else{
           toastr.warning(res.msg);
         }
@@ -282,21 +317,18 @@ function setBasketToOrders(id,order_no){
       }
     });
 }
-function setOrderNo (id){
-  $('#set_basket_id').val(id);
-}
 </script>
 <div class="modal fade" id="editBasketModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" data-dismiss="modal"></button>
           <h4 class="modal-title">تحضر سلة</h4>
         </div>
         <div class="modal-body">
     <!--Begin:: App Content-->
-         <form class="kt-form kt-form--label-right" id="editBasketForm">
+         <form class="kt-form kt-form--label-right"  id="editBasketForm">
                 <div class="kt-portlet__body">
                     <div class="kt-section kt-section--first">
                         <div class="kt-section__body">
@@ -411,7 +443,7 @@ function setOrderNo (id){
         <div class="modal-body">
         <!--Begin:: App Content-->
         <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-           <form class="kt-form kt-form--label-right" id="basketItemsForm">
+           <form class="kt-form kt-form--label-right" enctype="multipart/form-data" id="basketOrdersForm">
                     <fieldset>
                           <div class="from-group col-lg-2">
                            <input type="button" class="btn btn-info" value="ارسال الطلبية" onclick="setBasketToOrders($('#set_basket_id').val())"/>
@@ -420,22 +452,21 @@ function setOrderNo (id){
 
                     </fieldset>
             		<!--begin: Datatable -->
-            		<table class="table table-striped table-bordered table-hover table-checkable responsive nowrap" id="tb-basketItemsTable">
+            		<table class="table table-striped table-bordered table-hover table-checkable responsive nowrap" id="tb-basketOrdersTable">
             			       <thead>
             	  						<tr>
-            										<th>الصورة</th>
-            										<th>اسم المنتج</th>
-            										<th>الكمية</th>
-            										<th>الحالة</th>
-            										<th>تعديل</th>
+            										<th>السوق</th>
+            										<th>عدد المنتجات</th>
+            										<th>سعر الطلب</th>
+            										<th>رقم الوصل</th>
                                         </tr>
                   	            </thead>
-                                <tbody id="basketItemsTable">
+                                <tbody id="basketOrdersTable">
                                 </tbody>
             		</table>
             		<!--end: Datatable -->
-                    </form>
-            </div>
+             </form>
+           </div>
         <!--End:: App Content-->
         </div>
       </div>

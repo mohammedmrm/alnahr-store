@@ -285,6 +285,7 @@ License: You must have a valid license purchased only from https://themes.getboo
         <!--begin::Page Vendors(used by this page) -->
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
+        <script src="js/toast.js" type="text/javascript"></script>
         <script>
         $(document).ready(function () {
             $(document).on('show.bs.modal', '.modal', function (event) {

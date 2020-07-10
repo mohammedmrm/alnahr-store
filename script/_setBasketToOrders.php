@@ -16,6 +16,7 @@ $v = new Violin;
 $success = 0;
 $id      = $_REQUEST['id'];
 $company = $_REQUEST['company'];
+$order_nos = $_REQUEST['order_nos'];
 if(empty($company) || !($company>=0)){
   $company = 0;
 }
@@ -33,13 +34,29 @@ $v->validate([
     'id'=> [$id,    'required|int'],
     ]);
 $msg = "";
+$manual = 0;
+foreach ($order_nos as $no){
+  if( $no > 1){
+    $msg = "";
+    $manual++;
+  }else if($no == ""){
+    $msg = "";
+  }else{
+    $msg = "رقم الوصل -".$no. "- غير صالح";
+    break;
+  }
+}
 
-if($v->passes()) {
-  $sql = 'SELECT * from basket where id=?';
+if($v->passes() && $msg == "") {
+  $sql = 'SELECT basket.*,COUNT(basket_items.id) as allitems,SUM(configurable_product.price * basket_items.qty) as total  from basket
+          left join basket_items on basket_items.basket_id = basket.id
+          left join configurable_product on configurable_product.id = basket_items.configurable_product_id
+          where basket.id=? GROUP by basket.id';
   $res = getData($con,$sql,[$id]);
   if(count($res) == 1){
     //--- check if all items are prepared by the storage_manager;
-
+       $discount = $res[0]['discount'];
+       $total_price = $res[0]['total'];
        $sql = "SELECT max(store_id) as stores FROM `basket_items`
                           left join `configurable_product` on configurable_product_id = configurable_product.id
                           left join `product` on configurable_product.product_id = product.id
@@ -52,7 +69,7 @@ if($v->passes()) {
         $receipts = getData($con,$sql,[$id]);
         $receipts=$receipts[0];
 
-    if($receipts >= $required_receipts){
+    if($receipts >= ($required_receipts-$manual)){
       $sql = "select * from basket_items where basket_id=?";
       $res2 = getData($con,$sql,[$id]);
       if(count($res2) >= 1){
@@ -72,6 +89,7 @@ if($v->passes()) {
           }
       }
       if($msg == ""){
+              $i = 0;
               foreach($stores as $store){
                   //--- prepare the order
                   $sqllll ="SELECT basket_items.*,configurable_product.price as p_price FROM basket_items
@@ -82,15 +100,22 @@ if($v->passes()) {
                   $items = getData($con,$sqllll,[$id,$store['stores']]);
                   $iiii[]=$items;
                   $total = 0;
+                  $dis = 0;
                   foreach($items as $it){
                      $total += ((float)$it['p_price'])*((int)$it['qty']);
                   }
-                  $sql="select * from receipts where company_id=? and (to_receipt - from_receipt ) >= ? limit 1";
-                  $order_no = getData($con,$sql,[$company,$required_receipts]);
+                  $per =   $total/$total_price;
+                  $dis = 250 * round(($discount * $per)/250);
+                  if($order_nos[$i] == ""){
+                    $sql="select * from receipts where company_id=? and (to_receipt - from_receipt ) >= ? limit 1";
+                    $order = getData($con,$sql,[$company,($required_receipts-$manual)]);
+                    $order_no = $order[0]['from_receipt'];
+                  }else{
+                     $order_no = $order_nos[$i];
+                  }
 
-
-                  $sql = "insert into orders (order_no,total_price,customer_name,customer_phone,city_id,town_id,address,note,mandop_id,manager_id,store_id) values(?,?,?,?,?,?,?,?,?,?,?)";
-                  $order_id = setDataWithLastID($con,$sql,[$order_no[0]['from_receipt'],$total,$res[0]['customer_name'],$res[0]['customer_phone'],$res[0]['city_id'],$res[0]['town_id'],$res[0]['address'],$res[0]['note'],$res[0]['staff_id'],$_SESSION['userid'],$store['stores']]);
+                  $sql = "insert into orders (order_no,total_price,customer_name,customer_phone,city_id,town_id,address,note,mandop_id,manager_id,store_id,discount) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+                  $order_id = setDataWithLastID($con,$sql,[$order_no,$total,$res[0]['customer_name'],$res[0]['customer_phone'],$res[0]['city_id'],$res[0]['town_id'],$res[0]['address'],$res[0]['note'],$res[0]['staff_id'],$_SESSION['userid'],$store['stores'],$dis]);
                   foreach($items as $item){
                     $sql = "insert into order_items (order_id,configurable_product_id,qty,mandop_id,storage_manager_id,price)
                            values (?,?,?,?,?,?)";
@@ -109,7 +134,8 @@ if($v->passes()) {
 
                   }
                    $sql = "update receipts set from_receipt = (from_receipt + 1) where id=?";
-                   setData($con,$sql,[$order_no[0]['id']]);
+                   setData($con,$sql,[$order[0]['id']]);
+                   $i++;
                }
               $sql = "delete from basket where id=?";
               $res8 = setData($con,$sql,[$id]);
@@ -129,5 +155,5 @@ if($v->passes()) {
            ];
   $success = 0;
 }
-echo json_encode([$items,$total,$stores,$id,'success'=>$success,'error'=>$error,'msg'=>$msg]);
+echo json_encode([$_POST,'success'=>$success,'error'=>$error,'msg'=>$msg]);
 ?>

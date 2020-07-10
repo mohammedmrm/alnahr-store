@@ -132,6 +132,15 @@ try{
 
   $query .= $sort.$lim;
   $data = getData($con,$query);
+  $i=0;
+  foreach($data as $order){
+   $sql = "select order_items.*,configurable_product.sub_name,configurable_product.sku from order_items
+           left join configurable_product on configurable_product.id = order_items.configurable_product_id
+           where order_id =?";
+   $items = getData($con,$sql,[$order['id']]);
+   $data[$i]['items'] = $items;
+   $i++;
+  }
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];
