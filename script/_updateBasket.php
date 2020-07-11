@@ -27,6 +27,31 @@ if(empty($town)){
 }
 $address = $_REQUEST['e_address'];
 $note = $_REQUEST['e_note'];
+
+$type = $_REQUEST['e_replace'];
+if(empty($type)){
+  $type = 1;
+}
+$oldOrder = $_REQUEST['e_oldOrder'];
+if($type == 2){
+  if(empty($oldOrder)){
+      $oldOrder_err = "يجب تحديد الطلب السابق";
+  }else if($oldOrder > 0){
+      $sql = "select * from orders where id=?";
+      $res = getData($con,$sql,[$oldOrder]);
+      if(count($res) == 1){
+        $oldOrder_err = "";
+      }else{
+        $oldOrder_err = "الطلب المحدد غير صحيح";
+      }
+  }else{
+     $oldOrder_err = "الطلب المحدد غير صحيح";
+  }
+
+}else if($type == 1){
+  $oldOrder_err = "";
+  $oldOrder = 0;
+}
 $error = [];
 
 $v->addRuleMessage('isPhoneNumber', ' رقم هاتف غير صحيح ');
@@ -58,10 +83,10 @@ $v->validate([
     'note'            => [$note,  'max(250)'],
 ]);
 
-if($v->passes()) {
+if($v->passes() && $oldOrder_err == "") {
   $password = hashPass($password);
-  $sql = 'update basket set customer_name=?,customer_phone=?,city_id=?,town_id=?,address=?,note=? where id=? and staff_id=?';
-  $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$id,$_SESSION['userid']]);
+  $sql = 'update basket set customer_name=?,customer_phone=?,city_id=?,town_id=?,address=?,note=?,type=?,oldOrder_id=? where id=? and staff_id=?';
+  $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$id,$_SESSION['userid'],$type,$oldOrder]);
   if($result > 0){
     $success = 1;
   }
@@ -74,6 +99,7 @@ if($v->passes()) {
            'town'=>implode($v->errors()->get('town')),
            'address'=>implode($v->errors()->get('address')),
            'note'=>implode($v->errors()->get('note')),
+           'oldOrder'=>$oldOrder_err
            ];
 }
 echo json_encode(['success'=>$success, 'error'=>$error]);

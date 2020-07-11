@@ -27,7 +27,7 @@ try{
             ";
    $where = "where ";
   if(!empty($name)){
-   $filter .= " and name like '%".$name."%' ";
+   $filter .= " and product.name like '%".$name."%' ";
   }
   $f1 = "";
   if($_SESSION['role'] == 4){

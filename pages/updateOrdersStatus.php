@@ -118,7 +118,7 @@ min-height: 100px;
             </div>
           </div>
         <div id="ordersTableDiv" >
-        <table class="table table-striped table-bordered table-hover table-checkable responsive nowarp" id="tb-orders">
+        <table class="table table-striped table-bordered table-hover  responsive nowarp" id="tb-orders">
 			       <thead>
 	  						<tr>
 										<th>رقم الوصل</th>
@@ -250,18 +250,21 @@ $.ajax({
        nuseen_msg = "";
        notibg="";
      }
-     if(this.confirm == 4){
-       bg ="bg-warning";
-     }else{
-       bg ="";
-     }
+
      items = "";
      order_id= this.id;
      $.each(this.items,function(){
          items += '<input name="items['+order_id+'][]" class="text-left" type="checkbox" value="'+this.id+'">&nbsp;&nbsp;'+this.sub_name+'<br />';
      });
+     oldItems = "";
+     if(this.type == 2){
+     $.each(this.items,function(){
+         oldItems += '<input name="items['+order_id+'][]" class="text-left" type="checkbox" value="'+this.id+'">&nbsp;&nbsp;'+this.sub_name+'<br />';
+     });
+     oldItems = '<hr>'+oldItems;
+     }
      $("#ordersTable").append(
-       '<tr class="'+bg+'">'+
+       '<tr >'+
             '<td>'+this.order_no+'<input type="hidden" value="'+this.id+'" name="ids[]"></td>'+
             '<td>'+formatMoney(this.price)+'</td>'+
             '<td>'+this.store_name+'<br />'+(this.client_phone)+'</td>'+
@@ -271,8 +274,8 @@ $.ajax({
               '</select>'+
             '</td>'+
             '<td>'+this.status_name+'</td>'+
-            '<td>'+
-                  items+
+            '<td class="text-right">'+
+                  items+oldItems+
             '</td>'+
             '<td>'+(this.customer_phone)+'</td>'+
             '<td>'+this.city+' - '+this.town+'</td>'+

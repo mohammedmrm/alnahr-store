@@ -33,21 +33,7 @@ function getMyBasket(){
      console.log(res);
      $.each(res.data,function(){
              status = this.status;
-             if(status == 1){
-             btn = ` <div class="input-group">
-							<div class="input-group-prepend">
-								<span class="input-group-text">الخصم</span>
-							</div>
-							<input type="text" value="0" class="form-control" id="discount" name="discount"/>
-							<div class="input-group-append">
-								<span class="input-group-text">دينار</span>
-							</div>
-			          </div><br />
-                      <button type="button" onclick="sendBasket(`+this.id+`,$(this).parents('form:first'))" class="btn  btn-success">ارسال<i class="flaticon2-arrow-up"></i></button>
-                      <button type="reset"  onclick="emptyBasket(`+this.id+`)" class="btn btn-danger">افراغ<i class="flaticon2-open-box"></i></button>`;
-             }else if(status == 2){
-               btn = `<button type="button" onclick="cancelBasket(`+this.id+`)" class="btn  btn-info">الغأ<i class="flaticon-cancel"></i></button>`;
-             }
+
         basket = `<form class="col-md-4">
                   <div class="col-md-12">
                    <div class="kt-portlet kt-portlet--height-fluid">
@@ -92,13 +78,33 @@ function getMyBasket(){
                       </div><hr />`
                       total = total + (Number(this.price) * Number(this.bi_qty));
         });
+        if(this.city_id == 1){
+            total = total + 5000;
+        }else{
+           total = total + 10000;
+        }
+         if(status == 1){
+         btn = ` <div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">الخصم</span>
+			</div>
+			<input type="text" value="0" onkeyup="updateBasketPrice(`+total+`,`+this.id+`,$(this).val(),`+this.city_id+`)" class="form-control" id="discount" name="discount"/>
+			<div class="input-group-append">
+				<span class="input-group-text">دينار</span>
+			</div>
+         </div><br />
+                  <button type="button" onclick="sendBasket(`+this.id+`,$(this).parents('form:first'))" class="btn  btn-success">ارسال<i class="flaticon2-arrow-up"></i></button>
+                  <button type="reset"  onclick="emptyBasket(`+this.id+`)" class="btn btn-danger">افراغ<i class="flaticon2-open-box"></i></button>`;
+         }else if(status == 2){
+           btn = `<button type="button" onclick="cancelBasket(`+this.id+`)" class="btn  btn-info">الغأ<i class="flaticon-cancel"></i></button>`;
+         }
         basket +=`
                </div>
                 <div class="kt-portlet__foot">
                     <div class="kt-form__actions">
                         <div class="row">
                             <div class="col-lg-12 col-xl-12">
-                               <span class="fa-2x">`+total+` دينار</span><br />
+                               <span class="fa-2x"><span id="price`+this.id+`">`+total+`</span> دينار</span> مع التوصيل<br />
                                `+btn+`
                             </div>
                         </div>
@@ -237,5 +243,8 @@ function increaseItem(id,basket_id){
         console.log(e);
       }
     });
+}
+function updateBasketPrice(total,id,discount){
+  $("#price"+id).text(Number(total)-Number(discount));
 }
 </script>

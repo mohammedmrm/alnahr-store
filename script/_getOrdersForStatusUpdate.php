@@ -134,11 +134,18 @@ try{
   $data = getData($con,$query);
   $i=0;
   foreach($data as $order){
-   $sql = "select order_items.*,configurable_product.sub_name,configurable_product.sku from order_items
-           left join configurable_product on configurable_product.id = order_items.configurable_product_id
-           where order_id =?";
-   $items = getData($con,$sql,[$order['id']]);
-   $data[$i]['items'] = $items;
+     $sql = "select order_items.*,configurable_product.sub_name,configurable_product.sku from order_items
+             left join configurable_product on configurable_product.id = order_items.configurable_product_id
+             where order_id =?";
+     $items = getData($con,$sql,[$order['id']]);
+     $data[$i]['items'] = $items;
+     if($data[$i]['type'] == 2){
+     $sql = "select order_items.*,configurable_product.sub_name,configurable_product.sku from order_items
+             left join configurable_product on configurable_product.id = order_items.configurable_product_id
+             where order_id =?";
+     $items = getData($con,$sql,[$order['oldOrder_id']]);
+     $data[$i]['OldItems'] = $items;
+     }
    $i++;
   }
   $success="1";

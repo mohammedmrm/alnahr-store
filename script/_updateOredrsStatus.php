@@ -18,8 +18,7 @@ if(isset($_REQUEST['ids'])){
          foreach($ids as $v){
            if($statues[$i] >= 1){
              $data = setData($con,$query,[$statues[$i],$v]);
-             if($data > 0){
-               setData($con,$query2,[$v,$statues[$i],date('Y-m-d H:i:s'),$_SESSION['userid']]);
+             setData($con,$query2,[$v,$statues[$i],date('Y-m-d H:i:s'),$_SESSION['userid']]);
                if($statues[$i] == 6 || $statues[$i] == 5){
                      foreach ($items[$v] as $item){
                        $sql = "update configurable_product
@@ -53,7 +52,7 @@ if(isset($_REQUEST['ids'])){
                             where order_items.order_id = ?";
                    setData($con,$sql,[$statues[$i],$statues[$i],$statues[$i],$statues[$i],$v]);
                }
-             }
+
              $success="1";
            }
            $i++;

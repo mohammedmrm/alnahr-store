@@ -125,7 +125,7 @@ License: You must have a valid license purchased only from https://themes.getboo
           color: #F0F8FF !important;
         }
         .table td {
-          text-align: center !important;
+          text-align: right !important;
           font-size: 13px;
           text-shadow: 0px 0px 0px #000000;
           text-outline: 0px #FF3300;

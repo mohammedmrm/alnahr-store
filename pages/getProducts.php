@@ -8,7 +8,7 @@ if (file_exists("script/_access.php")) {
   fieldset {
     border: 1px solid #ddd !important;
     margin: 0;
-    xmin-width: 0;
+    min-width: 0;
     padding: 10px;
     position: relative;
     border-radius: 4px;
@@ -321,7 +321,7 @@ if (file_exists("script/_access.php")) {
                       </div>
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>رقم هاتف الزبون</label><br />
-                        <input type="text" class="form-control" id="e_customer_phone" name="e_customer_phone" />
+                        <input type="text" onkeydown="e_getOldOrder()" class="form-control" id="e_customer_phone" name="e_customer_phone" />
                         <span class="form-text text-danger" id="e_customer_phone_err"></span>
                       </div>
                     </div>
@@ -611,7 +611,7 @@ if (file_exists("script/_access.php")) {
           phone: $("#customer_phone").val()
         },
         success: function(res) {
-
+          $("#addToBasketForm").removeClass('loading');
           console.log(res);
           $("#oldOrders").html("");
           if (res.success == 1) {
@@ -627,6 +627,7 @@ if (file_exists("script/_access.php")) {
           }
         },
         error: function(e) {
+          $("#addToBasketForm").removeClass('loading');
           toastr.error("خطأ");
           console.log(e);
         }
@@ -647,7 +648,7 @@ if (file_exists("script/_access.php")) {
           phone: $("#e_customer_phone").val()
         },
         success: function(res) {
-
+          $("#addToBasketForm").removeClass('loading');
           console.log(res);
           $("#e_oldOrders").html("");
           if (res.success == 1) {
@@ -663,6 +664,7 @@ if (file_exists("script/_access.php")) {
           }
         },
         error: function(e) {
+          $("#addToBasketForm").removeClass('loading');
           toastr.error("خطأ");
           console.log(e);
         }
@@ -716,7 +718,12 @@ if (file_exists("script/_access.php")) {
         } else {
           $("#basked_id_err").text(res.error.basket);
           $("#qty_err").text(res.error.qty);
-          toastr.warning("يوجد بعض الاخطاء");
+          if(res.error.msg == ""){
+            toastr.warning("يوجد بعض الاخطاء");
+          }else{
+            toastr.warning(res.error.msg);
+          }
+
         }
       },
       error: function(e) {
@@ -786,6 +793,7 @@ if (file_exists("script/_access.php")) {
           $("#e_town_err").text(res.error.town);
           $("#e_address_err").text(res.error.address);
           $("#e_note_err").text(res.error.note);
+          $("#e_oldOrder_err").text(res.error.oldOrder);
           toastr.warning("يوجد بعض الاخطاء");
         }
       },
