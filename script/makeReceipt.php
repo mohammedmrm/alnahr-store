@@ -54,13 +54,14 @@ if(!empty($end)) {
 try{
 
   $query = "select orders.*,count(order_items.id) as items,date_format(orders.date,'%Y-%m-%d') as dat,
-            stores.name as store_name,
+            stores.name as store_name, companies.logo as logo,
             cites.name as city ,towns.name as town,staff.name as driver_name
             from orders
             left join cites on  cites.id = orders.city_id
             left join towns on  towns.id = orders.town_id
             left join staff on  staff.id = orders.mandop_id
             left join stores on  stores.id = orders.store_id
+            left join companies on  companies.id = orders.delivery_company_id
             left join order_items on  order_items.order_id = orders.id
             where orders.id = ? group by orders.id";
 
@@ -94,12 +95,12 @@ $pdf->setLanguageArray($lg);
 $pdf->SetFont('aealarabiya', '', 12);
 
 // set default header data
-if($data['com_id'] != 0){
-  $logo = '../../../img/'.$data['logo'];
+if($data['delivery_company_id'] != 0){
+  $logo = '../../../img/logos/companies/'.$data['logo'];
 }else{
   $logo = "../../../".$config['Company_logo'];
 }
-$pdf->SetHeaderData($logo,33,"");
+$pdf->SetHeaderData($logo,30,"");
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array('aealarabiya', '', 12));
@@ -107,7 +108,7 @@ $pdf->setHeaderFont(Array('aealarabiya', '', 12));
 
 
 // set margins
-$pdf->SetMargins(10, 20,10, 10);
+$pdf->SetMargins(10, 30,10, 10);
 $pdf->SetHeaderMargin(5);
 //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
@@ -235,6 +236,9 @@ $style = array(
     'fontsize' => 12,
     'stretchtext' => 1
 );
+if($data['bar_code'] == null || empty($data['bar_code']) ){
+  $data['bar_code'] = "00000";
+}
 $style2 = array(
     'position' => 'L',
     'align' => 'L',
@@ -247,13 +251,13 @@ $style2 = array(
     'fgcolor' => array(0,0,0),
     'bgcolor' => "",
     'text' => true,
-    'label' => $data['id'],
+    'label' => $data['bar_code'],
     'font' => 'helvetica',
     'fontsize' => 12,
     'stretchtext' => 1
 );
 // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-$pdf->write1DBarcode($data['id'], 'S25+', 0, '', 60, 20, 0.4, $style2, 'N');
+$pdf->write1DBarcode($data['bar_code'], 'S25+', 0, '', 60, 20, 0.4, $style2, 'N');
 $pdf->SetTextColor(25,25,112);
 $pdf->SetFont('aealarabiya', '', 9);
 
@@ -266,7 +270,7 @@ $pdf->writeHTML($del, true, false, false, false, '');
 //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
 $style['position'] = '';
 $pdf->setRTL(false);
-$pdf->write2DBarcode($id, 'QRCODE,M',70, 120, 40, 40, $style, 'N');
+$pdf->write2DBarcode($id, 'QRCODE,M',70, 130, 40, 40, $style, 'N');
 
 }
 

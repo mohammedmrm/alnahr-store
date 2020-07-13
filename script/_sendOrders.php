@@ -1,0 +1,63 @@
+<?php
+session_start();
+header('Content-Type: application/json');
+error_reporting(0);
+require_once("_access.php");
+access([1,2,3,4,5,6]);
+require_once("dbconnection.php");
+require_once("../config.php");
+$company = $_REQUEST['company'];
+$store = $_REQUEST['apistore'];
+$ids = $_REQUEST['ids'];
+if($company > 0){
+  $msg ="";
+}else{
+  $msg = "يجب تحديد شركه التوصيل";
+}
+$response = 0;
+$data=[];
+$sql ="select * from companies where id=?";
+$res= getData($con,$sql,[$company]);
+foreach ($ids as $id){
+  if($id > 1){
+    $f .= ' or orders.id = '.$id.' ';
+  }
+}
+$f = ' ('.preg_replace('/^ or/', '', $f).') ';
+$sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,'%Y-%m-%d') as dat,
+            if(orders.city_id=1,
+             orders.total_price-orders.discount+".$config['dev_b']." ,
+             orders.total_price-orders.discount+".$config['dev_o']."
+            ) as price,
+            cites.name as city ,
+            towns.name as town
+            from orders
+            left join cites on  cites.id = orders.city_id
+            left join towns on  towns.id = orders.town_id
+            left join order_items on  order_items.order_id = orders.id
+            where orders.confirm = 1 and ". $f.' group by orders.id';
+$result =getData($con,$sql);
+if(count($res) == 1){
+    $response = httpPost('http://'.$res[0]['dns'].'/api/addOrdersByClient.php',['token'=>$res[0]['token'],'store'=>$store,'orders'=>$result]);
+    foreach($response['data'] as $k=>$val){
+        if(isset($val['barcode'])){
+          $sql = "update orders set bar_code = ?,delivery_company_id=? where id=? ";
+          $update = setData($con,$sql,[$val['barcode'],$company,$val['id']]);
+        }
+      }
+}else{
+  $msg = "يجب اختيار شركة التوصيل";
+}
+function httpPost($url, $data)
+{
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return json_decode(substr($response,3), true);
+}
+
+echo json_encode(["msg"=>$msg,"response"=>$response]);
+?>

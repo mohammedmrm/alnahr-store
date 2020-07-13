@@ -50,6 +50,8 @@ function acc($id){
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
                                   <?php } ?>
                                   <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myBaskets.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">السلات</span></a></li>
+                                  <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myOrders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">طلبياتي</span></a></li>
+                                  <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myEranings.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">ارباحي</span></a></li>
                                   <?php if($a == 1 || $a == 5|| $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/requstedItems.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اخراج مخزني</span></a></li>
                                   <?php } ?>
@@ -93,6 +95,18 @@ function acc($id){
                                    <?php if($a == 1 || $a == 2 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/stores.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الصفحات (الاسواق)</span></a></li>
                                    <?php } ?>
+                               </ul>
+							</div>
+						</li>
+                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon2-settings"><span></span></i><span class="kt-menu__link-text">التوصيل</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
+							   <ul class="kt-menu__subnav">
+                                    <?php if($a == 1 || $a == 2 || $a == 3 || $a == 5 || $a==99){?>
+                                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/companies.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">شركات التوصيل</span></a></li>
+                                    <?php } ?>
+                                    <?php if($a == 1 || $a == 2 || $a == 3 || $a == 5 || $a==99){?>
+                                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orderAssign.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">احالة الطلبيات</span></a></li>
+                                    <?php } ?>
                                </ul>
 							</div>
 						</li>
