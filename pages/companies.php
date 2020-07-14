@@ -384,6 +384,8 @@ function deleteCompany(id){
            $("#Company_text1_err").text(res.error["Company_text1_err"]);
            $("#Company_text2_err").text(res.error["Company_text2_err"]);
            $("#Company_logo_err").text(res.error["Company_logo_err"]);
+           $("#Company_token_err").text(res.error["Company_token_err"]);
+           $("#Company_dns_err").text(res.error["Company_dns_err"]);
        }
      },
      error:function(e){

@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 header('Content-Type: application/json');
-require("_access.php");
+require_once("_access.php");
 access([1,2,5]);
 require_once("dbconnection.php");
 require_once("_crpt.php");
@@ -20,6 +20,8 @@ $logo   = $_FILES['Company_logo'];
 $text2   = $_REQUEST['Company_text2'];
 $text1 = $_REQUEST['Company_text1'];
 $phone   = $_REQUEST['Company_phone'];
+$token   = $_REQUEST['Company_token'];
+$dns   = $_REQUEST['Company_dns'];
 
 
 
@@ -51,10 +53,12 @@ $v->addRuleMessages([
 ]);
 
 $v->validate([
-    'Company_name'    => [$name,    'required|min(3)|max(100)'],
+    'Company_name'    => [$name,  'required|min(3)|max(100)'],
+    'Company_token'   => [$token, 'required|min(3)|max(200)'],
+    'Company_dns'     => [$dns, 'required|min(3)|max(200)'],
     'Company_text1'   => [$text1, 'max(500)'],
-    'Company_text2'   => [$text2,'max(500)'],
-    'Company_phone'   => [$phone,   "required|isPhoneNumber"],
+    'Company_text2'   => [$text2, 'max(5000)'],
+    'Company_phone'   => [$phone, "required|isPhoneNumber"],
 ]);
 $logo_err = image($logo,[".jpg", ".jpeg", ".png"],1);
 if($v->passes() && $logo_err == "") {
@@ -67,9 +71,9 @@ if($v->passes() && $logo_err == "") {
   }else{
     $imgPath = "_";
   }
-  $sql = 'insert into companies (name,phone,logo,text1,text2) values
-                              (?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$phone,$imgPath,$text1,$text2]);
+  $sql = 'insert into companies (name,phone,logo,text1,text2,token,dns) values
+                              (?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$phone,$imgPath,$text1,$text2,$token,$dns]);
   if($result > 0){
     $success = 1;
   }
@@ -79,6 +83,8 @@ if($v->passes() && $logo_err == "") {
            'Company_text1_err'=>implode($v->errors()->get('Company_text1')),
            'Company_text2_err'=>implode($v->errors()->get('Company_text2')),
            'Company_phone_err'=>implode($v->errors()->get('Company_phone')),
+           'Company_token_err'=>implode($v->errors()->get('Company_token')),
+           'Company_dns_err'=>implode($v->errors()->get('Company_dns')),
            'Company_logo_err'=>$logo_err,
            ];
 }
