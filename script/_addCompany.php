@@ -64,9 +64,8 @@ $logo_err = image($logo,[".jpg", ".jpeg", ".png"],1);
 if($v->passes() && $logo_err == "") {
   if($logo['size'] != 0){
     $id = uniqid();
-    mkdir("../img/logo/companies/", 0700);
     $destination = "../img/logos/companies/".$id.".jpg";
-    $imgPath = "logos/companies/".$id.".jpg";
+    $imgPath = $id.".jpg";
     move_uploaded_file($logo["tmp_name"], $destination);
   }else{
     $imgPath = "_";
