@@ -230,12 +230,12 @@ if (file_exists("script/_access.php")) {
                     <div class="form-group row">
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>المدينة</label>
-                        <select onchange="getTowns($('#town'),$(this).val());" class="selectpicker form-control" id="city" name="city"></select>
+                        <select data-live-search="true" onchange="getTowns($('#town'),$(this).val());" class="selectpicker form-control" id="city" name="city"></select>
                         <span class="form-text text-danger" id="city_err"></span>
                       </div>
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>القضاء او الناحية او المنطقة</label><br />
-                        <select class="selectpicker form-control" id="town" name="town"></select>
+                        <select data-live-search="true" class="selectpicker form-control" id="town" name="town"></select>
                         <span class="form-text text-danger" id="town_err"></span>
                       </div>
                     </div>
