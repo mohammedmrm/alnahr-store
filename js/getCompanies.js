@@ -1,6 +1,6 @@
 function getCompanies(elem){
    $.ajax({
-     url:"script/_getcompanies.php",
+     url:"script/_getCompanies.php",
      type:"POST",
      success:function(res){
        elem.html("");
