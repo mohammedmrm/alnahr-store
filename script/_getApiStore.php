@@ -31,5 +31,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo (json_encode(array("msg"=>$msg,"response"=>json_decode(substr($response, 3)))));
+echo (json_encode(array("msg"=>$msg,"response"=>($response)));
 ?>
