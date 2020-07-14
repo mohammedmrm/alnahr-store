@@ -235,7 +235,7 @@ if (file_exists("script/_access.php")) {
                       </div>
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>القضاء او الناحية او المنطقة</label><br />
-                        <select data-live-search="true" class="selectpicker form-control" id="town" name="town"></select>
+                        <select data-live-search="true"  class="selectpicker form-control" id="town" name="town"></select>
                         <span class="form-text text-danger" id="town_err"></span>
                       </div>
                     </div>

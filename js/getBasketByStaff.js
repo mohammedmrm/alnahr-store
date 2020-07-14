@@ -9,6 +9,8 @@ function getBasketByStaff(elem) {
       $.each(res.data, function () {
         if (this.type == '2') {
           type = " (استبدال) ";
+        }else{
+          type = "";
         }
         elem.append("<option value='" + this.id + "'>سلة رقم " + this.id + '-' + this.customer_name + type + "</option>");
       });
