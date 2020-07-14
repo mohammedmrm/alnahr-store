@@ -4,13 +4,11 @@ function getBasketByStaff(elem) {
     type: "POST",
     success: function (res) {
       elem.html("");
-
       elem.append("<option>....اختر....</option>");
       $.each(res.data, function () {
+        type = "";
         if (this.type == '2') {
           type = " (استبدال) ";
-        }else{
-          type = "";
         }
         elem.append("<option value='" + this.id + "'>سلة رقم " + this.id + '-' + this.customer_name + type + "</option>");
       });
