@@ -28,8 +28,8 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
             if(orders.city_id=1,
              orders.total_price-orders.discount+".$config['dev_b']." ,
              orders.total_price-orders.discount+".$config['dev_o']."
-            ) as price,
-            cites.name as city ,
+            ) as price,if(weight is null,1,weight) as weight,
+            cites.name as city,
             towns.name as town
             from orders
             left join cites on  cites.id = orders.city_id
