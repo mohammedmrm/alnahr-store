@@ -16,8 +16,8 @@ if($msg == ""){
   $sql ="select * from companies where id=?";
   $res= getData($con,$sql,[$company]);
   if(count($res) == 1){
-      $link = 'https://'.$res[0]['dns'].'api/getStore.php?token='.$res[0]['token'];
-      $response = httpPost($link,[]);
+      $link = 'https://'.$res[0]['dns'].'api/getStore.php';
+      $response = httpPost($link,['token'=>$res[0]['token']]);
   }else{
     $msg = "يجب اختيار شركة التوصيل";
   }
