@@ -60,5 +60,5 @@ function httpPost($url, $data)
     return $response;
 }
 
-echo json_encode(["msg"=>$msg,"response"=>$response]);
+echo json_encode(["msg"=>$msg,"response"=>json_decode(substr($response, 3))]);
 ?>
