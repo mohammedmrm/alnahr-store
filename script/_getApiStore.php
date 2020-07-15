@@ -31,5 +31,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo (json_encode(array('http://'.$res[0]['dns'].'api/getStore.php',"msg"=>$msg,"response"=>(($response)))));
+echo json_encode(['http://'.$res[0]['dns'].'api/getStore.php',"msg"=>$msg,"response"=>$response]);
 ?>
