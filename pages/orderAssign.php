@@ -385,6 +385,7 @@ function getApiStore(id){
         success:function(res){
           $("#apistore").html("");
           console.log(res);
+          if(res.response == null){
           if(res.response.success == 1){
             $.each(res.response.data,function(){
               $("#apistore").append(
@@ -392,7 +393,10 @@ function getApiStore(id){
               );
             });
           }else{
-           toastr.warning("لايمكن طلب تحميل الاسواق",'فشل الاتصال');
+            toastr.warning("لايمكن طلب تحميل الاسواق",'فشل الاتصال');
+          }
+          }else{
+            toastr.warning("تاكد من معلومات الشركه",'فشل الاتصال');
           }
            $("#apistore").selectpicker("refresh");
         },
