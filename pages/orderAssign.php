@@ -385,7 +385,7 @@ function getApiStore(id){
         success:function(res){
           $("#apistore").html("");
           console.log(res);
-          if(res.response == null){
+          if(res.response != null){
           if(res.response.success == 1){
             $.each(res.response.data,function(){
               $("#apistore").append(
