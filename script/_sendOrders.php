@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-error_reporting(0);
+//error_reporting(0);
 require_once("_access.php");
 access([1,2,3,4,5,6]);
 require_once("dbconnection.php");
@@ -28,7 +28,7 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
             if(orders.city_id=1,
              orders.total_price-orders.discount+".$config['dev_b']." ,
              orders.total_price-orders.discount+".$config['dev_o']."
-            ) as price,if(weight is null,1,weight) as weight,
+            ) as price,
             cites.name as city,
             towns.name as town
             from orders
