@@ -150,8 +150,7 @@ legend
 										<th width="150px">رقم هاتف المستلم</th>
 										<th>عنوان المستلم</th>
 										<th>مبلغ الوصل</th>
-                                        <th>مع التوصيل</th>
-										<th>مبلغ التوصيل</th>
+                                        <th>مبلغ التوصيل</th>
                                         <th>الخصم</th>
                                         <th>حالة المبلغ</th>
                                         <th width="100px">التاريخ</th>
@@ -168,8 +167,7 @@ legend
 										<th width="150px">رقم هاتف المستلم</th>
 										<th>عنوان المستلم</th>
 										<th>مبلغ الوصل</th>
-                                        <th>مع التوصيل</th>
-										<th>مبلغ التوصيل</th>
+                                        <th>مبلغ التوصيل</th>
                                         <th>الخصم</th>
                                         <th>حالة المبلغ</th>
                                         <th width="100px">التاريخ</th>
@@ -283,11 +281,10 @@ $.ajax({
             '<td class=""><input type="checkbox" value="'+this.id+'" name="ids[]" rowid="'+this.id+'"><span></span></td>'+
             '<td>'+this.id+'</td>'+
             '<td>'+this.order_no+'</td>'+
-            '<td>'+this.client_name+'<br />'+phone_format(this.client_phone)+'</td>'+
+            '<td>'+this.store_name+'<br />'+phone_format(this.client_phone)+'</td>'+
             '<td>'+phone_format(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'<br />'+this.address+'</td>'+
-            '<td>'+formatMoney(this.price)+'</td>'+
-            '<td>'+this.with_dev+'</td>'+
+            '<td>'+formatMoney(this.total_price)+'</td>'+
             '<td>'+formatMoney(this.dev_price)+'</td>'+
             '<td>'+formatMoney(this.discount)+'</td>'+
             '<td>'+this.money_status+'</td>'+
