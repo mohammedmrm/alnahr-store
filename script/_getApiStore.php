@@ -17,7 +17,7 @@ if($msg == ""){
   $res= getData($con,$sql,[$company]);
   if(count($res) == 1){
       $link = 'https://'.$res[0]['dns'].'api/getStore.php?token='.$res[0]['token'];
-      $response = httpPost($link,['token'=>$res[0]['token']]);
+      $response = httpPost($link,[]);
   }else{
     $msg = "يجب اختيار شركة التوصيل";
   }
