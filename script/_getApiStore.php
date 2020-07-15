@@ -16,7 +16,8 @@ if($msg == ""){
   $sql ="select * from companies where id=?";
   $res= getData($con,$sql,[$company]);
   if(count($res) == 1){
-      $response = httpPost('https://'.$res[0]['dns'].'api/getStore.php',['token'=>$res[0]['token']]);
+      $link = 'https://'.$res[0]['dns'].'api/getStore.php?token='.$res[0]['token'];
+      $response = httpPost(,['token'=>$res[0]['token']]);
   }else{
     $msg = "يجب اختيار شركة التوصيل";
   }
@@ -31,5 +32,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo json_encode(['http://'.$res[0]['dns'].'api/getStore.php',"msg"=>$msg,"response"=>$response]);
+echo json_encode([$link,"msg"=>$msg,"response"=>$response]);
 ?>
