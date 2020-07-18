@@ -7,11 +7,11 @@
                                 <i class="la la-cog"></i> المنتجات المطلوبة
                             </a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#pdfs" role="tab">
                                 <i class="la la-briefcase"></i> طباعة تقارير
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -80,9 +80,6 @@
                             </tbody>
 		            </table>
                     </form>
-                    </div>
-                    <div class="tab-pane" id="pdfs" role="tabpanel">
-                    pdf
                     </div>
                 </div>
             </div>

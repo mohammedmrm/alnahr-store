@@ -55,6 +55,9 @@ function acc($id){
                                   <?php if($a == 1 || $a == 5|| $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/requstedItems.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اخراج مخزني</span></a></li>
                                   <?php } ?>
+                                  <?php if($a == 1 || $a == 5|| $a==99){?>
+                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/mandopInvoice.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشوفات المندوبين</span></a></li>
+                                  <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/makeOrders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">توليد الشحنات</span></a></li>
                                   <?php } ?>
@@ -88,8 +91,7 @@ function acc($id){
                                     <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشوفات العملاء</span></a></li>
                                     <?php } ?>
-
-                                   <?php if($a == 1 || $a == 2 || $a==99){?>
+                                    <?php if($a == 1 || $a == 2 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/clients.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">العملاء</span></a></li>
                                    <?php } ?>
                                    <?php if($a == 1 || $a == 2 || $a==99){?>
