@@ -35,6 +35,5 @@ try{
    $data=["error"=>$ex];
    $success="0";
 }
-
 echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
 ?>
