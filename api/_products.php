@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
-access();
+//access();
 require_once("../script/dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
@@ -65,5 +65,5 @@ try{
    $success="0";
 }
 
-echo (json_encode(array('message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
+echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
 ?>
