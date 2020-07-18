@@ -6,21 +6,21 @@ header('Content-Type: application/json');
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
 require_once("../script/dbconnection.php");
-if(!empty($_REQUEST['username']) && !empty($_REQUEST['username'])){
+if(!empty($password) && !empty($username)){
   $sql = 'select * from staff where phone=?';
-  $res  = getData($con,$sql,[$_REQUEST['username']]);
-  if(count($result) != 1 || !password_verify($password,$result[0]['password'])){
+  $loginres  = getData($con,$sql,[$username]);
+  if(count($loginres) == 1 && password_verify($password,$loginres[0]['password'])){
      $msg = 1;
   }else{
      $msg ="incorrect username or password";
   }
 }else{
-    $msg ="username and password required";
+     $msg ="username and password required";
 }
 
 function access(){
-  if(!$GLOBALS['msg']){
-     die(json_encode(['message'=>$msg]));
+  if($GLOBALS['msg']!=1){
+     die(json_encode(['message'=>$GLOBALS['msg']]));
   }
 }
 ?>

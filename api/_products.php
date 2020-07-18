@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
+access();
 require_once("../script/dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
@@ -17,7 +18,7 @@ $cat = trim($_REQUEST['category']);
 try{
   $count = "select count(*) as count from product ";
   $query = "select product.*,category.title as category_name,
-             stores.name as store_name,image.img as img 
+             stores.name as store_name,image.img as img
              from product
             left join stores on stores.id = product.store_id
             left join category on category.id = product.category_id
