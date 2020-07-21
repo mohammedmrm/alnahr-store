@@ -83,8 +83,8 @@ foreach($imgs["tmp_name"] as $val){
    $img_err =  "يجب رفع صورة واحدة على الاقل";
 }
 if($v->passes() && $img_err ==""){
-  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id) values (?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store]);
+  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price) values (?,?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price]);
   if($result > 0){
     $success = 1;
     $product = 'select * from product where name = ? and type = ? and category_id = ? order by id DESC limit 1';;
