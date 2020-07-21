@@ -29,6 +29,9 @@ try{
       $i++;
     }
     $data[0]['attribute'] = $res;
+    $sql = "select * from images where product_id=?";
+    $images = getData($con,$sql,[$id]);
+    $data[0]['images']= $images;
   }
   $success="1";
 } catch(PDOException $ex) {
