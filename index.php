@@ -279,11 +279,11 @@ License: You must have a valid license purchased only from https://themes.getboo
         <!--end::Global Theme Bundle -->
 
 
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
-        <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
         <?php include("layout.php"); ?>
         <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
-
+        <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+        <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
+        
         <!--begin::Page Vendors(used by this page) -->
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>

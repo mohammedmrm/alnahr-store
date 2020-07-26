@@ -177,7 +177,7 @@ $tbl = '
   </tr>
   <tr>
     <td colspan="2"  class="title">المبلغ مع التوصيل</td>
-    <td colspan="4" align="center">'.number_format($data['total_price']+$dev_p-$data['discount']).' دينار</td>
+    <td colspan="4" align="center">'.number_format($data['total_price']-$data['discount']).'</td>
   </tr>
 </table>
 ';
@@ -213,7 +213,7 @@ $id =
       '"address":'.'"'.$data['address'].'",'.
       '"customer_name":'.'"'.$data['customer_name'].'",'.
       '"customer_phone":'.'"'.$data['customer_phone'].'",'.
-      '"price":'.'"'.$data['price']+$dev_p-$data['discount'].'",'.
+      '"price":'.'"'.$data['price']-$data['discount'].'",'.
       '"note":'.'"'.$data['note'].'"
     }
 }
