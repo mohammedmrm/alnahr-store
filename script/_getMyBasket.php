@@ -4,12 +4,14 @@ header('Content-Type: application/json');
 require("_access.php");
 require("dbconnection.php");
 try{
-  $query = "select * from basket where staff_id=? and status > 0";
+  $query = "select basket.*,cites.name as city from basket
+   left join cites on cites.id = basket.city_id
+   where staff_id=? and status > 0";
   $data = getData($con,$query,[$_SESSION['userid']]);
   $success="1";
   $i=0;
   foreach($data as $v){
-    $sql ="select *,if(sub_name is null or sub_name = '',product.name,sub_name) as sub_name, basket_items.qty as bi_qty,
+    $sql ="select configurable_product.*,if(sub_name is null or sub_name = '',product.name,sub_name) as sub_name, basket_items.qty as bi_qty,
             basket_items.id as bi_id
             from basket_items
             left join configurable_product on configurable_product.id = basket_items.configurable_product_id

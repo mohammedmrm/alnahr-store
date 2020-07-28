@@ -40,7 +40,7 @@ function getMyBasket(){
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
                             <h3 class="kt-portlet__head-title"> `+this.customer_name+`</h3>
-                            <h5 class="kt-portlet__head-title"> &nbsp;&nbsp;( `+this.address+` ) </h5>
+                            <h5 class="kt-portlet__head-title"> &nbsp;&nbsp;( `+this.city+` ) </h5>
                         </div>
                     </div>
                     <div class="kt-portlet__body">
@@ -66,7 +66,7 @@ function getMyBasket(){
                                `+this.sub_name+`
                           </div>
                           <div class="">
-                               `+this.price+` دينار
+                               `+(this.price)+` دينار
                           </div>
                           <div class="">
                                `+this.bi_qty+` قطعه
@@ -79,16 +79,16 @@ function getMyBasket(){
                       total = total + (Number(this.price) * Number(this.bi_qty));
         });
         if(this.city_id == 1){
-            total = total + 5000;
+            total = total + 5000 -Number(this.discount);
         }else{
-           total = total + 10000;
+           total = total + 10000 -Number(this.discount);
         }
          if(status == 1){
          btn = ` <div class="input-group">
 			<div class="input-group-prepend">
 				<span class="input-group-text">الخصم</span>
 			</div>
-			<input type="text" value="0" onkeyup="updateBasketPrice(`+total+`,`+this.id+`,$(this).val(),`+this.city_id+`)" class="form-control" id="discount" name="discount"/>
+			<input type="text" value="`+Number(this.discount)+`" onkeyup="updateBasketPrice(`+total+`,`+this.id+`,$(this).val(),`+this.city_id+`)" class="form-control" id="discount" name="discount"/>
 			<div class="input-group-append">
 				<span class="input-group-text">دينار</span>
 			</div>

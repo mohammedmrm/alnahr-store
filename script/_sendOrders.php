@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-error_reporting(0);
+//error_reporting(0);
 require_once("_access.php");
 access([1,2,3,4,5,6]);
 require_once("dbconnection.php");
@@ -35,7 +35,7 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
             left join cites on  cites.id = orders.city_id
             left join towns on  towns.id = orders.town_id
             left join order_items on  order_items.order_id = orders.id
-            where orders.confirm = 1 and ". $f.' group by orders.id';
+            where orders.confirm = 1 and ".$f." group by orders.id";
 $result =getData($con,$sql);
 if(count($res) == 1){
     $response = httpPost($res[0]['dns'].'/api/addOrdersByClient.php',['token'=>$res[0]['token'],'store'=>$store,'orders'=>$result]);
