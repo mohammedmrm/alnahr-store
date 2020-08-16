@@ -54,7 +54,7 @@ $v->validate([
     'name'      => [$name,    'required|min(4)|max(250)'],
     'simple_des'=> [$simple_des,'max(250)'],
     'des'       => [$des,   "max(3000)"],
-    'buy_price' => [$buy_price,"required"],
+    'buy_price' => [$buy_price,"int"],
     'price'     => [$price,  'required'],
     'cat'       => [$cat,  'required|int'],
     'store'     => [$store,  'required|int'],

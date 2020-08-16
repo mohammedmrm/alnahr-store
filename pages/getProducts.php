@@ -235,7 +235,7 @@ if (file_exists("script/_access.php")) {
                       </div>
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>القضاء او الناحية او المنطقة</label><br />
-                        <select data-live-search="true"  class="selectpicker form-control" id="town" name="town"></select>
+                        <select data-live-search="true" class="selectpicker form-control" id="town" name="town"></select>
                         <span class="form-text text-danger" id="town_err"></span>
                       </div>
                     </div>
@@ -576,7 +576,7 @@ if (file_exists("script/_access.php")) {
             '</td>' +
             '<td>' + this.price + '</td>' +
             '<td>' + this.qty + '</td>' +
-            '<td>' + this.name + '</td>' +
+            '<td>' + this.sub_name + '</td>' +
             '<td>' + attribute + '</td>' +
             '<td>' + this.store_name + '</td>' +
             '</tr>');
@@ -634,6 +634,7 @@ if (file_exists("script/_access.php")) {
       });
     }
   }
+
   function e_getOldOrder() {
 
     if ($("#e_customer_phone").val().length >= 10 && $("#e_customer_phone").val().length <= 16) {
@@ -691,6 +692,7 @@ if (file_exists("script/_access.php")) {
       $("#oldOrderDiv").css("display", 'none');
     }
   }
+
   function e_replaceStatus() {
     if ($("#e_replace").is(':checked')) {
       $("#e_oldOrderDiv").css("display", 'inline-block');
@@ -698,6 +700,7 @@ if (file_exists("script/_access.php")) {
       $("#e_oldOrderDiv").css("display", 'none');
     }
   }
+
   function openBasket(id) {
     $("#product_id").val(id);
   }
@@ -718,9 +721,9 @@ if (file_exists("script/_access.php")) {
         } else {
           $("#basked_id_err").text(res.error.basket);
           $("#qty_err").text(res.error.qty);
-          if(res.error.msg == ""){
+          if (res.error.msg == "") {
             toastr.warning("يوجد بعض الاخطاء");
-          }else{
+          } else {
             toastr.warning(res.error.msg);
           }
 
