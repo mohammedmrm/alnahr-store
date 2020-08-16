@@ -76,7 +76,7 @@ function acc($id){
                                       <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحدبث يدوي</span></a></li> -->
                                   <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
-                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/Earnings.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الارباح</span></a></li>
+                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/earnings.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الارباح</span></a></li>
                                   <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/receipts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الوصولات</span></a></li>
