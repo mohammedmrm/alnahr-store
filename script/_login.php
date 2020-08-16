@@ -16,6 +16,7 @@ if(empty($username) || empty($password)){
   }else{
     $msg = 1;
     $_SESSION['login']=1;
+    $_SESSION['app']='store';
     $_SESSION['username']=$result[0]['phone'];
     $_SESSION['userid']=$result[0]['id'];
     $_SESSION['role']=$result[0]['role_id'];

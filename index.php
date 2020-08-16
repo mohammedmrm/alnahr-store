@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if($_SESSION['login'] != 1){
+if($_SESSION['login'] != 1 && $_SESSION['app'] != 'stote'){
     header('location: login.php');
 }
 include_once("config.php");

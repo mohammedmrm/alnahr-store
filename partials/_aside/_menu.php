@@ -29,7 +29,8 @@ function acc($id){
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/addProduct.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اضافه منتج</span></a></li>
                         <?php } ?>
                         <?php if($a == 1 || $a == 3 || $a == 4 || $a == 5 || $a == 6 || $a==99){?>
-                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getFullProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات</span></a></li>
+                            <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات بالتفصيل</span></a></li>
                         <?php } ?>
                         <?php if($a == 1 || $a == 3  || $a == 5 || $a == 6 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/categories.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">التصنيفات</span></a></li>
@@ -71,11 +72,11 @@ function acc($id){
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحديث حالة الطلبيات</span></a></li>
                                   <?php } ?>
-                                  <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
-                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحدبث يدوي</span></a></li>
+                                  <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>                            
+                                      <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحدبث يدوي</span></a></li> -->
                                   <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
-                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الارباح</span></a></li>
+                                      <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/Earnings.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الارباح</span></a></li>
                                   <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/receipts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الوصولات</span></a></li>
