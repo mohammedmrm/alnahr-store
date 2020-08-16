@@ -54,6 +54,7 @@ License: You must have a valid license purchased only from https://themes.getboo
 
 		<!--end::Layout Skins -->
 		<link rel="shortcut icon" href="<?php echo $config['faicon'];?>" />
+        <link rel="manifest" href="pwa/manifest.webmanifest">
 <style>
         /* arabic */
         @font-face {
@@ -288,6 +289,14 @@ License: You must have a valid license purchased only from https://themes.getboo
 		<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
         <script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
         <script src="js/toast.js" type="text/javascript"></script>
+        <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+           window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+          });
+        }
+        </script>
         <script>
         $(document).ready(function () {
             $(document).on('show.bs.modal', '.modal', function (event) {
