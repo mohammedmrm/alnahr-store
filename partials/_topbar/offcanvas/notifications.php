@@ -3,13 +3,14 @@
 <div id="kt_offcanvas_toolbar_notifications" class="kt-offcanvas-panel">
 	<div class="kt-offcanvas-panel__head">
 		<h3 class="kt-offcanvas-panel__title">
-			Notifications
+			الاشعارات
 			<small>24 New</small>
 		</h3>
 		<a href="#" class="kt-offcanvas-panel__close" id="kt_offcanvas_toolbar_notifications_close"><i class="flaticon2-delete"></i></a>
 	</div>
 	<div class="kt-offcanvas-panel__body">
-		<div class="kt-notification-v2">
+    الاشعارات
+<!--		<div class="kt-notification-v2">
 			<a href="#" class="kt-notification-v2__item">
 				<div class="kt-notification-v2__item-icon">
 					<i class="flaticon-bell kt-font-focus"></i>
@@ -179,7 +180,7 @@
 					</div>
 				</div>
 			</a>
-		</div>
+		</div>-->
 	</div>
 </div>
 

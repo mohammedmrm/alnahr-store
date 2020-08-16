@@ -11,7 +11,7 @@
 		<a href="#" class="kt-offcanvas-panel__close" id="kt_offcanvas_toolbar_profile_close"><i class="flaticon2-delete"></i></a>
 	</div>
 	<div class="kt-offcanvas-panel__body">
-		<div class="kt-user-card-v3 kt-margin-b-30">
+<!--		<div class="kt-user-card-v3 kt-margin-b-30">
 			<div class="kt-user-card-v3__avatar">
 				<img src="assets/media/users/300_21.jpg" alt="" />
 			</div>
@@ -177,7 +177,7 @@
 		</div>
 		<div class="kt-margin-t-40">
 			<button type="button" class="btn btn-brand btn-font-sm btn-upper btn-bold">full profile</button>
-		</div>
+		</div>-->
 	</div>
 </div>
 
