@@ -2,6 +2,7 @@
 if(!isset($_SESSION)){
  session_start();
 }
+header("Access-Control-Allow-Origin: *");  
 header('Content-Type: application/json');
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
