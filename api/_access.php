@@ -17,10 +17,17 @@ $link .= $_SERVER['HTTP_HOST'];
 // Append the requested resource location to the URL
 $link .= $_SERVER['REQUEST_URI'];
 
-function access($access_roles = []){
-  if(!in_array($_SESSION['user_details']['role_id'],$access_roles) || !isset($_SESSION['userid'])){
-    header("location: login.php?redirect=".$GLOBALS['link']);
-    die("<h1>لاتمتلك صلاحيات الوصول لهذه الصفحة  (<a href='login.php'>سجل الدخول</a>)</h1>");
+function access($username,$password,$con){
+  $sql = "select * from staff where phone = ? and status=1";
+  $result = getData($con,$sql,[$username]);
+  if(count($result) != 1 || !password_verify($password,$result[0]['password']) ){
+    $login['msg'] = "اسم المستخدم او كلمة المرور غير صحيحة";
+    $login['code'] = 300;
+  }else{
+    $login['msg'] = 1;
+    $login['code'] = 200;
+    $login['id'] = $result[0]['id'];
   }
+  return $login;
 }
 ?>

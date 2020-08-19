@@ -4,7 +4,7 @@ error_reporting(0);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once("../script/_access.php");
+
 require_once("../script/dbconnection.php");
 require_once("../script/_crpt.php");
 require_once("../config.php");
@@ -19,6 +19,15 @@ $error = [];
 $product = $_REQUEST['product_id'];
 $basket  = $_REQUEST['basket'];
 $qty = $_REQUEST['qty'];
+$option = $_REQUEST['option'];
+$username = $_REQUEST['username'];
+$password = $_REQUEST['password'];
+
+require_once("_access.php");
+$login = access($username,$password,$con);
+
+
+if($login['msg'] == 1){
 if(empty($qty)){
   $qty = 1;
 }
@@ -62,14 +71,42 @@ if($type == 2){
 }else{
    $msg = "";
 }
+
+
 if($v->passes() && $msg == "") {
-  $sql = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id) values (?,?,?,?)';
-  $result = setData($con,$sql,[$product,$basket,$qty,$_SESSION['userid']]);
-  if($result > 0){
-    $success = 1;
-    $sql = "update basket set status=1 where staff_id=? and id=?";
-    setData($con,$sql,[$_SESSION['userid'],$basket]);
-  }
+ $sql = "select attribute_id from sub_option
+                            left join configurable_product on configurable_product.id = sub_option.configurable_product_id
+                            left join product on product.id = configurable_product.product_id
+                            where product.id = ? GROUP by sub_option.attribute_id";
+ $pro = getData($con,$sql,[$product]);
+ $count = count($pro);
+ $op = count($option);
+ if($count = $op){
+    foreach($option as $conf) {
+        if ($i == 0) {
+                $options += ' attribute_config_id=' + $conf;
+            } else {
+                $options += ' or attribute_config_id=' + $conf;
+            }
+        $i++;
+    }
+      $query = 'SELECT configurable_product_id as c_id,COUNT(configurable_product_id) as count
+                FROM sub_option
+                left join configurable_product on configurable_product.id = sub_option.configurable_product_id
+                left join product on configurable_product.product_id = product.id
+                where ( '.$options.' ) and product.id = '.$product.'
+                GROUP by configurable_product_id
+                order by COUNT(configurable_product_id) DESC
+                limit 1';
+     $configrabe_pro = getData($con,$query);
+     $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
+                values (?,?,?,?)';
+     $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$login['id']]);
+     if($addToBasket){
+       $success = 1;
+     }
+ }
+
 }else{
   $error = [
            'product'=> implode($v->errors()->get('product')),
@@ -78,5 +115,6 @@ if($v->passes() && $msg == "") {
            'msg'=>$msg
            ];
 }
-echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
+}
+echo json_encode(["login"=>$login,'success'=>$success,'error'=>$error]);
 ?>
