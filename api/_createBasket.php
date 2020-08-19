@@ -12,8 +12,8 @@ $v = new Violin;
 
 
 $success = 0;
-$customer_name    = $_REQUEST['customer_name'];
-$customer_phone   = $_REQUEST['customer_phone'];
+$customer_name    = $_REQUEST['name'];
+$customer_phone   = $_REQUEST['phone'];
 $city= $_REQUEST['city'];
 if(empty($city)){
   $city = 0;
@@ -49,9 +49,7 @@ if($type == 2){
   $oldOrder = 0;
 }
 $error = [];
-require_once("_access.php");
-$login = access($username,$password,$con);
-if($login['msg'] == 1){
+
 $v->addRuleMessage('isPhoneNumber', ' رقم هاتف غير صحيح ');
 
 $v->addRule('isPhoneNumber', function($value, $input, $args) {
@@ -61,8 +59,7 @@ $v->addRule('isPhoneNumber', function($value, $input, $args) {
     return   (bool) 0;
   }
 
-});
-
+}); z
 $v->addRuleMessages([
     'required' => ' الحقل مطلوب',
     'int'      => ' فقط الارقام مسموح بها',
@@ -112,6 +109,5 @@ if($v->passes() && $max == "" && $oldOrder_err == "") {
            'max'=>$max
            ];
 }
-}
-echo json_encode(['login'=>$login,'success'=>$success,'error'=>$error]);
+echo json_encode(['code'=>200,'message'=>$msg,'success'=>$success,'error'=>$error]);
 ?>
