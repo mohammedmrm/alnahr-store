@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-header("Access-Control-Allow-Origin: *");  
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
@@ -60,7 +60,7 @@ $v->addRule('isPhoneNumber', function($value, $input, $args) {
     return   (bool) 0;
   }
 
-}); z
+});
 $v->addRuleMessages([
     'required' => ' الحقل مطلوب',
     'int'      => ' فقط الارقام مسموح بها',
