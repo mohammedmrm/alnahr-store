@@ -90,7 +90,7 @@ if($v->passes() && $max == "" && $oldOrder_err == "") {
   try{
       $sql = 'insert into basket (customer_name,customer_phone,city_id,town_id,address,note,staff_id,type,oldOrder_id) values
                                   (?,?,?,?,?,?,?,?,?)';
-      $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$_SESSION['userid'],$type,$oldOrder]);
+      $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$userid,$type,$oldOrder]);
       if($result > 0){
         $success = 1;
       }
