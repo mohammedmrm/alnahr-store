@@ -14,7 +14,7 @@ $v = new Violin;
 
 $success = 0;
 $customer_name    = $_REQUEST['name'];
-$customer_phone   = $_REQUEST['phone'];
+$customer_phone   = str_replace('-','',$_REQUEST['phone']);;
 $city= $_REQUEST['city'];
 if(empty($city)){
   $city = 0;
