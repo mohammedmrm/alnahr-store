@@ -77,7 +77,7 @@ $v->validate([
     'customer_phone'  => [$customer_phone,   'required|isPhoneNumber'],
     'city'            => [$city,'required|int'],
     'town'            => [$town,"required|int"],
-    'basket'            => [$basket_id,"required|int"],
+    'basket'          => [$basket_id,"required|int"],
     'address'         => [$address,'max(250)'],
     'note'            => [$note,  'max(250)'],
 ]);
@@ -114,5 +114,5 @@ if($v->passes() && $max == "" && $oldOrder_err == "") {
            'oldOrder'=>$oldOrder_err,
            ];
 }
-echo json_encode(['code'=>200,'message'=>$msg,'success'=>$success,'error'=>$error]);
+echo json_encode(['code'=>200,'message'=>$msg,'success'=>$success,'error'=>$error,'data'=>$data]);
 ?>
