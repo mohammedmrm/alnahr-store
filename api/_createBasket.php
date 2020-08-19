@@ -15,6 +15,7 @@ $v = new Violin;
 $success = 0;
 $customer_name    = $_REQUEST['name'];
 $customer_phone   = str_replace('-','',$_REQUEST['phone']);;
+$customer_phone   = str_replace(' ','',$_REQUEST['phone']);;
 $city= $_REQUEST['city'];
 if(empty($city)){
   $city = 0;
@@ -99,8 +100,8 @@ if($v->passes() && $max == "" && $oldOrder_err == "") {
   }
 }else{
   $error = [
-           'customer_name'=> implode($v->errors()->get('customer_name')),
-           'customer_phone'=>implode($v->errors()->get('customer_phone')),
+           'name'=> implode($v->errors()->get('customer_name')),
+           'phone'=>implode($v->errors()->get('customer_phone')),
            'city'=>implode($v->errors()->get('city')),
            'town'=>implode($v->errors()->get('town')),
            'address'=>implode($v->errors()->get('address')),
