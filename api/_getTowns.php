@@ -16,5 +16,5 @@ try{
    $data=["error"=>$ex,'q'=>$query];
    $success="0";
 }
-print_r(json_encode(array("success"=>$success,"data"=>$data,'q'=>$query,'P'=>$city)));
+print_r(json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'q'=>$query,'P'=>$city)));
 ?>
