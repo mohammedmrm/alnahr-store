@@ -86,8 +86,8 @@ if($v->passes() && $max == "" && $oldOrder_err == "") {
       $sql = 'update basket set
       customer_name=?,
       customer_phone=?,
-      city=?,
-      town=?,
+      city_id=?,
+      town_id=?,
       address=?,
       note=?,
       type=?,
