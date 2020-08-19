@@ -2,7 +2,7 @@
 if(!isset($_SESSION)){
  session_start();
 }
-header("Access-Control-Allow-Origin: *");  
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
@@ -13,6 +13,7 @@ if(!empty($password) && !empty($username)){
   if(count($loginres) == 1 && password_verify($password,$loginres[0]['password'])){
      $msg = 1;
      $code = 200;
+     $userid = $loginres[0]['id'];
   }else{
      $msg ="incorrect username or password";
      $code = 300;
