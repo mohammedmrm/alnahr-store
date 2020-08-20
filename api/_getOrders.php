@@ -3,8 +3,8 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
-access([1,2,5,4]);
-require_once("dbconnection.php");
+access();
+require_once("../script/dbconnection.php");
 require_once("../config.php");
 
 //$branch = $_REQUEST['branch'];
