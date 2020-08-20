@@ -11,8 +11,9 @@ use Violin\Violin;
 require_once('../validator/autoload.php');
 $v = new Violin;
 $success = 0;
+$product = $_REQUEST['product'];
+$flag =$_REQUEST['flag'];
 $error = [];
-$user = $_SESSION['userid'];
 $v->addRuleMessages([
     'required' => ' الحقل مطلوب',
     'int'      => ' فقط الارقام مسموح بها',
@@ -23,12 +24,14 @@ $v->addRuleMessages([
 ]);
 
 $v->validate([
-    'id'      => [$user,  'required|int'],
+    'id'      => [$userid,  'required|int'],
 ]);
 if($v->passes()) {
-  $sql = 'select * from list where mandop_id=?';
-  $data = getData($con,$sql,[$user]);
-  $success = 1;
+  $sql = 'insert into list_items (product_id,list_id) values(?,?)';
+  $data = setData($con,$sql,[$product,$flag]);
+  if($data){
+   $success = 1;
+  }
 }else{
   $error = [
            'user'=>implode($v->errors()->get('id')),
