@@ -27,449 +27,198 @@ if (file_exists("script/_access.php")) {
         padding: 5px 5px 5px 10px;
         background-color: #ffffff;
     }
+    .padding-10 {
+      padding: 10px;
+    }
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #990000;
+    }
+.preview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px; } }
+
+.preview-pic {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+  border: none;
+  margin-top: 15px; }
+.preview-thumbnail.nav-tabs li {
+width: 18%;
+margin-right: 2.5%; }
+.preview-thumbnail.nav-tabs li img {
+  max-width: 100%;
+  display: block; }
+.preview-thumbnail.nav-tabs li a {
+  padding: 0;
+  max-width: 100%;
+  margin: 0; }
+.preview-thumbnail.nav-tabs li:last-of-type {
+  margin-right: 0; }
+
+.tab-content {
+  overflow: hidden; }
+  .tab-content img {
+    -webkit-animation-name: opacity;
+            animation-name: opacity;
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+.card {
+  margin-top: 50px;
+  background: #eee;
+  padding: 3em;
+  line-height: 1.5em; }
+
+@media screen and (min-width: 997px) {
+  .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; } }
+
+.details {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.colors {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #ff9f1a; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px; }
+
+.product-title {
+  margin-top: 0;
+}
+
+.thump {
+  width:80px;
+  min-height:80px;
+  border: 1px solid #B3B3B3;
+  border-radius: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: #FFFFFF;
+  margin: 1px;
+  float: left;
+}
+#img{
+ border-radius: 5px;
+}
+
 </style>
 
 <!-- begin:: Content -->
 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-    <div class="kt-portlet kt-portlet--mobile">
-        <div class="kt-portlet__head">
+       <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
                 <h3 class="kt-portlet__head-title">
                     الطلبيات
                 </h3>
             </div>
         </div>
-
-        <div class="kt-portlet__body">
-            <!--begin: Datatable -->
-            <form id="producttabledata" class="kt-form kt-form--fit kt-margin-b-20">
-                <fieldset>
-                    <legend>فلتر</legend>
-                    <div class="row kt-margin-b-20">
-                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                            <label>اسم المنتج:</label>
-                            <input id="name" name="name" onkeyup="getProducts()" type="text" class="form-control kt-input" placeholder="" data-col-index="0">
-                        </div>
-                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                            <label>SKU:</label>
-                            <input name="sku" onkeyup="getProducts()" type="text" class="form-control kt-input" placeholder="" data-col-index="1">
-                        </div>
-                        <div class="kt-separator kt-separator--border-dashed kt-separator--space-md"></div>
+        <form id="producttabledata">
+        <div class="kt-portlet__body  bg-white padding-10">
+          <div class="kt-widget-6">
+            <!-- begin::Tab Content -->
+            <div class="kt-widget6__tab tab-content">
+                <div id="kt_personal_income_quater_15d3532e15cc23" class="tab-pane fade active show">
+                    <div class="kt-widget-6__items row" id="product-grid">
                     </div>
-                </fieldset>
-
-                <div class="row kt-margin-b-20">
-                    <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                        <label>عدد السجلات في الصفحة الواحدة</label>
-                        <select onchange="getProducts()" class="form-control kt-input" name="limit" data-col-index="7">
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
-                </div>
-
-                <table class="table table-striped table-bordered table-hover table-checkable responsive no-wrap" id="tb-productTable">
-                    <thead>
-                        <tr>
-                            <th><input id="allselector" type="checkbox"></th>
-                            <th>صور</th>
-                            <th>SKU</th>
-                            <th>تعديل</th>
-                            <th>السعر</th>
-                            <th>الكمية</th>
-                            <th>اسم المنتج</th>
-                            <th>صفات المنتج</th>
-                            <th>السوق</th>
-
-
-                        </tr>
-                    </thead>
-                    <tbody id="productTable">
-                    </tbody>
-
-                </table>
-                <div class="kt-section__content kt-section__content--border">
-                    <nav aria-label="...">
+                    <hr />
+                    <div class="kt-section__content kt-section__content--border">
+                      <nav aria-label="...">
                         <ul class="pagination" id="pagination">
 
                         </ul>
                         <input type="hidden" id="p" name="p" value="<?php if (!empty($_GET['p'])) {
-                                                                        echo $_GET['p'];
+                                                                      echo $_GET['p'];
                                                                     } else {
-                                                                        echo 1;
+                                                                      echo 1;
                                                                     } ?>" />
-                    </nav>
-                </div>
-                <hr />
-                <?php if ($_SESSION['role'] != 4) { ?>
-                    <fieldset>
-                        <legend>التحديثات</legend>
-                        <div class="row kt-margin-b-20">
-                            <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-                                <label>افعل مع المحدد:</label>
-                                <select id="action" onchange="disable()" name="action" class="selectpicker form-control kt-input" data-col-index="2">
-                                    <option value="">... اختر ...</option>
-                                    <option value="delete">حذف جميع المنتجات المحددة</option>
-                                </select>
-                            </div>
-                            <!--            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-            	<label>الخصم:</label>
-            	<input type="number" class="form-control" value="0" step="250"  id="discount" name="discount"/>
-            </div>-->
-                            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                                <label>تنفيذ:</label>
-                                <input type="button" onclick="runAction()" class="form-control btn btn-success" value="نفذ" />
-                            </div>
+                      </nav>
+        </div>
+            </div>
+            <!-- end::Tab Content -->
+        </div>
+        </div>
+</div>
+</form>
+<div class="modal fade" id="productDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-header">
+        <h5 class="modal-title" id="gridModalLabel">تفاصيل المنتج</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+     </div>
+     <div class="modal-body">
+		<div class="">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="details col-xl-5">
+						<h3 class="product-title h1" id="title">اسم المنتج</h3>
+						<p class="product-description" id="des">
+                           وصف المنتج
+                        </p>
+						<h4 class="price" id="price">سعر المنتج</h4>
+						<p class="vote"></p>
+						<div class="options" id="options">
                         </div>
-                    </fieldset>
-                <?php } ?>
-            </form>
-            <!--end: Datatable -->
-        </div>
+                        <hr />
+						<div class="action">
+							<button class="add-to-cart btn btn-default" type="button">اضافه للسله</button>
+							<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+						</div>
+					</div>
+					<div class="preview col-xl-5">
+                        <div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1">
+                          <img id="img" style="width:100%;" src="http://placekitten.com/400/252" />
+                          </div>
+					   </div>
+					</div>
+                    <div class="col-xl-2" id="thumpnail">
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
+    </div>
+  </div>
 </div>
-<!-- end:: Content -->
-<div class="modal fade" id="basketProductModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">اضافة للسلة</h4>
-            </div>
-            <div class="modal-body">
-                <!--Begin:: App Content-->
-                <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-                    <div class="kt-portlet">
-                        <form class="kt-form kt-form--label-right" id="addToBasketForm">
-                            <div class="kt-portlet__body">
-                                <div class="kt-section kt-section--first">
-                                    <div class="kt-section__body">
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>السلة</label>
-                                                <select data-live-search="true" class="selectpicker form-control" id="basket" name="basket">
-                                                </select>
-                                                <span class="form-text text-danger" id="basket_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>الكمية</label>
-                                                <input type="number" step="1" min="1" max="100" id="qty" name="qty" value="1" class="form-control" />
-                                                <span class="form-text text-danger" id="qty_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>انشاء سله</label><br />
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addBasketModal" id="addNewBasket" name="addNewBasket">انشاء سلة جديدة</button>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>تحضر سلة موجودة</label><br />
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editBasketModal" id="editNewBasket" name="addNewBasket">تحضير سلة</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="kt-portlet__foot">
-                                <div class="kt-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-xl-3">
-                                        </div>
-                                        <div class="col-lg-9 col-xl-9">
-                                            <input type="hidden" id="product_id" name="product_id" />
-                                            <button type="button" onclick="addToBasket()" class="btn btn-success">اضافة المنتج للسلة</button>&nbsp;
-                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!--End:: App Content-->
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="addBasketModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">انشاء سلة جديدة</h4>
-            </div>
-            <div class="modal-body">
-                <!--Begin:: App Content-->
-                <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-                    <div class="kt-portlet">
-                        <form class="kt-form kt-form--label-right" id="addBasketForm">
-                            <div class="kt-portlet__body">
-                                <div class="kt-section kt-section--first">
-                                    <div class="kt-section__body">
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>اسم الزبون</label>
-                                                <input type="text" class="form-control" id="customer_name" name="customer_name" />
-                                                <span class="form-text text-danger" id="customer_name_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>رقم هاتف الزبون</label><br />
-                                                <input type="text" onkeydown="getOldOrder()" class="form-control" id="customer_phone" name="customer_phone" />
-                                                <span class="form-text text-danger" id="customer_phone_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>المدينة</label>
-                                                <select data-live-search="true" onchange="getTowns($('#town'),$(this).val());" class="selectpicker form-control" id="city" name="city"></select>
-                                                <span class="form-text text-danger" id="city_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>القضاء او الناحية او المنطقة</label><br />
-                                                <select data-live-search="true" class="selectpicker form-control" id="town" name="town"></select>
-                                                <span class="form-text text-danger" id="town_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>تفاصيل العنوان</label>
-                                                <textarea type="text" class="form-control" id="address" name="address"></textarea>
-                                                <span class="form-text text-danger" id="address_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>ملاحظه</label>
-                                                <textarea type="text" class="form-control" id="note" name="note"></textarea>
-                                                <span class="form-text text-danger" id="note_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>استبدال؟</label><br />
-                                                <input type="checkbox" onclick="replaceStatus()" value="2" id="replace" name="replace" />
-                                                <span class="form-text text-danger" id="replace_err"></span>
-                                            </div>
-                                            <div style="display: none;" class="col-lg-6 kt-margin-b-10-tablet-and-mobile" id="oldOrderDiv">
-                                                <label>الطلب السابق</label><br />
-                                                <select class="selectpicker form-control" id="oldOrders" name="oldOrder">
-                                                    <option>--اختر الطلب--</option>
-                                                </select>
-                                                <span class="form-text text-danger" id="oldOrder_err"></span>
-                                            </div>
-                                        </div>
-                                        <span class="form-text text-danger" id="staff_password_err"></span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="kt-portlet__foot">
-                                <div class="kt-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-xl-3">
-                                        </div>
-                                        <div class="col-lg-9 col-xl-9">
-                                            <button type="button" onclick="createBasket()" class="btn btn-success">انشاء السلة</button>&nbsp;
-                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!--End:: App Content-->
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="editBasketModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">تحضر سلة</h4>
-            </div>
-            <div class="modal-body">
-                <!--Begin:: App Content-->
-                <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-                    <div class="kt-portlet">
-                        <form class="kt-form kt-form--label-right" id="editBasketForm">
-                            <div class="kt-portlet__body">
-                                <div class="kt-section kt-section--first">
-                                    <div class="kt-section__body">
-                                        <div class="form-group row">
-                                            <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
-                                                <label>السلة</label>
-                                                <select data-live-search="true" class="selectpicker form-control" id="e_basket_id" name="e_basket_id">
-                                                </select>
-                                                <span class="form-text text-danger" id="e_basked_id_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>اسم الزبون</label>
-                                                <input type="text" class="form-control" id="e_customer_name" name="e_customer_name" />
-                                                <span class="form-text text-danger" id="e_customer_name_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>رقم هاتف الزبون</label><br />
-                                                <input type="text" onkeydown="e_getOldOrder()" class="form-control" id="e_customer_phone" name="e_customer_phone" />
-                                                <span class="form-text text-danger" id="e_customer_phone_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>المدينة</label>
-                                                <select data-live-search="true" onchange="getTowns($('#e_town'),$(this).val());" class="selectpicker form-control" id="e_city" name="e_city"></select>
-                                                <span class="form-text text-danger" id="e_city_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>القضاء او الناحية او المنطقة</label><br />
-                                                <select data-live-search="true" class="selectpicker form-control" id="e_town" name="e_town"></select>
-                                                <span class="form-text text-danger" id="e_town_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>تفاصيل العنوان</label>
-                                                <textarea type="text" class="form-control" id="e_address" name="e_address"></textarea>
-                                                <span class="form-text text-danger" id="e_address_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>ملاحظه</label>
-                                                <textarea type="text" class="form-control" id="e_note" name="e_note"></textarea>
-                                                <span class="form-text text-danger" id="e_address_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>استبدال؟</label><br />
-                                                <input type="checkbox" onclick="e_replaceStatus()" value="2" id="e_replace" name="e_replace" />
-                                                <span class="form-text text-danger" id="replace_err"></span>
-                                            </div>
-                                            <div style="display: none;" class="col-lg-6 kt-margin-b-10-tablet-and-mobile" id="e_oldOrderDiv">
-                                                <label>الطلب السابق</label><br />
-                                                <select class="selectpicker form-control" id="e_oldOrders" name="e_oldOrder">
-                                                    <option>--اختر الطلب--</option>
-                                                </select>
-                                                <span class="form-text text-danger" id="e_oldOrder_err"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="kt-portlet__foot">
-                                <div class="kt-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-xl-3">
-                                        </div>
-                                        <div class="col-lg-9 col-xl-9">
-                                            <button type="button" onclick="updateBasket()" class="btn btn-danger">تحديث معلومات السلة</button>&nbsp;
-                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!--End:: App Content-->
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="editProduct" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"></button>
-                <h4 class="modal-title">تعديل منتج</h4>
-            </div>
-            <div class="modal-body">
-                <!--Begin:: App Content-->
-                <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
-                    <div class="kt-portlet">
-                        <form class="kt-form kt-form--label-right" id="editProductForm">
-                            <div class="kt-portlet__body">
-                                <div class="kt-section kt-section--first">
-                                    <div class="kt-section__body">
-                                        <div class="form-group row">
-                                            <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
-                                                <label>صوره</label>
-                                                <input type="file" class="form-control" id="e_img" name="e_img" />
-                                                <span class="form-text text-danger" id="e_customer_name_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>اسم المنتج</label>
-                                                <input type="text" class="form-control" id="e_name" name="e_name" />
-                                                <span class="form-text text-danger" id="e_name_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>SKU</label><br />
-                                                <input type="text" class="form-control" id="e_sku" name="e_sku" />
-                                                <span class="form-text text-danger" id="e_sku_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>سعر الشراء</label>
-                                                <input type="text" class="form-control" id="e_buy_price" name="e_buy_price" />
-                                                <span class="form-text text-danger" id="e_buy_price_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>سعر البيع</label><br />
-                                                <input type="text" class="form-control" id="e_price" name="e_price" />
-                                                <span class="form-text text-danger" id="e_price_err"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>الكميه</label>
-                                                <input type="number" class="form-control" id="e_qty" name="e_qty" />
-                                                <span class="form-text text-danger" id="e_qty_err"></span>
-                                            </div>
-                                            <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                                                <label>الموقع</label><br />
-                                                <input type="text" class="form-control" id="e_location" name="e_location" />
-                                                <span class="form-text text-danger" id="e_location_err"></span>
-                                            </div>
-                                            <input type="hidden" id="e_product_id" name="e_product_id" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="kt-portlet__foot">
-                                <div class="kt-form__actions">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-xl-3">
-                                        </div>
-                                        <div class="col-lg-9 col-xl-9">
-                                            <button type="button" onclick="updateProduct()" class="btn btn-danger">تحديث معلومات المنتج</button>&nbsp;
-                                            <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!--End:: App Content-->
-            </div>
-        </div>
-
-    </div>
 </div>
 
 <!--begin::Page Vendors(used by this page) -->
@@ -494,15 +243,15 @@ if (file_exists("script/_access.php")) {
             url: "script/_getFullProducts.php",
             type: "POST",
             beforeSend: function() {
-                $("#tb-productTable").addClass('loading');
+                $("#product-grid").addClass('loading');
             },
             data: $("#producttabledata").serialize(),
             success: function(res) {
                 $("#tb-productTable").DataTable().destroy();
                 console.log(res);
-                $("#productTable").html("");
+                $("#product-grid").html("");
                 $("#pagination").html("");
-                $("#tb-productTable").removeClass('loading');
+                $("#product-grid").removeClass('loading');
                 if (res.pages >= 1) {
                     if (res.page > 1) {
                         $("#pagination").append(
@@ -547,46 +296,27 @@ if (file_exists("script/_access.php")) {
                 }
 
                 $.each(res.data, function() {
-                    if (res.role != 4) {
-                        btn = '<button type="button" class="btn btn-clean fa-2x text-info"    onclick="editProduct(' + this.c_id + ')" data-toggle="modal" data-target="#editProduct"><span class="flaticon-edit"></sapn></button>' +
-                            '<button type="button" class="btn btn-clean fa-2x text-danger"  onclick="deleteProduct(' + this.c_id + ')" data-toggle="modal" data-target="#deleteProduct"><span class="flaticon-delete"></sapn></button>' +
-                            '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket(' + this.c_id + ')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn> شراء</button>' +
-                            '';
-                    } else {
-                        btn = '<button type="button" class="btn btn-clean fa-2x text-success" onclick="openBasket(' + this.c_id + ')" data-toggle="modal" data-target="#basketProductModal"><span class="flaticon-shopping-basket"></sapn> شراء</button>';
-                    }
-                    if (this.qty <= 0) {
-                        btn = '<button type="button" class="btn btn-clean text-info"    onclick="editProduct(' + this.c_id + ')" data-toggle="modal" data-target="#editProduct"><span class="flaticon-edit"></sapn></button>' +
-                            '<button type="button" class="btn btn-clean text-danger"  onclick="deleteProduct(' + this.c_id + ')" data-toggle="modal" data-target="#deleteProduct"><span class="flaticon-delete"></sapn></button>' +
-                            '<span type="button" class="text-warning">غير متوفر</span>' +
-                            '';
-                    }
-                    attribute = "";
-                    $.each(this.attribute, function() {
-                        attribute = attribute + "<b> " + this.name + "</b> : " + this.value + "&nbsp;&nbsp;&nbsp;&nbsp;";
-                    });
-                    $("#productTable").append(
-                        '<tr>' +
-                        '<td><input type="checkbox" name="id[]" rowid="' + this.c_id + '"></td>' +
-                        '<td><div style="background-image:url(img/product/' + this.path + ');" class="item-img-sm"></div></td>' +
-                        '<td>' + this.sku + '</td>' +
-                        '<td width="150px">' +
-                        btn +
-                        '</td>' +
-                        '<td>' + this.price + '</td>' +
-                        '<td>' + this.qty + '</td>' +
-                        '<td>' + this.name + '</td>' +
-                        '<td>' + attribute + '</td>' +
-                        '<td>' + this.store_name + '</td>' +
-                        '</tr>');
+                     $("#product-grid").append (
+                       `<div class="kt-widget-6__item col-lg-4" onclick="getProductDetails(`+this.id+`)" data-toggle="modal" data-target="#productDetails">
+                            <div class="kt-widget-6__item-pic">
+                                <img class=""  src="img/product/`+this.img+`" alt="صوره المنتج" onerror="this.onerror=null; this.src='img/default.svg'">
+                            </div>
+                            <div class="kt-widget-6__item-info">
+                                <div class="kt-widget-6__item-title h3">
+                                    `+this.name+`
+                                </div>
+                                <div class="price" >
+                                     `+this.price+` دينار
+                                </div>
+
+                                <div class="kt-widget-6__item-desc">
+                                    `+this.simple_des+`
+                                </div>
+                            </div>
+                        </div>`
+                       )
                 });
-                var myTable = $('#tb-productTable').DataTable({
-                    "oLanguage": {
-                        "sLengthMenu": "عرض_MENU_سجل",
-                        "sSearch": "بحث:",
-                    },
-                    "bPaginate": false,
-                });
+
             },
             error: function(e) {
                 $("#tb-ProductTable").removeClass('loading');
@@ -805,6 +535,59 @@ if (file_exists("script/_access.php")) {
             }
         });
     }
+function getProductDetails(id){
+        $.ajax({
+            url: "script/_getProductDetails.php",
+            type: "POST",
+            beforeSend: function() {
+                $("#productDetails").addClass('loading');
+            },
+            data: {id: id},
+            success: function(res) {
+              $("#productDetails").removeClass('loading');
+              console.log(res);
+              if (res.success == 1) {
+                $.each(res.data,function(){
+                  $("#title").text(this.name);
+                  $("#price").text(this.price+' دينار عراقي');
+                  $("#des").text(this.simple_des);
+                  $("#img").attr("src",'img/product/'+this.img);
+
+                  ///-----add thumpnails-----------
+                  $("#thumpnail").html("");
+                  $.each(this.images,function(){
+                      $("#thumpnail").append(
+                      '<div onmouseover="setImg(\'img/product/'+this.path+'\')" class="thump col" style="background-image:url(img/product/'+this.path+')"></div>'
+                      )
+                  });
+                  ///-----add thumpnails-----------
+                  $('#options').html("");
+                  $.each(this.attribute,function(){
+                      attr = '<h4>'+this.name+':</h4>';
+                      attr += '<select name="config[]" style="min-width:100px;height:30px;">';
+                      $.each(this.config,function(){
+                        attr += '<option value="'+this.id+'">'+this.value+'</option>';
+                      });
+                      attr += '</select>';
+                      $('#options').append(attr);
+                  });
+                });
+              }
+            },
+            error: function(e) {
+                $("#productDetails").removeClass('loading');
+                toastr.error("خطأ");
+                console.log(e);
+            }
+        });
+}
+$('img').on('error',function(){
+this.src='img/default.svg';
+});
+function setImg(path){
+  $("#img").attr('src',path);
+  console.log(path);
+}
     $(document).ready(function() {
 
         $("#allselector").change(function() {

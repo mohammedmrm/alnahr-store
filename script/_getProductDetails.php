@@ -4,25 +4,9 @@ error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
 require_once("dbconnection.php");
-$limit = trim($_REQUEST['limit']);
-if(empty($limit) || $limit <=0){
-  $limit=21;
-}
-$page = trim($_REQUEST['p']);
-if(empty($page) || $page <=0){
-  $page=1;
-}
-$search = trim($_REQUEST['search']);
-
+$id = $_REQUEST['id'];
 
 try{
-    $count = "select count(*) as count from product
-              left join stores on stores.id = product.store_id
-              left join category on category.id = product.category_id
-              left join (select max(path) as img,product_id from images
-              group by product_id) image on image.product_id = product.id
-              where product.id <> 0";
-
     $query = 'select product.*,category.title as category_name,
               stores.name as store_name,image.img as img
               from product
@@ -30,25 +14,11 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0';
-    if ($category >= 1) {
-        $query .=' and category.id=${category}';
-        $count .=' and category.id=${category}';
-    }
-    if ($search != "") {
-        $query .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
-        $count .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
-    }
-    $page = ($page - 1);
-    $query .= ' limit '. ($page * $limit) .' ,'. $limit;
+              where product.id = ?';
 
-    $data = getData($con,$query);
-    $ps = getData($con,$count);
-    $pages= ceil($ps[0]['count']/$limit);
+    $data = getData($con,$query,[$id]);
     $i=0;
-
     foreach($data as $v){
-      $id = $v['id'];
       if($v['type'] == 2){
         $sql = 'SELECT attribute.* FROM configurable_product
                 left join product on product.id = configurable_product.product_id
@@ -80,5 +50,5 @@ try{
    $success="0";
 }
 
-echo (json_encode(array("success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>($page+1),'role'=>$_SESSION['role'])));
+echo (json_encode(array("success"=>$success,"data"=>$data,'role'=>$_SESSION['role'])));
 ?>

@@ -62,7 +62,7 @@ workbox.routing.registerRoute(
  */
 self.__precacheManifest = [
   {
-    url: "_layout.php",
+    url: "layout.php",
     revision: "87c56f81355eb5393263a10c471d8929",
   },
 
@@ -153,10 +153,6 @@ self.__precacheManifest = [
     revision: "1e64af85296e71c32461996f76f5d85d",
   },
   {
-    url: "js/getManagers.js",
-    revision: "d08e848f9dc9ca43ea9e8bcf45e3130c",
-  },
-  {
     url: "js/getorderStatus.js",
     revision: "cb96f388f3e178a58b1232590c375893",
   },
@@ -174,66 +170,6 @@ self.__precacheManifest = [
   },
   { url: "js/toast.js", revision: "fae7f854c415e506d7f8d298fa9228e3" },
   { url: "js/webfont.js", revision: "9224f101e832356c17974cffa186ade2" },
-  { url: "login.php", revision: "e38f0869b5071a461bb57d65b7dcd7d3" },
-
-   {
-     url: "pages/addorder.php",
-     revision: "1db0e8f3057c2edc830c7259c344c32e",
-   },
-  {
-    url: "pages/addorders.php",
-    revision: "22601595f10da0d469c5c6078ab2f460",
-  },
-  {
-    url: "pages/branches.php",
-    revision: "adb615e1cf1426c9e6a9c845af5c22ac",
-  },
-  {
-    url: "pages/clients.php",
-    revision: "44fcfcc1ce76761a98de46a17f8f865c",
-  },
-  {
-    url: "pages/invoices.php",
-    revision: "3ba3cf632b6828c9d5851ae7627781b1",
-  },
-  {
-    url: "pages/ordersActions.php",
-    revision: "ba563d968b4bd9d414360a0ce3543dc8",
-  },
-  {
-    url: "pages/orderStatus.php",
-    revision: "a04b5e9214e16513a70df4c9dfae23a4",
-  },
- 
-  {
-    url: "pages/profile.php",
-    revision: "33d6f13bbe613a621a126149ecf3ddd0",
-  },
-  {
-    url: "pages/receipt.php",
-    revision: "0542d7a7c5d29f31d456e061e752d0bb",
-  },
-  {
-    url: "pages/returned.php",
-    revision: "81c25637c0ebd792193c9f6a07474060",
-  },
-  {
-    url: "pages/returnedToCityStore.php",
-    revision: "566db89f8af0ed43aeaf987e2774bf20",
-  },
-  {
-    url: "pages/staff.php",
-    revision: "4aa00dc864cfce8ae0e0b4a7656c5b19",
-  },
-  {
-    url: "pages/stores.php",
-    revision: "0c0ad04042bcb482890c062bfb2fa1c6",
-  },
-  {
-    url: "pages/towns.php",
-    revision: "af826206fcadef1de25abbf6596541be",
-  },
-
   { url: "README.md", revision: "12bfa1ca2343d74d54f4ef19c7c5ce0a" },
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
