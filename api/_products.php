@@ -39,8 +39,8 @@ try{
         $count .=' and product.category_id='.$cat;
   }
   if ($store >= 1) {
-        $query .=' and product.id='.$store;
-        $count .=' and product.id='.$store;
+        $query .=' and product.store_id='.$store;
+        $count .=' and product.store_id='.$store;
   }
   $f1 = "";
   if($_SESSION['role'] == 4){
