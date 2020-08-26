@@ -29,7 +29,8 @@ try{
             left join (
                 select max(path) as img,product_id from images group by product_id
             ) image on image.product_id = product.id
-            where product.id <> 0  ";
+            ";
+  $where = "where ";
     if ($search != "") {
         $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
     }
