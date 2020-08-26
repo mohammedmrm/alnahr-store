@@ -6,7 +6,7 @@ require_once("_access.php");
 require_once("dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
-  $limit=21;
+  $limit=15;
 }
 $page = trim($_REQUEST['p']);
 if(empty($page) || $page <=0){

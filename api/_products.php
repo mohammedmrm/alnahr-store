@@ -12,7 +12,7 @@ $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
   $limit=10;
 }
-$page = trim($_REQUEST['p']);
+$page = trim($_REQUEST['page']);
 if(empty($page) || $page <=0){
   $page=1;
 }
