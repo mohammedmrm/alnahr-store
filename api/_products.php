@@ -16,7 +16,7 @@ $page = trim($_REQUEST['page']);
 if(empty($page) || $page <=0){
   $page=1;
 }
-$name= trim($_REQUEST['search']);
+$search= trim($_REQUEST['search']);
 $cat = trim($_REQUEST['category']);
 $store = trim($_REQUEST['store']);
 try{
@@ -30,10 +30,11 @@ try{
                 select max(path) as img,product_id from images group by product_id
             ) image on image.product_id = product.id
             ";
-  $where = "where ";
-  if(!empty($name)){
-   $filter .= " and product.name like '%".$name."%' ";
-  }
+  $where = "where product.id <> 0 ";
+    if ($search != "") {
+        $query .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
+        $count .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
+    }
   if ($cat >= 1) {
         $query .=' and product.category_id='.$cat;
         $count .=' and product.category_id='.$cat;
