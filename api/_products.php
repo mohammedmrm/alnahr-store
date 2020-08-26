@@ -29,19 +29,15 @@ try{
             left join (
                 select max(path) as img,product_id from images group by product_id
             ) image on image.product_id = product.id
-            ";
-  $where = "where product.id <> 0 ";
+            where product.id <> 0  ";
     if ($search != "") {
-        $query .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
-        $count .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
+        $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
     }
   if ($cat >= 1) {
-        $query .=' and product.category_id='.$cat;
-        $count .=' and product.category_id='.$cat;
-  }
+        $filter .=' and product.category_id='.$cat;
+   }
   if ($store >= 1) {
-        $query .=' and product.store_id='.$store;
-        $count .=' and product.store_id='.$store;
+        $filter .=' and product.store_id='.$store;
   }
   $f1 = "";
   if($_SESSION['role'] == 4){
