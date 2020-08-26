@@ -32,8 +32,8 @@ try{
               group by product_id) image on image.product_id = product.id
               where product.id <> 0';
     if ($category >= 1) {
-        $query .=' and category.id=${category}';
-        $count .=' and category.id=${category}';
+        $query .=' and category.id='.$category;
+        $count .=' and category.id='.$category;
     }
     if ($search != "") {
         $query .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';

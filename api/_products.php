@@ -16,8 +16,9 @@ $page = trim($_REQUEST['page']);
 if(empty($page) || $page <=0){
   $page=1;
 }
-$name= trim($_REQUEST['name']);
+$name= trim($_REQUEST['search']);
 $cat = trim($_REQUEST['category']);
+$store = trim($_REQUEST['store']);
 try{
   $count = "select count(*) as count from product ";
   $query = "select product.*,category.title as category_name,
@@ -32,6 +33,14 @@ try{
   $where = "where ";
   if(!empty($name)){
    $filter .= " and product.name like '%".$name."%' ";
+  }
+  if ($cat >= 1) {
+        $query .=' and product.category_id='.$cat;
+        $count .=' and product.category_id='.$cat;
+  }
+  if ($store >= 1) {
+        $query .=' and product.id='.$store;
+        $count .=' and product.id='.$store;
   }
   $f1 = "";
   if($_SESSION['role'] == 4){

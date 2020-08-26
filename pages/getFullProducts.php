@@ -153,7 +153,7 @@ margin-right: 2.5%; }
                 </h3>
             </div>
         </div>
-        <form id="producttabledata">
+        <form id="producttabledata" action="#">
         <div class="kt-portlet__body  bg-white padding-10">
           <div class="kt-widget-6">
             <!-- begin::Tab Content -->
@@ -161,7 +161,7 @@ margin-right: 2.5%; }
                 <div class="row">
                   <div class="form-group ">
                     <div class="input-group input-group-lg">
-                    <input type="text" class="form-control" placeholder="بحث" aria-describedby="basic-addon1">
+                    <input type="text"  name="search" class="form-control" placeholder="بحث" aria-describedby="basic-addon1">
                     </div>
                   </div>
                 </div>
@@ -503,6 +503,13 @@ margin-right: 2.5%; }
     getCities($('#e_city'));
     getTowns($('#town'), 1);
     getTowns($('#e_town'), 1);
+    $(document).keydown(function(e) {
+    if (event.which === 13 || event.keyCode === 13 ) {
+        event.stopPropagation();
+        event.preventDefault();
+        getProducts();
+    }
+    });
     function getProducts() {
         $.ajax({
             url: "script/_getFullProducts.php",
@@ -846,9 +853,7 @@ function getProductDetails(id){
             }
         });
 }
-$('img').on('error',function(){
-this.src='img/default.svg';
-});
+
 function setImg(path){
   $("#img").attr('src',path);
   console.log(path);

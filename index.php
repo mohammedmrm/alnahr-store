@@ -233,7 +233,10 @@ License: You must have a valid license purchased only from https://themes.getboo
           width:30px;
           height:30px;
         }
-
+        .modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
         </style>
 	</head>
 
@@ -349,6 +352,9 @@ License: You must have a valid license purchased only from https://themes.getboo
             console.log(e)
           }
         }
+        $('img').on('error',function(){
+        this.src='img/default.svg';
+        });
         </script>
 
 
