@@ -2,8 +2,6 @@
 session_start();
 error_reporting(0);
 header("Content-Type: application/json; charset=UTF-8");
-
-
 require_once("dbconnection.php");
 require_once("_crpt.php");
 require_once("../config.php");
@@ -98,6 +96,8 @@ if($v->passes() && $msg == "") {
      $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$_SESSION['login']]);
      if($addToBasket){
        $success = 1;
+        $sql = "update basket set status=1 where staff_id=? and id=?";
+        setData($con,$sql,[$userid,$basket]);
      }
  }
 
