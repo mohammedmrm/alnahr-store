@@ -102,5 +102,5 @@ try{
    $success="0";
 }
 
-echo (json_encode(array($query,'code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
+echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page)));
 ?>

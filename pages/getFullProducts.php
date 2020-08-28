@@ -212,7 +212,7 @@ margin-right: 2.5%; }
                         <hr />
 						<div class="action">
 							<button class="add-to-cart btn btn-default" data-toggle="modal" data-target="#baskets" type="button">اضافه للسله</button>
-							<button class="like btn btn-default" onclick="addToFav()" type="button"><span class="fa fa-heart"></span></button>
+							<button class="like btn btn-default" onclick="deleteProduct()" type="button"><span class="fa fa-trash"></span></button>
 						</div>
 					</div>
 					<div class="preview col-xl-5">
@@ -929,16 +929,19 @@ function setImg(path){
         console.log($("#action").val());
     }
 
-    function deleteProduct(id) {
+    function deleteProduct() {
+      if(confirm("هل انت متاكد من حذف المنتج")){
         $.ajax({
-            url: "script/_runAction.php",
+            url: "script/_deleteFullProduct.php",
             type: "POST",
-            data: 'action=delete&ids[]=' + id,
+            data: {id: $("#product_id").val()},
             success: function(res) {
-                getProducts();
+
                 console.log(res);
                 if (res.success == 1) {
                     toastr.success("تم حذف المنتج");
+                    getProducts();
+                    $('.modal').modal('hide');
                 } else {
                     toastr.warning("حدث خطاء! حاول مرة اخرى.");
                 }
@@ -948,6 +951,7 @@ function setImg(path){
                 console.log(e);
             }
         });
+      }
     }
 
     function editProduct(id) {
