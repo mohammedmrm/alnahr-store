@@ -695,11 +695,6 @@ $.ajax({
      }else{
         inv = ""
      }
-     if(this.money_status == 1){
-       money = '<span class="success">تم التحاسب'+inv+'</span>';
-     }else{
-       money = '<span class="danger">لم يتم التحاسب'+inv+'</span>';
-     }
      nuseen_msg =this.nuseen_msg;
      notibg = "kt-badge--danger";
      if(this.nuseen_msg == null){
@@ -729,7 +724,6 @@ $.ajax({
                 '<button type="button" class="btn btn-clean" onclick="OrderChat('+this.id+');setMsgSeen('+this.id+')" data-toggle="modal" data-target="#chatOrderModal">'+
                    '<span class="kt-header__topbar-icon"> <i class="flaticon-chat"></i> <span class="kt-badge  kt-badge--notify kt-badge--sm '+notibg+'">'+nuseen_msg+'</span> </span>'+
                 '</button>'+
-                '<br />'+money+
             '</td>'+
             '<td>'+this.status_name+'</td>'+
             '<td>'+this.staff_name+'</td>'+

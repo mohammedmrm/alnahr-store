@@ -18,6 +18,7 @@ $response = 0;
 $data=[];
 $sql ="select * from companies where id=?";
 $res= getData($con,$sql,[$company]);
+$f='';
 foreach ($ids as $id){
   if($id > 1){
     $f .= ' or orders.id = '.$id.' ';
@@ -39,6 +40,7 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
 $result =getData($con,$sql);
 if(count($res) == 1){
     $response = httpPost($res[0]['dns'].'/api/addOrdersByClient.php',['token'=>$res[0]['token'],'store'=>$store,'orders'=>$result]);
+    $response = json_decode($response, true);
     foreach($response['data'] as $k=>$val){
         if(isset($val['barcode'])){
           $sql = "update orders set bar_code = ?,delivery_company_id=? where id=? ";
@@ -59,6 +61,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-
-echo json_encode(["msg"=>$msg,"response"=>json_decode(substr($response, 3))]);
+echo json_encode(["msg"=>$msg,"response"=>$response]);
 ?>

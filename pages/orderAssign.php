@@ -410,6 +410,7 @@ function sendOrders(){
         data:$("#ordertabledata").serialize(),
         success:function(res){
           console.log(res);
+          Toast.success("تم الاحاله"); 
         },
         error:function(e){
            Toast.error("خطأ!");
