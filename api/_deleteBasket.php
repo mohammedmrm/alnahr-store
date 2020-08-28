@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
@@ -26,7 +26,7 @@ $v->validate([
     'id'      => [$id,  'required|int'],
 ]);
 if($v->passes()) {
-  $sql = 'delete from basket where id=?';
+  $sql = 'delete from basket where id=? and staff_id=?';
   $data = setData($con,$sql,[$id,$userid]);
   if($data){
    $success = 1;
