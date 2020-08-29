@@ -6,13 +6,13 @@ require("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
 try{
-  $query = "select *,cites.id as value, cites.name as label from cites";
+  $query = "select cites.id as value, cites.name as label from cites";
   $data = getData($con,$query);
   $data2 = $data;
   $i = 0;
   foreach($data2 as $city){
-    $sql = "select *,towns.id as value, towns.name as label from towns where city_id=?";
-    $res = getData($con,$sql,[$city['id']]);
+    $sql = "select towns.id as value, towns.name as label from towns where city_id=?";
+    $res = getData($con,$sql,[$city['value']]);
     $data[$i]['towns'] = $res;
     $i++;
   }
