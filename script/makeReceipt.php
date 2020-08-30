@@ -77,6 +77,15 @@ require_once("../tcpdf/tcpdf.php");
 
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 foreach($datas as $data){
+
+$sql = "select category.title as cat_name from order_items
+LEFT join configurable_product on configurable_product.id = order_items.configurable_product_id
+left join product on configurable_product.product_id = product.id
+left join category on product.category_id = category.id where order_items.order_id = ? GROUP by category.id";
+$cats = getData($con,$sql,[$data['id']]);
+foreach($cats as $cat){
+  $type = $cat['cat_name']." ";
+}
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('07822816693');
@@ -121,7 +130,11 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // ---------------------------------------------------------
 //print_r($datas);
-
+if($data['city_id'] == 1){
+  $dev_p = $config['dev_b'];
+}else{
+  $dev_p = $config['dev_o'];
+}
 $pdf->SetFont('aealarabiya', '', 12);
 $pdf->setRTL(true);
 // add a page
@@ -131,7 +144,7 @@ $pdf->AddPage('P', 'A5');
 $tbl = '
 <table  cellpadding="5">
     <tr>
-    <td width="209">اسم السوق : '.$data['store_name'].'</td>
+    <td width="209">اسم الصفحه : '.$data['store_name'].'</td>
   </tr>
   <tr>
     <td width="209" >رقم الوصل : '.$data['order_no'].'</td>
@@ -165,9 +178,9 @@ $tbl = '
   </tr>
   <tr>
     <td colspan="1"  class="title">النوع</td>
-    <td colspan="1" align="center" >'.$data['order_type'].'</td>
+    <td colspan="1" align="center" >'.$type.'</td>
     <td colspan="1"  class="title">الوزن</td>
-    <td colspan="1" align="center" >'.$data['weight'].' كغم</td>
+    <td colspan="1" align="center" > 1</td>
     <td colspan="1" class="title">العدد</td>
     <td colspan="1" align="center" >'.$data['items'].'</td>
   </tr>

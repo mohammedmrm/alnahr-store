@@ -315,8 +315,7 @@ $pdf->setRTL(true);
 
 $pdf->SetFontSize(10);
 $id =
-'
-{
+'{
     "data":{
       "id":'.'"'.$data['id'].'",'.
       '"order_no":'.'"'.$data['order_no'].'",'.
