@@ -245,7 +245,7 @@ $pdf->AddPage('P', 'A5');
 $tbl = '
 <table  cellpadding="5">
     <tr>
-    <td width="209">اسم الصفحه : '.$data['store_name'].'</td>
+    <td width="209">اسم الصفحه : <center>'.$data['store_name'].'</center></td>
   </tr>
   <tr>
     <td width="209" >رقم الوصل : '.$data['order_no'].'</td>
