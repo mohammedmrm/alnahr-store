@@ -176,8 +176,6 @@ require_once("../tcpdf/tcpdf.php");
 class MYPDF extends TCPDF {
     public function Footer() {
         // Set font
-        $t = $GLOBALS['total'];
-        $reportType = $GLOBALS['reportType'];
         $this->SetFont('aealarabiya', 'B', 12);
         // Title
         $Footer= "";
@@ -199,7 +197,7 @@ LEFT join configurable_product on configurable_product.id = order_items.configur
 where order_items.order_id=?";
 $items = getData($con,$sql,[$data['id']]);
 foreach($items as $item){
-  $products = $item['sub_name'].", ";
+  $products .= $item['sub_name'].", ";
 }
 // set document information
 $pdf->SetCreator(PDF_CREATOR);

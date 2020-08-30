@@ -91,7 +91,7 @@ LEFT join configurable_product on configurable_product.id = order_items.configur
 where order_items.order_id=?";
 $items = getData($con,$sql,[$data['id']]);
 foreach($items as $item){
-  $products = $item['sub_name'].", ";
+  $products .= $item['sub_name'].", ";
 }
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
