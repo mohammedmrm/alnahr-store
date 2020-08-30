@@ -173,7 +173,17 @@ try{
 }
 
 require_once("../tcpdf/tcpdf.php");
-
+class MYPDF extends TCPDF {
+    public function Footer() {
+        // Set font
+        $t = $GLOBALS['total'];
+        $reportType = $GLOBALS['reportType'];
+        $this->SetFont('aealarabiya', 'B', 12);
+        // Title
+        $Footer= "";
+        $this->writeHTML($Footer);
+    }
+}
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 foreach($datas as $data){
 $sql = "select category.title as cat_name from order_items
@@ -184,7 +194,13 @@ $cats = getData($con,$sql,[$data['id']]);
 foreach($cats as $cat){
   $type = $cat['cat_name']." ";
 }
-
+$sql  = "select * from order_items
+LEFT join configurable_product on configurable_product.id = order_items.configurable_product_id
+where order_items.order_id=?";
+$items = getData($con,$sql,[$data['id']]);
+foreach($items as $item){
+  $products = $item['sub_name'].", ";
+}
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('07822816693');
@@ -238,7 +254,7 @@ if($data['delivery_company_id'] != 0){
 }else{
   $logo = "../../../".$config['Company_logo'];
 }
-$pdf->SetHeaderData($logo,30,"");
+$pdf->SetHeaderData($logo,30,'');
 $pdf->AddPage('P', 'A5');
 
 // Persian and English content
@@ -269,10 +285,15 @@ $tbl = '
         <td  align="center" class="title">العنوان</td>
     </tr>
     <tr>
-        <td colspan="1" height="60" align="center">'.$data['city'].' - '.$data['town'].' - '.$data['address'].'</td>
+        <td colspan="1"  align="center">'.$data['city'].' - '.$data['town'].' - '.$data['address'].'</td>
+    </tr>
+    <tr>
+        <td  align="center" class="title">المنتجات</td>
+    </tr>
+    <tr>
+        <td colspan="1">'.$products.'</td>
     </tr>
 </table>
-<br /><br />
 <table  border="1" cellpadding="5">
   <tr>
     <td colspan="6" class="title" align="center">تفاصيل الطلب</td>
@@ -378,12 +399,12 @@ $pdf->writeHTML("<br /><br /><hr>".$comp, true, false, false, false, '');
 $pdf->SetTextColor(55,55,55);
 //$pdf->setRTL(false);
 $pdf->SetFont('aealarabiya', '', 10);
-$del = "<br /><hr />صممم و طور من قبل شركة <b><u>النهر</u></b> للحلول البرمجية<br />07722877759";
-$pdf->writeHTML($del, true, false, false, false, '');
+//$del = "<br /><hr />صممم و طور من قبل شركة <b><u>النهر</u></b> للحلول البرمجية<br />07722877759";
+//$pdf->writeHTML($del, true, false, false, false, '');
 //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
 $style['position'] = '';
 $pdf->setRTL(false);
-$pdf->write2DBarcode($id, 'QRCODE,M',70, 130, 40, 40, $style, 'N');
+$pdf->write2DBarcode($id, 'QRCODE,M',10, 0, 30, 30, $style, 'N');
 
 }
 
