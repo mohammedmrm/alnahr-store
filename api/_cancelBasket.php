@@ -1,11 +1,12 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
-require_once("dbconnection.php");
-require_once("_crpt.php");
+require_once("../script/dbconnection.php");
+require_once("../script/_crpt.php");
+require_once("../config.php");
 require_once("../config.php");
 
 use Violin\Violin;
