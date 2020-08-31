@@ -26,7 +26,7 @@ $v->validate([
     ]);
 
 if($v->passes()) {
-  $sql = 'update basket set status = 1 where id=? and staff_id=?';
+  $sql = 'update basket set status = 2 where id=? and staff_id=?';
   $result = setData($con,$sql,[$id,$userid]);
   if($result > 0){
     $success = 1;
