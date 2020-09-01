@@ -44,7 +44,7 @@ $v->validate([
     'qty'     => [$qty,'required|int'],
 ]);
 $sql = "select * from basket where id=?";
-$basket2 = getData($con,$sql,[$basket2]);
+$basket2 = getData($con,$sql,[$basket]);
 $type = $basket2[0]['type'];
 $oldOrder = $basket2[0]['oldOrder_id'];
 if($type == 2){
@@ -99,7 +99,7 @@ if($v->passes() && $msg == "") {
      $configrabe_pro = getData($con,$query);
      $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
                 values (?,?,?,?)';
-     $addToBasket = setDataWithLastID($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$login['id']]);
+     $addToBasket = setDataWithLastID($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
      if($addToBasket>0){
         $success = 1;
         $sql = "update basket set status=1 where staff_id=? and id=?";
@@ -116,5 +116,5 @@ if($v->passes() && $msg == "") {
            ];
 }
 
-echo json_encode(["login"=>$login,'success'=>$success,'error'=>$error]);
+echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
 ?>
