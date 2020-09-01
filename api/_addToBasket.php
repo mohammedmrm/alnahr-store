@@ -3,8 +3,6 @@ session_start();
 error_reporting(0);
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-
-
 require_once("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
@@ -27,7 +25,7 @@ $password = $_REQUEST['password'];
 
 
 
-if($login['msg'] == 1){
+
 if(empty($qty)){
   $qty = 1;
 }
@@ -117,6 +115,6 @@ if($v->passes() && $msg == "") {
            'msg'=>$msg
            ];
 }
-}
+
 echo json_encode(["login"=>$login,'success'=>$success,'error'=>$error]);
 ?>
