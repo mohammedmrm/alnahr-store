@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
@@ -15,9 +16,10 @@ try{
             where  basket.id=? and basket.staff_id = ?";
   $data = getData($con,$query,[$id,$userid]);
   $sql = "select * from basket_items
-  inner join configurable_product on configurable_product.id = basket_items.configurable_product_id
-  where basket_items.basket_id = ?";
-  $res = getData($con,$sql,[$data[0]['id']]);
+   inner join configurable_product
+   on configurable_product.id = basket_items.configurable_product_id
+   where basket_items.basket_id = ?";
+  $res = getData($con,$sql,[$id]);
   $data['items'] = $res;
   $success="1";
 } catch(PDOException $ex) {
