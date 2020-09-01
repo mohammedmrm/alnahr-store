@@ -101,9 +101,11 @@ if($v->passes() && $msg == "") {
      $configrabe_pro = getData($con,$query);
      $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
                 values (?,?,?,?)';
-     $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$login['id']]);
-     if($addToBasket){
-       $success = 1;
+     $addToBasket = setDataWithLastID($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$login['id']]);
+     if($addToBasket>0){
+        $success = 1;
+        $sql = "update basket set status=1 where staff_id=? and id=?";
+        setData($con,$sql,[$userid,$addToBasket]);
      }
  }
 
