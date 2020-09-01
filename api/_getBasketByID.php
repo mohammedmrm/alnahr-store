@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
-require("dbconnection.php");
+require_once("../script/dbconnection.php");
 $id = $_REQUEST['id'];
 try{
   $query = "select * from basket
