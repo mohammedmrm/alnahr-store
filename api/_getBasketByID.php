@@ -14,6 +14,11 @@ try{
             ) a on a.basket_id = basket.id
             where  basket.id=? and basket.staff_id = ?";
   $data = getData($con,$query,[$id,$userid]);
+  $sql = "select * from basket_items
+  inner join configurable_product on configurable_product.id = basket_items.configurable_product_id
+  where basket_items.basket_id = ?";
+  $res = getData($con,$sql,[$data[0]['id']]);
+  $data['items'] = $res;
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];
