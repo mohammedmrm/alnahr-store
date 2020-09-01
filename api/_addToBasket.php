@@ -102,8 +102,8 @@ if($v->passes() && $msg == "") {
      $addToBasket = setDataWithLastID($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
      if($addToBasket>0){
         $success = 1;
-        $sql = "update basket set status=1 where staff_id=? and id=?";
-        setData($con,$sql,[$userid,$addToBasket]);
+        $sql = "update basket set status=1 where  id=?";
+        setData($con,$sql,[$basket]);
      }
  }
 
