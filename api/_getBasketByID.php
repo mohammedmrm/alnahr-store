@@ -20,6 +20,7 @@ try{
             left join towns on towns.id = basket.town_id
             where  basket.id=? and basket.staff_id = ?";
   $data = getData($con,$query,[$id,$userid]);
+  $data = $data[0];
   $sql = "select * from basket_items
    inner join configurable_product
    on configurable_product.id = basket_items.configurable_product_id

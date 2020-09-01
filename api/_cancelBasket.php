@@ -7,8 +7,6 @@ access();
 require_once("../script/dbconnection.php");
 require_once("../script/_crpt.php");
 require_once("../config.php");
-require_once("../config.php");
-
 use Violin\Violin;
 require_once('../validator/autoload.php');
 $v = new Violin;
