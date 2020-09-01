@@ -99,8 +99,8 @@ if($v->passes() && $msg == "") {
      $configrabe_pro = getData($con,$query);
      $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
                 values (?,?,?,?)';
-     $addToBasket = setDataWithLastID($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
-     if($addToBasket>0){
+     $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
+     if($addToBasket){
         $success = 1;
         $sql = "update basket set status=1 where  id=?";
         setData($con,$sql,[$basket]);
