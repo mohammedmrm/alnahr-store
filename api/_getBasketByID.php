@@ -6,13 +6,18 @@ header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
+require_once("../config.php");
 $id = $_REQUEST['id'];
 try{
-  $query = "select * from basket
+  $query = "select basket.*,a.*,cites.name as city_name,towns.name as town_name,
+             if(basket.city_id = 1,".$config['dev_o'].",".$config['dev_o'].") as dev_price
+            from basket
             left join staff on staff.id = basket.staff_id
             left join (
                    select count(*) as items,basket_id from basket_items group by basket_id
             ) a on a.basket_id = basket.id
+            left join cites on cites.id = basket.city_id
+            left join towns on towns.id = basket.town_id
             where  basket.id=? and basket.staff_id = ?";
   $data = getData($con,$query,[$id,$userid]);
   $sql = "select * from basket_items
