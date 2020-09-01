@@ -25,8 +25,6 @@ $option = $_REQUEST['option'];
 $username = $_REQUEST['username'];
 $password = $_REQUEST['password'];
 
-require_once("_access.php");
-$login = access($username,$password,$con);
 
 
 if($login['msg'] == 1){
