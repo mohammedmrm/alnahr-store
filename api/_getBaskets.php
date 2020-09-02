@@ -4,6 +4,7 @@ header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
+require_once("../config.php");
 try{
   $query = "select basket.*,a.*,cites.name as city_name,towns.name as town_name,
              if(basket.city_id = 1,".$config['dev_b'].",".$config['dev_o'].") as dev_price
