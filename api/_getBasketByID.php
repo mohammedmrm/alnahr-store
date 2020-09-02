@@ -21,7 +21,7 @@ try{
             where  basket.id=? and basket.staff_id = ?";
   $data = getData($con,$query,[$id,$userid]);
   $data = $data[0];
-  $sql = "select * from basket_items
+  $sql = "select *,basket_items.id as bi_id from basket_items
    inner join configurable_product
    on configurable_product.id = basket_items.configurable_product_id
    where basket_items.basket_id = ?";
