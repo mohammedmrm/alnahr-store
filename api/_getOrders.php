@@ -15,6 +15,7 @@ $order = $_REQUEST['order'];
 $status = $_REQUEST['status'];
 $where = "";
 $filter = "";
+$success = 0 ;
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
   $limit=10;
@@ -83,5 +84,8 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                     $page = ($page - 1) * $limit;
                     $query .= ' limit ' .$page .','. $limit;
                     $data = getData($con,$query);
+if(count($data) > 0){
+    $success = 1;
+}
 echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data)));
 ?>
