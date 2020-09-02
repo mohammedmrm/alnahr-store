@@ -10,7 +10,7 @@ require_once("../config.php");
 $id = $_REQUEST['id'];
 try{
   $query = "select basket.*,a.*,cites.name as city_name,towns.name as town_name,
-             if(basket.city_id = 1,".$config['dev_o'].",".$config['dev_o'].") as dev_price
+             if(basket.city_id = 1,".$config['dev_b'].",".$config['dev_o'].") as dev_price
             from basket
             left join staff on staff.id = basket.staff_id
             left join (
