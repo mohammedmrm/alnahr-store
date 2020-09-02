@@ -15,6 +15,7 @@ $v = new Violin;
 
 $success = 0;
 $id    = $_REQUEST['id'];
+$discount    = $_REQUEST['discount'];
 if(empty($discount)){
   $discount=0;
 }
