@@ -15,6 +15,9 @@ $v = new Violin;
 
 $success = 0;
 $id    = $_REQUEST['id'];
+if(empty($discount)){
+  $discount=0;
+}
 $error = [];
 $v->addRuleMessages([
     'required' => ' الحقل مطلوب',
@@ -23,17 +26,19 @@ $v->addRuleMessages([
 
 $v->validate([
     'id'=> [$id,    'required|int'],
+    'discount'=> [$discount,    'required|int'],
     ]);
 
 if($v->passes()) {
-  $sql = 'update basket set status = 2 where id=? and staff_id=?';
-  $result = setData($con,$sql,[$id,$userid]);
+  $sql = 'update basket set status = 2, discount=? where id=? and staff_id=?';
+  $result = setData($con,$sql,[$discount,$id,$userid]);
   if($result > 0){
     $success = 1;
   }
 }else{
   $error = [
            'id'=> implode($v->errors()->get('id')),
+           'discount'=> implode($v->errors()->get('discount')),
            ];
 }
 echo json_encode(['code'=>200,'message'=>$msg,'success'=>$success,'error'=>$error]);
