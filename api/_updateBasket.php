@@ -15,7 +15,7 @@ $v = new Violin;
 $success = 0;
 $customer_name    = $_REQUEST['name'];
 $customer_phone   = str_replace('-','',$_REQUEST['phone']);;
-$customer_phone   = str_replace(' ','',$_REQUEST['phone']);;
+$customer_phone   = str_replace(' ','',$customer_phone);;
 $city= $_REQUEST['city'];
 if(empty($city)){
   $city = 0;
@@ -81,7 +81,7 @@ $v->validate([
     'address'         => [$address,'max(250)'],
     'note'            => [$note,  'max(250)'],
 ]);
-if($v->passes() && $max == "" && $oldOrder_err == "") {
+if($v->passes() && $oldOrder_err == "") {
   try{
       $sql = 'update basket set
       customer_name=?,
