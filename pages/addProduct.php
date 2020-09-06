@@ -1,8 +1,9 @@
 <?php
 require_once("script/dbconnection.php");
+require_once("script/_access.php");
 function categoryTree($parent_id = -1, $sub_mark = ''){
     global $con;
-    $query = getData($con,"SELECT * FROM category WHERE parent_id = $parent_id ORDER BY title ASC");
+    $query = getData($con,"SELECT * FROM category WHERE parent_id = $parent_id and company_id=? ORDER BY title ASC",[$_SESSION['company_id']]);
     foreach($query as $row){
             echo '<option value="'.$row['id'].'">'.$sub_mark.$row['title'].'</option>';
             categoryTree($row['id'], $sub_mark.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');

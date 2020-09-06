@@ -28,9 +28,9 @@ $sql = "SELECT
           SUM(IF (order_status_id = '7',1,0)) as  posponded,
           branches.name as branch_name
           FROM orders inner join branches on branches.id = orders.from_branch
-          where date between '".$start."' and '".$end."'
+          where orders.company_id=? and date between '".$start."' and '".$end."'
           GROUP BY from_branch";
 
-$result = getData($con,$sql);
+$result = getData($con,$sql,[$_SESSION['company_id']]);
 echo json_encode(['data'=>$result]);
 ?>

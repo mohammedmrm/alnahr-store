@@ -30,7 +30,7 @@ access([1,2,5]);
 	<div class="kt-portlet__head">
 		<div class="kt-portlet__head-label">
 			<h3 class="kt-portlet__head-title">
-				الصفحات (الاسواق)
+			   التصنيفات
 			</h3>
 		</div>
 	</div>
@@ -100,7 +100,7 @@ getAllCategories($("#getAllCategoriesTable"));
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">البيجات</h4>
+          <h4 class="modal-title">التصنيفات</h4>
         </div>
         <div class="modal-body">
 		<!--begin::Portlet-->
@@ -221,7 +221,7 @@ function deleteCategory(id){
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">اضافة صفحة</h4>
+          <h4 class="modal-title">اضافة تصنيف</h4>
         </div>
         <div class="modal-body">
 		<!--begin::Portlet-->
@@ -239,7 +239,7 @@ function deleteCategory(id){
                           require_once("script/dbconnection.php");
                           function categoryTree($parent_id = -1, $sub_mark = ''){
                               global $con;
-                              $query = getData($con,"SELECT * FROM category WHERE parent_id = $parent_id ORDER BY title ASC");
+                              $query = getData($con,"SELECT * FROM category WHERE parent_id = $parent_id and company_id=? ORDER BY title ASC",[$_SESSION['company_id']]);
                               foreach($query as $row){
                                       echo '<option value="'.$row['id'].'">'.$sub_mark.$row['title'].'</option>';
                                       categoryTree($row['id'], $sub_mark.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');

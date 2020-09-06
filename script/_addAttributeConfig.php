@@ -55,9 +55,9 @@ if($v->passes() && $img_err ==  "") {
     move_uploaded_file($img["tmp_name"], $destination);
   }
 
-  $sql = 'insert into attribute_config (attribute_id,value,img) values
-                             (?,?,?)';
-  $result = setData($con,$sql,[$id,$name,$imgPath]);
+  $sql = 'insert into attribute_config (attribute_id,value,img,company_id) values
+                             (?,?,?,?)';
+  $result = setData($con,$sql,[$id,$name,$imgPath,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
   }

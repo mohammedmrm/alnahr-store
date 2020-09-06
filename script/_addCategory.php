@@ -16,6 +16,9 @@ $v = new Violin;
 
 $success = 0;
 $parent = $_REQUEST['parent'];
+if(empty($parent)){
+  $parent=-1;
+}
 $name   = $_REQUEST['name'];
 
 
@@ -25,7 +28,7 @@ $v->addRuleMessage('unique', ' القيمة المدخلة مستخدمة بال
 $v->addRule('unique', function($value, $input, $args) {
     $value  = trim($value);
     if(!empty($value)){
-      $exists = getData($GLOBALS['con'],"SELECT * FROM category WHERE title='".$value."'");
+      $exists = getData($GLOBALS['con'],"SELECT * FROM category WHERE title='".$value."' and company_id=?",[$_SESSION['company_id']]);
     }else{
       $exists = 0;
     }

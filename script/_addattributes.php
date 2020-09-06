@@ -28,9 +28,9 @@ $v->validate([
 ]);
 
 if($v->passes()) {
-  $sql = 'insert into attribute (name) values
-                             (?)';
-  $result = setData($con,$sql,[$name]);
+  $sql = 'insert into attribute (name,company_id) values
+                             (?,?)';
+  $result = setData($con,$sql,[$name,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
   }

@@ -8,8 +8,8 @@ if(empty($branch)){
 }
 require("dbconnection.php");
 try{
-  $query = "select * from clients";
-  $data = getData($con,$query);
+  $query = "select * from clients where company_id=?";
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];

@@ -52,10 +52,9 @@ access([1]);
                             <tfoot>
 	                <tr>
 								<th>ID</th>
-								<th>شعار الشركه</th>
 								<th>اسم الشركه</th>
 								<th>رقم الهاتف</th>
-								<th>نص تسجيل الشركه</th>
+								<th>ملاحظه</th>
 								<th>تعديل</th>
 					</tr>
 	           </tfoot>
@@ -91,15 +90,13 @@ $.ajax({
      elem.append(
        '<tr>'+
             '<td>'+this.id+'</td>'+
-            '<td><img src="img/logos/companies/'+this.logo+'" width="100px"></td>'+
             '<td>'+this.name+'</td>'+
             '<td>'+this.phone+'</td>'+
-            '<td>'+this.text1+'</td>'+
+            '<td>'+this.note+'</td>'+
             '<td width="150px">'+
               '<button class="btn btn-clean btn-icon-lg" onclick="editCompany('+this.id+')" data-toggle="modal" data-target="#editCompany"><span class="flaticon-edit"></sapn>'+
               '<button class="btn btn-clean btn-icon-lg" onclick="deleteCompany('+this.id+')" data-toggle="modal" data-target="#deleteCompany"><span class="flaticon-delete"></sapn>'+
             '</button></td>'+
-
        '</tr>');
      });
      var myTable= $('#tb-getAllcompanies').DataTable({
@@ -190,16 +187,10 @@ getAllcompanies($("#getAllcompaniesTable"));
 
     </div>
   </div>
-
-<script type="text/javascript" src="js/getCities.js"></script>
-<script type="text/javascript" src="js/getManagers.js"></script>
-<script type="text/javascript" src="js/getBraches.js"></script>
 <script>
 function editCompany(id){
   $(".text-danger").text("");
   $("#editCompanyid").val(id);
-  getCities($("#e_Company_city"));
-  getManagers($("#e_Company_manager"));
   $.ajax({
     url:"script/_getCompanyByID.php",
     data:{id: id},
@@ -213,7 +204,6 @@ function editCompany(id){
           $('#e_Company_name').val(this.name);
           $('#e_Company_email').val(this.email);
           $('#e_Company_phone').val(this.phone);
-          $('#e_Company_branch').selectpicker('val', this.branch_id);
         });
       }
       console.log(res);
@@ -299,40 +289,35 @@ function deleteCompany(id){
   				  <div class="kt-portlet__body">
   					<div class="form-group">
   						<label>الاسم الشركه:</label>
-  						<input type="name" name="Company_name" class="form-control"  placeholder="ادخل الاسم ">
-  						<span class="form-text  text-danger" id="Company_name_err"></span>
+  						<input type="name" name="name" class="form-control"  placeholder="ادخل الاسم">
+  						<span class="form-text  text-danger" id="name_err"></span>
   					</div>
   					<div class="form-group">
-  						<label>شعار الشركه:</label>
-  						<input type="file" name="Company_logo" class="form-control">
-  						<span  id="Company_logo_err"class="form-text  text-danger"></span>
+  						<label>هاتف الشركه:</label>
+  						<input type="tel" name="phone" class="form-control">
+  						<span  id="phone_err"class="form-text  text-danger"></span>
   					</div>
   					<div class="form-group">
-  						<label>توكن:</label>
-  						<input type="text" name="Company_token" class="form-control" placeholder="ex: 1r76yuiort34984.....">
-  						<span  id="Company_token_err"class="form-text  text-danger"></span>
+  						<label>ملاحظه:</label>
+  						<textarea  name="note" class="form-control" ></textarea>
+  						<span class="form-text  text-danger" id="note_err"></span>
   					</div>
-                      					<div class="form-group">
-  						<label>الموقع الالكتروني:</label>
-  						<input type="text" name="Company_dns" class="form-control" placeholder="ex: www.example.com">
-  						<span  id="Company_dns_err"class="form-text  text-danger"></span>
+                    <hr />
+  					<div class="form-group">
+  						<label>اسم مدير الشركه:</label>
+  						<input type="text" name="m_name" class="form-control">
+  						<span  id="m_name_err"class="form-text  text-danger"></span>
   					</div>
   					<div class="form-group">
   						<label>رقم الهاتف:</label>
-  						<input type="text" name="Company_phone" class="form-control" placeholder="ادخل رقم الهاتف">
-  						<span  id="Company_phone_err"class="form-text  text-danger"></span>
+  						<input type="tel" name="username" class="form-control" placeholder="ادخل رقم الهاتف">
+  						<span class="form-text  text-danger" id="username_err"></span>
   					</div>
   					<div class="form-group">
-  						<label>نص تسجيل الشركه:</label>
-  						<textarea  name="Company_text1" class="form-control" ></textarea>
-  						<span class="form-text  text-danger" id="Company_text1_err"></span>
+  						<label>كلمه المرور:</label>
+  						<input type="password" name="password" class="form-control" placeholder="ادخل رقم الهاتف">
+  						<span  id="password_err"class="form-text  text-danger"></span>
   					</div>
-  					<div class="form-group">
-  						<label>نص افرع الشركه:</label>
-  						<textarea  name="Company_text2" class="form-control" ></textarea>
-  						<span class="form-text  text-danger" id="Company_text2_err"></span>
-  					</div>
-
   	            </div>
                 </div>
 	            <div class="kt-portlet__foot kt-portlet__foot--solid">
@@ -358,18 +343,19 @@ function deleteCompany(id){
     var myform = document.getElementById('addCompanyForm');
     var fd = new FormData(myform);
   $.ajax({
-     url:"script/_addCompany.php",
+     url:"script/_addHeadCompany.php",
      type:"POST",
      data:fd,
      processData: false,  // tell jQuery not to process the data
      contentType: false,
    	 cache: false,
      beforeSend:function(){
-          $("#Company_name_err").text('');
-           $("#Company_phone_err").text('');
-           $("#Company_text1_err").text('');
-           $("#Company_text2_err").text('');
-           $("#Company_logo_err").text('');
+           $("#name_err").text('');
+           $("#phone_err").text('');
+           $("#username_err").text('');
+           $("#password_err").text('');
+           $("#note_err").text('');
+           $("#m_name_err").text('');
      },
      success:function(res){
        console.log(res);
@@ -378,13 +364,12 @@ function deleteCompany(id){
          $("#addCompanyForm input").val("");
          Toast.success('تم الاضافة');
        }else{
-           $("#Company_name_err").text(res.error["Company_name_err"]);
-           $("#Company_phone_err").text(res.error["Company_phone_err"]);
-           $("#Company_text1_err").text(res.error["Company_text1_err"]);
-           $("#Company_text2_err").text(res.error["Company_text2_err"]);
-           $("#Company_logo_err").text(res.error["Company_logo_err"]);
-           $("#Company_token_err").text(res.error["Company_token_err"]);
-           $("#Company_dns_err").text(res.error["Company_dns_err"]);
+           $("#name_err").text(res.error["name_err"]);
+           $("#phone_err").text(res.error["phone_err"]);
+           $("#note_err").text(res.error["note_err"]);
+           $("#username_err").text(res.error["username_err"]);
+           $("#password_err").text(res.error["password_err"]);
+           $("#m_name_err").text(res.error["mname_err"]);
        }
      },
      error:function(e){

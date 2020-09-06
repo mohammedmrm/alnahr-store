@@ -26,7 +26,7 @@ $inserted = "select staff.name as name , count(orders.mandop_id) as inserted,
               left join orders orders on orders.mandop_id = staff.id and orders.confirm =1
               left join stores on  stores.id = orders.store_id
               left join mandop_stores on  mandop_stores.store_id = stores.id
-              where (orders.date between '".$start."' and '".$end."')
+              where staff.company_id=? and (orders.date between '".$start."' and '".$end."')
               GROUP by staff.id order by count(orders.mandop_id) DESC limit 10";
 }else{
 $inserted = "select staff.name as name , count(orders.mandop_id) as inserted,
@@ -35,9 +35,9 @@ $inserted = "select staff.name as name , count(orders.mandop_id) as inserted,
               left join orders orders on orders.mandop_id = staff.id and orders.confirm =1
               left join stores on  stores.id = orders.store_id
               left join mandop_stores on  mandop_stores.store_id = stores.id
-              where (orders.date between '".$start."' and '".$end."') and staff.id = '".$_SESSION['userid']."'
+              where staff.company_id=? and (orders.date between '".$start."' and '".$end."') and staff.id = '".$_SESSION['userid']."'
               GROUP by staff.id order by count(orders.mandop_id) DESC limit 10";
 }
-$result = getData($con,$inserted);
+$result = getData($con,$inserted,[$_SESSION['company_id']]);
 echo json_encode(['data'=>$result]);
 ?>

@@ -21,12 +21,12 @@ if(empty($start)) {
 
 if($_SESSION['role'] != 1){
   $s = "select sum(total_price-discount) as total, count(*) as orders from orders where (mandop_id=?) and
-        date between '".$start."' and '".$end."' and confirm=1";
+        orders.company_id=? and  date between '".$start."' and '".$end."' and confirm=1";
   $r= getData($con,$s,[$_SESSION['userid']]);
 }else{
   $s = "select sum(total_price-discount) as total, count(*) as orders from orders where
-        date between '".$start."' and '".$end."' and confirm = 1";
-  $r= getData($con,$s);
+        orders.company_id=? and  date between '".$start."' and '".$end."' and confirm = 1";
+  $r= getData($con,$s,,[$_SESSION['company_id']]);
 }
 echo json_encode(['data'=>$r]);
 ?>

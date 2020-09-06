@@ -34,7 +34,7 @@ if($_SESSION['user_details']['role_id'] == 1){
        from orders
        left JOIN client_dev_price
             on client_dev_price.client_id = orders.client_id AND client_dev_price.city_id = orders.to_city
-       where date between "'.$start.'" and "'.$end.'"
+       where orders.company_id=? and date between "'.$start.'" and "'.$end.'"
        GROUP by  DATE_FORMAT(date, "%Y-%m-%d")';
 
 }else{
@@ -52,10 +52,10 @@ if($_SESSION['user_details']['role_id'] == 1){
        from orders
        left JOIN client_dev_price
             on client_dev_price.client_id = orders.client_id AND client_dev_price.city_id = orders.to_city
-       where date between "'.$start.'" and "'.$end.'" and from_branch = "'.$_SESSION['user_details']['branch_id'].'"
+       where orders.company_id=? and date between "'.$start.'" and "'.$end.'" and from_branch = "'.$_SESSION['user_details']['branch_id'].'"
        GROUP by  DATE_FORMAT(date, "%Y-%m-%d")';
 
 }
-$data =  getData($con,$sql);
+$data =  getData($con,$sql,[$_SESSION['company_id']]);
 echo json_encode(['data'=>$data,$sql]);
 ?>
