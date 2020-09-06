@@ -49,6 +49,7 @@ include_once("config.php");
 
 		<!--begin::Layout Skins(used by all pages) -->
 		<link href="assets/css/skins/header/base/light.rtl.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/pages/login/login-v1.rtl.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/skins/header/menu/light.rtl.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/skins/brand/light.rtl.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/skins/aside/navy.rtl.css" rel="stylesheet" type="text/css" />
