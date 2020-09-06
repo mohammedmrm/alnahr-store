@@ -31,6 +31,7 @@ try{
             ) image on image.product_id = product.id
             ";
   $where = "where ";
+  $filter .= " and product.company_id=?"
     if ($search != "") {
         $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
     }
@@ -66,8 +67,8 @@ try{
   }
   $lim = " limit ".(($page-1) * $limit).",".$limit;
   $query .=  $lim;
-  $data = getData($con,$query);
-  $ps = getData($con,$count);
+  $data = getData($con,$query,[$head_company_id]);
+  $ps = getData($con,$count,[$head_company_id]);
   $pages= ceil($ps[0]['count']/$limit);
   $j=0;
   foreach($data as $product){

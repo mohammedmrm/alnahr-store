@@ -7,11 +7,11 @@ access([1,2,3]);
 require("dbconnection.php");
 $city = $_REQUEST['city'];
 if(empty($city)){
-  $query = "select * from category";
+  $query = "select * from category where company_id=?";
 }
 try{
 
-  $data = getData($con,$query);
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex,'q'=>$query];

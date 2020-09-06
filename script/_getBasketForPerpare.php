@@ -16,11 +16,11 @@ try{
             left join (
                    select count(*) as items,basket_id from basket_items group by basket_id
             ) a on a.basket_id = basket.id
-            where  (basket.status = 2 || basket.status = 3)  and a.items > 0";
+            where  (basket.status = 2 || basket.status = 3)  and a.items > 0 and basket.company_id=?";
   if($store > 0){
     $filter = " and store_id =".$store;
   }
-  $data = getData($con,$query);
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];

@@ -7,9 +7,9 @@ access([1]);
 require("dbconnection.php");
 $branch = $_REQUEST['branch'];
 try{
-  $query = "select companies.* from companies";
+  $query = "select companies.* from companies where company_id=?";
 
-  $data = getData($con,$query);
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];

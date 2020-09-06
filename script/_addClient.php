@@ -64,9 +64,9 @@ $v->validate([
 
 if($v->passes()) {
   $password = hashPass($password);
-  $sql = 'insert into clients (name,phone,email,password,branch_id) values
-                              (?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$phone,$email,$password,$branch]);
+  $sql = 'insert into clients (name,phone,email,password,branch_id,company_id) values
+                              (?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$phone,$email,$password,$branch,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
     $sql = "select * from clients where phone=? and branch_id=?";

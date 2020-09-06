@@ -50,9 +50,9 @@ $v->validate([
 ]);
 
 if($v->passes()) {
-  $sql = 'insert into stores (name,client_id,note) values
-                              (?,?,?)';
-  $result = setData($con,$sql,[$name,$client,$note]);
+  $sql = 'insert into stores (name,client_id,note,company_id) values
+                              (?,?,?,?)';
+  $result = setData($con,$sql,[$name,$client,$note,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
     $sql = "select token from clients where id = ?";

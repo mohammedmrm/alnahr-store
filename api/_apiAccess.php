@@ -14,6 +14,7 @@ if(!empty($password) && !empty($username)){
      $msg = 1;
      $code = 200;
      $userid = $loginres[0]['id'];
+     $head_company_id= $loginres[0]['company_id'];
   }else{
      $msg ="incorrect username or password";
      $code = 300;

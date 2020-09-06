@@ -20,6 +20,7 @@ if(empty($username) || empty($password)){
     $_SESSION['username']=$result[0]['phone'];
     $_SESSION['userid']=$result[0]['id'];
     $_SESSION['role']=$result[0]['role_id'];
+    $_SESSION['company_id']=$result[0]['company_id'];
     $_SESSION['user_details']=$result[0];
   }
 }

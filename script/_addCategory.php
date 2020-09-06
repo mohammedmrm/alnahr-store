@@ -47,9 +47,9 @@ $v->validate([
 ]);
 
 if($v->passes()) {
-  $sql = 'insert into category (title,parent_id,note) values
-                              (?,?,?)';
-  $result = setData($con,$sql,[$name,$parent,$note]);
+  $sql = 'insert into category (title,parent_id,note,company_id) values
+                              (?,?,?,?)';
+  $result = setData($con,$sql,[$name,$parent,$note,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
  }

@@ -9,11 +9,11 @@ $query = "select
            stores.name as store, stores.id as id,clients.name as client_name
            from stores
            left join clients on clients.id = stores.client_id
-           ";
+           where company_id=?";
 
 try{
 
-  $data = getData($con,$query);
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex,'q'=>$query];

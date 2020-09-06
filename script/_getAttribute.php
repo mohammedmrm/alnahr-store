@@ -6,8 +6,8 @@ access([1,2,3,4,5,6]);
 $id = $_REQUEST['id'];
 require("dbconnection.php");
 try{
-  $query = "select * from attribute where id =?";
-  $data = getData($con,$query,[$id]);
+  $query = "select * from attribute where id =? and company_id=?";
+  $data = getData($con,$query,[$id,$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];

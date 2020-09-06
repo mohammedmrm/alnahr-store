@@ -76,9 +76,9 @@ if($v->passes() && $img_err == "") {
   $destination = "../img/staff/".$branch."/".$id.".jpg";
   $imgPath = $branch."/".$id.".jpg";
   move_uploaded_file($_FILES["staff_id"]["tmp_name"], $destination);
-  $sql = 'insert into staff (name,phone,email,branch_id,password,id_copy,role_id) values
-                             (?,?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$phone,$email,$branch,$pass,$imgPath,$role]);
+  $sql = 'insert into staff (name,phone,email,branch_id,password,id_copy,role_id,company_id) values
+                             (?,?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$phone,$email,$branch,$pass,$imgPath,$role,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
     $sql = 'select token from staff where role_id = 1';

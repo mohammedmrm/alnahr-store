@@ -83,8 +83,8 @@ foreach($imgs["tmp_name"] as $val){
    $img_err =  "يجب رفع صورة واحدة على الاقل";
 }
 if($v->passes() && $img_err ==""){
-  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price) values (?,?,?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price]);
+  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price,company_id) values (?,?,?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
     $product = 'select * from product where name = ? and type = ? and category_id = ? order by id DESC limit 1';;
@@ -116,8 +116,8 @@ if($v->passes() && $img_err ==""){
           $imgPath2 = $res['id']."/".$imgName.$ext;
           move_uploaded_file($_FILES['config_matrix']["tmp_name"][$m]['img'], $destination);
         }
-        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,location,stock,sub_name,img) values(?,?,?,?,?,?,?,?,?)";
-        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku'],$val['location'],$val['stock'],$val['sub_name'],$imgPath2]);
+        $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,location,stock,sub_name,img,company_id) values(?,?,?,?,?,?,?,?,?,?)";
+        $res2 = setData($con,$sql,[$res['id'],$val['buy_price'],$val['price'],$val['qty'],$val['sku'],$val['location'],$val['stock'],$val['sub_name'],$imgPath2,$_SESSION['company_id']]);
         //--get data of last inserted config
         $sql = "select * from `configurable_product` where product_id=? and buy_price=? and sku=? order by id DESC limit 1";
         $res3 = getData($con,$sql,[$res['id'],$val['buy_price'],$val['sku']]);

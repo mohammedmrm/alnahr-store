@@ -70,9 +70,9 @@ if($v->passes() && $logo_err == "") {
   }else{
     $imgPath = "_";
   }
-  $sql = 'insert into companies (name,phone,logo,text1,text2,token,dns) values
-                              (?,?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$phone,$imgPath,$text1,$text2,$token,$dns]);
+  $sql = 'insert into companies (name,phone,logo,text1,text2,token,dns,company_id) values
+                              (?,?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$phone,$imgPath,$text1,$text2,$token,$dns,$_SESSION['company_id']]);
   if($result > 0){
     $success = 1;
   }

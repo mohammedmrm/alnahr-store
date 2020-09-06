@@ -64,6 +64,7 @@ try{
             ";
   $where = "where";
   $filter = " and orders.confirm = 1 ";
+  $filter = " and orders.company_id = ? ";
   if($branch >= 1){
    $filter .= " and from_branch =".$branch;
   }
@@ -125,13 +126,13 @@ try{
     $query .= " ".$filter;
   }
 
-  $count = getData($con,$count);
+  $count = getData($con,$count,[$_SESSION['company_id']]);
   $orders = $count[0]['count'];
   $pages= ceil($count[0]['count'] / $limit);
   $lim = " limit ".(($page-1) * $limit).",".$limit;
 
   $query .= $sort.$lim;
-  $data = getData($con,$query);
+  $data = getData($con,$query,[$_SESSION['company_id']]);
   $success="1";
 } catch(PDOException $ex) {
    $data=["error"=>$ex];
@@ -167,7 +168,7 @@ if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
     $sqlt .= " ".$filter;
 }
- $total = getData($con,$sqlt);
+ $total = getData($con,$sqlt,[$_SESSION['company_id']]);
  $total[0]['orders'] = $orders;
 if($store >=1){
  $total[0]['store'] = $data[0]['store_name'];

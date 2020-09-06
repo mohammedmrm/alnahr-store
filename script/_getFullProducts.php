@@ -21,7 +21,7 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0";
+              where product.id <> 0 and product.company_id=?";
 
     $query = 'select product.*,category.title as category_name,
               stores.name as store_name,image.img as img
@@ -30,7 +30,7 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0';
+              where product.id <> 0 and product.company_id=?';
     if ($category >= 1) {
         $query .=' and category.id='.$category;
         $count .=' and category.id='.$category;
@@ -42,8 +42,8 @@ try{
     $page = ($page - 1);
     $query .= ' limit '. ($page * $limit) .' ,'. $limit;
 
-    $data = getData($con,$query);
-    $ps = getData($con,$count);
+    $data = getData($con,$query,[$_SESSION['company_id']]);
+    $ps = getData($con,$count,[$_SESSION['company_id']]);
     $pages= ceil($ps[0]['count']/$limit);
     $i=0;
 
