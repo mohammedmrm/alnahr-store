@@ -26,6 +26,7 @@ try{
             ) a on a.product_id = product.id
             ";
    $where = "where ";
+   $filter .= " and product.company_id=".$_SESSION['company_id']; 
   if(!empty($name)){
    $filter .= " and product.name like '%".$name."%' ";
   }
