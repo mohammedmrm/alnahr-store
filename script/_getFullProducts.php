@@ -21,7 +21,7 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0 and product.company_id=?";
+              where product.id <> 0 and product.company_id=? ";
 
     $query = 'select product.*,category.title as category_name,
               stores.name as store_name,image.img as img
