@@ -30,7 +30,8 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0 and product.company_id=? and product.store_id in (SELECT store_id from mandop_stores)';
+              where product.id <> 0 and product.company_id=?
+              ';
     if ($category >= 1) {
         $query .=' and category.id='.$category;
         $count .=' and category.id='.$category;
@@ -38,6 +39,10 @@ try{
     if ($search != "") {
         $query .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
         $count .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
+    }
+    if($_SESSION['role'] == 4){
+      $query .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')'
+      $count .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')'
     }
     $page = ($page - 1);
     $query .= ' limit '. ($page * $limit) .' ,'. $limit;
