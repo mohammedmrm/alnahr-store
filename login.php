@@ -23,9 +23,9 @@ License: You must have a valid license purchased only from https://themes.getboo
 include_once("config.php");
 ?>
 <html lang="en" >
-         <!-- begin::Head -->
-        <head><!--begin::Base Path (base relative path for assets of this page) -->
-        <base href=""><!--end::Base Path -->
+    <!-- begin::Head -->
+    <head><!--begin::Base Path (base relative path for assets of this page) -->
+<base href=""><!--end::Base Path -->
         <meta charset="utf-8"/>
 
         <title>Al-Nahar Al-Thalath</title>
@@ -34,28 +34,23 @@ include_once("config.php");
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+            <!--begin::Page Custom Styles(used by this page) -->
+                             <link href="assets/css/pages/login/login-v2.rtl.css" rel="stylesheet" type="text/css" />
+                        <!--end::Page Custom Styles -->
 
-		<!--end::Fonts -->
+        <!--begin::Global Theme Styles(used by all pages) -->
+                    <link href="assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+                    <link href="assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+                <!--end::Global Theme Styles -->
 
+	    <!--begin::Layout Skins(used by all pages) -->
 
-		<!--end::Page Vendors Styles -->
-
-		<!--begin::Global Theme Styles(used by all pages) -->
-		<link href="assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
-
-		<!--end::Global Theme Styles -->
-
-		<!--begin::Layout Skins(used by all pages) -->
-		<link href="assets/css/skins/header/base/light.rtl.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/pages/login/login-v1.rtl.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/skins/header/menu/light.rtl.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/skins/brand/light.rtl.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/skins/aside/navy.rtl.css" rel="stylesheet" type="text/css" />
-
-		<!--end::Layout Skins -->
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" /><style>
+<link href="assets/css/skins/header/base/light.rtl.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/skins/header/menu/light.rtl.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/skins/brand/navy.rtl.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/skins/aside/navy.rtl.css" rel="stylesheet" type="text/css" />	    <!--end::Layout Skins -->
+<link rel="shortcut icon" href="img/logos/faicon.png" />
+<style>
 
      /* arabic */
         @font-face {
@@ -98,6 +93,16 @@ include_once("config.php");
 		<!--begin::Heade-->
 		<div class="kt-login-v2__head">
            <div class="col-md-4"></div>
+<!--           <div class="col-md-4">
+             <div class="text-center">
+                  <h1>السكة</h1>
+                  <h2>للتوصيل السريع</h2>
+                  <p>
+                      <?php $t=time(); echo(date("Y-m-d",$t));  ?>
+
+                  </p>
+              </div>
+            </div>-->
             <div class="col-md-4">
               <div class="kt-login-v2__logo">
   				<a href="#">
@@ -179,8 +184,6 @@ include_once("config.php");
 	</div>
 	<!--end::Item-->
 </div>	</div>
-</body>
-
 	<!-- end:: Page -->
 
 
@@ -231,7 +234,7 @@ function login(){
         if(ValidURL(res.redirect)){
          window.location.href = res.redirect;
         }else{
-         window.location.href = "index.php";
+         window.location.href = "index.php?page=pages/"+res.home;
        }
       }else{
         $("#msg").text(res.msg);
@@ -254,15 +257,12 @@ function ValidURL(str) {
 </script>
 
 <!-- end::Global Config -->
+
+<!--begin::Global Theme Bundle(used by all pages) -->
 <script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
 <script src="assets/js/scripts.bundle.js" type="text/javascript"></script>
 <!--end::Global Theme Bundle -->
 
-<!--begin::Page Vendors(used by this page) -->
-<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js" type="text/javascript"></script>
-<!--end::Page Vendors -->
-
 <!--begin::Page Scripts(used by this page) -->
 <script src="assets/js/pages/custom/user/login.js" type="text/javascript"></script>
-<!--end::Page Scrip -->
-</html>
+<!--end::Page Scrip

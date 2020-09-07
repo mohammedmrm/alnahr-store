@@ -11,18 +11,50 @@ if(empty($username) || empty($password)){
   require_once("dbconnection.php");
   $sql = "select * from staff where phone = ? and status=1";
   $result = getData($con,$sql,[$username]);
-  if(count($result) != 1 || !password_verify($password,$result[0]['password']) ){
-    $msg = "اسم المستخدم او كلمة المرور غير صحيحة";
+  if(count($result) != 1){
+      $sql = "select * from clients where phone = ?";
+      $result = getData($con,$sql,[$username]);
+      if(!password_verify($password,$result[0]['password']) ){
+        $msg = "*اسم المستخدم او كلمة المرور غير صحيحة";
+      }else{
+        $msg = 1;
+        $_SESSION['login']=1;
+        $_SESSION['app']='store';
+        $_SESSION['username']=$result[0]['phone'];
+        $_SESSION['userid']=$result[0]['id'];
+        $_SESSION['role']=10;
+        $_SESSION['company_id']=$result[0]['company_id'];
+        $_SESSION['user_details']=$result[0];
+      }
   }else{
-    $msg = 1;
-    $_SESSION['login']=1;
-    $_SESSION['app']='store';
-    $_SESSION['username']=$result[0]['phone'];
-    $_SESSION['userid']=$result[0]['id'];
-    $_SESSION['role']=$result[0]['role_id'];
-    $_SESSION['company_id']=$result[0]['company_id'];
-    $_SESSION['user_details']=$result[0];
+    if(!password_verify($password,$result[0]['password']) ){
+      $msg = "اسم المستخدم او كلمة المرور غير صحيحة";
+      $sql = "select * from clients where phone = ?";
+      $result = getData($con,$sql,[$username]);
+      if(!password_verify($password,$result[0]['password']) ){
+        $msg = "*اسم المستخدم او كلمة المرور غير صحيحة";
+      }else{
+        $msg = 1;
+        $_SESSION['login']=1;
+        $_SESSION['app']='store';
+        $_SESSION['username']=$result[0]['phone'];
+        $_SESSION['userid']=$result[0]['id'];
+        $_SESSION['role']=10;
+        $_SESSION['company_id']=$result[0]['company_id'];
+        $_SESSION['user_details']=$result[0];
+        }      
+    }else{
+      $msg = 1;
+      $_SESSION['login']=1;
+      $_SESSION['app']='store';
+      $_SESSION['username']=$result[0]['phone'];
+      $_SESSION['userid']=$result[0]['id'];
+      $_SESSION['role']=$result[0]['role_id'];
+      $_SESSION['company_id']=$result[0]['company_id'];
+      $_SESSION['user_details']=$result[0];
+    }
   }
+
 }
 echo json_encode(['msg'=>$msg,"redirect"=>$_REQUEST['redirect'] ]);
 ?>

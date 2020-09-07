@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-$a = $_SESSION['user_details']['role_id'];
+$a = $_SESSION['role'];
 function acc($id){
   return true;
 }
@@ -25,10 +25,10 @@ function acc($id){
 						<li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Dashboards</span></span></li>
 
 <!--                        <li class="kt-menu__item" aria-haspopup="true"><a href="index.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">لوحة  التحكم</span></a></li>-->
-                        <?php if($a == 1 || $a == 3 || $a==99){?>
+                        <?php if($a == 1 || $a == 3 || $a == 10 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/addProduct.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">اضافه منتج</span></a></li>
                         <?php } ?>
-                        <?php if($a == 1 || $a == 3 || $a == 4 || $a == 5 || $a == 6 || $a==99){?>
+                        <?php if($a == 1 || $a == 3 || $a == 10 || $a == 4 || $a == 5 || $a == 6 || $a==99){?>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getFullProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات</span></a></li>
                             <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/getProducts.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">عرض المنتجات بالتفصيل</span></a></li>
                         <?php } ?>
@@ -47,7 +47,7 @@ function acc($id){
 							<div class="kt-menu__submenu kt-menu__item--open"><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
                                   <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Users</span></span></li>
-                                  <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                                  <?php if($a == 1 || $a == 3 || $a == 5  || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/orders.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الطلبيات</span></a></li>
                                   <?php } ?>
                                   <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/myBaskets.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">السلات</span></a></li>
@@ -75,7 +75,7 @@ function acc($id){
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>                            
                                       <!-- <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">تحدبث يدوي</span></a></li> -->
                                   <?php } ?>
-                                  <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                                  <?php if($a == 1 || $a == 3  || $a == 10 || $a == 5 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/earnings.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الارباح</span></a></li>
                                   <?php } ?>
                                   <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
@@ -85,7 +85,7 @@ function acc($id){
 							</div>
 						</li>
 
- <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon-users-1"></i><span class="kt-menu__link-text">العملاء</span></a>
+                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--open" aria-haspopup="true" data-ktmenu-submenu-toggle="hover"><a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon flaticon-users-1"></i><span class="kt-menu__link-text">العملاء</span></a>
 							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
                                     <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Profile</span></span></li>
@@ -117,10 +117,10 @@ function acc($id){
 							<div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
 								<ul class="kt-menu__subnav">
 									<li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Profile</span></span></li>
-                                    <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
+                                    <?php if($a == 1 || $a == 3 || $a == 10 || $a == 5 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشف حساب مندوب</span></a></li>
                                     <?php } ?>
-                                    <?php if($a == 1 || $a==99){?>
+                                    <?php if($a == 1 || $a == 10 || $a==99){?>
                                         <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/staff.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">المندوبين</span></a></li>
                                     <?php } ?>
                                 </ul>
