@@ -45,7 +45,7 @@ try{
   $f1 = "";
   if($_SESSION['role'] == 4){
    $sql = "select * from mandop_stores where mandop_id=?";
-   $res=getData($con,$sql,[$_SESSION['userid']]);
+   $res=getData($con,$sql,[$userid]);
    if(count($res)>0){
      $f1 = " and ( ";
      foreach($res as $val){
