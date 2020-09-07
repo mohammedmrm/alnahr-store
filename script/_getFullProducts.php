@@ -41,8 +41,8 @@ try{
         $count .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
     }
     if($_SESSION['role'] == 4){
-      $query .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')'
-      $count .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')'
+      $query .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')';
+      $count .= 'and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id='.$_SESSION['userid'].')';
     }
     $page = ($page - 1);
     $query .= ' limit '. ($page * $limit) .' ,'. $limit;
