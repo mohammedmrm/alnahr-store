@@ -31,7 +31,7 @@ try{
             ) image on image.product_id = product.id
             ";
   $where = "where ";
-  $filter .= " and product.store_id in (SELECT store_id from mandop_stores)";
+  $filter .= " and product.store_id in (SELECT store_id from mandop_stores where mandop_id=".$userid.")";
   $filter .= " and product.company_id=?";
   if ($search != "") {
         $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
