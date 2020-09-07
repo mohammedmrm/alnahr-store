@@ -33,33 +33,15 @@ try{
   $where = "where ";
   $filter .= " and product.store_id in (SELECT store_id from mandop_stores)";
   $filter .= " and product.company_id=?";
-    if ($search != "") {
+  if ($search != "") {
         $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
-    }
+  }
   if ($cat >= 1) {
         $filter .=' and product.category_id='.$cat;
    }
   if ($store >= 1) {
         $filter .=' and product.store_id='.$store;
   }
-  $f1 = "";
-  if($_SESSION['role'] == 4){
-   $sql = "select * from mandop_stores where mandop_id=?";
-   $res=getData($con,$sql,[$userid]);
-   if(count($res)>0){
-     $f1 = " and ( ";
-     foreach($res as $val){
-         $f2 ="store_id =".$val['store_id']." or";
-     }
-     $last = strrpos($f2, 'or');
-     $f2 = substr($f2, 0, $last);
-     $f1 .= $f2." ) ";
-   }else{
-     $f1 = " and store_id = -1";
-   }
-  }
-  $filter .= $f1;
-
   if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
     $filter = $where." ".$filter;
