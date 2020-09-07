@@ -30,7 +30,7 @@ try{
               left join category on category.id = product.category_id
               left join (select max(path) as img,product_id from images
               group by product_id) image on image.product_id = product.id
-              where product.id <> 0 and product.company_id=?';
+              where product.id <> 0 and product.company_id=? and product.store_id in (SELECT store_id from mandop_stores)';
     if ($category >= 1) {
         $query .=' and category.id='.$category;
         $count .=' and category.id='.$category;
