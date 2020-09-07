@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 session_start();
 error_reporting(0);
 require_once("_apiAccess.php");
-//access();
+access();
 require_once("../script/dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
