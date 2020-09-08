@@ -85,7 +85,7 @@ $v->validate([
 ]);
 $sql = "select count(*) as count from basket where staff_id=?";
 $res =getData($con,$sql,[$_SESSION['userid']]);
-if($res[0]['count'] > 10){
+if($res[0]['count'] > 150){
   $max = "تم انشاء الحد الاعلى من السلات";
 }else{
   $max = "";
