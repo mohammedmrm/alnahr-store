@@ -116,5 +116,5 @@ if($v->passes() && $msg == "") {
            ];
 }
 
-echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
+echo json_encode([$query,"code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
 ?>
