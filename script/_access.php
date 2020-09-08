@@ -18,7 +18,7 @@ $link .= $_SERVER['HTTP_HOST'];
 $link .= $_SERVER['REQUEST_URI'];
 
 function access($access_roles = []){
-  if(!in_array($_SESSION['user_details']['role_id'],$access_roles) || !isset($_SESSION['userid'])){
+  if(!in_array($_SESSION['role'],$access_roles) || !isset($_SESSION['userid'])){
     header("location: login.php?redirect=".$GLOBALS['link']);
     die("<h1>لاتمتلك صلاحيات الوصول لهذه الصفحة  (<a href='login.php'>سجل الدخول</a>)</h1>");
   }

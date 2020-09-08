@@ -26,7 +26,7 @@ try{
             ) a on a.product_id = product.id
             ";
    $where = "where ";
-   $filter .= " and product.company_id=".$_SESSION['company_id']; 
+   $filter .= " and product.company_id=".$_SESSION['company_id'];
   if(!empty($name)){
    $filter .= " and product.name like '%".$name."%' ";
   }
@@ -34,17 +34,18 @@ try{
   if($_SESSION['role'] == 4){
    $sql = "select * from mandop_stores where mandop_id=?";
    $res=getData($con,$sql,[$_SESSION['userid']]);
-   if(count($res)>0){
-     $f1 = " and ( ";
-     foreach($res as $val){
-         $f2 ="store_id =".$val['store_id']." or";
-     }
-     $last = strrpos($f2, 'or');
-     $f2 = substr($f2, 0, $last);
-     $f1 .= $f2." ) ";
-   }else{
-     $f1 = " and store_id = -1";
-   }
+     if(count($res)>0){
+       $f1 = " and ( ";
+       foreach($res as $val){
+           $f2 ="store_id =".$val['store_id']." or";
+       }
+       $last = strrpos($f2, 'or');
+       $f2 = substr($f2, 0, $last);
+       $f1 .= $f2." ) ";
+
+      }
+  }else if($_SESSION['role'] == 10){
+     $f1 = ' and product.client_id='.$_SESSION['userid'].')';
   }
   $filter .= $f1;
 

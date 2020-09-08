@@ -11,9 +11,13 @@ use Violin\Violin;
 require_once('../validator/autoload.php');
 $v = new Violin;
 
-
+function correct_encoding($text) {
+$current_encoding = mb_detect_encoding($text, 'auto');
+$text = iconv($current_encoding, 'UTF-8', $text);
+return $text;
+}
 $success = 0;
-$customer_name    = $_REQUEST['name'];
+$customer_name    = correct_encoding($_REQUEST['name']);
 $customer_phone   = str_replace('-','',$_REQUEST['phone']);;
 $customer_phone   = str_replace(' ','',$_REQUEST['phone']);;
 $city= $_REQUEST['city'];

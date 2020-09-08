@@ -42,7 +42,8 @@ if(empty($username) || empty($password)){
         $_SESSION['role']=10;
         $_SESSION['company_id']=$result[0]['company_id'];
         $_SESSION['user_details']=$result[0];
-        }      
+        $_SESSION['user_details']['developer']=0;
+        }
     }else{
       $msg = 1;
       $_SESSION['login']=1;
