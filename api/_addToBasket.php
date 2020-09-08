@@ -82,9 +82,9 @@ if($v->passes() && $msg == "") {
  if($count = $op){
     foreach($option as $conf) {
         if ($i == 0) {
-                $options += ' attribute_config_id=' + $conf;
+                $options .= ' attribute_config_id=' + $conf;
             } else {
-                $options += ' or attribute_config_id=' + $conf;
+                $options .= ' or attribute_config_id=' + $conf;
             }
         $i++;
     }
@@ -116,5 +116,5 @@ if($v->passes() && $msg == "") {
            ];
 }
 
-echo json_encode([$query,"code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
+echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
 ?>
