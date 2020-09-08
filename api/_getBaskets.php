@@ -5,6 +5,11 @@ require_once("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
 require_once("../config.php");
+function correct_encoding($text) {
+  $current_encoding = mb_detect_encoding($text, 'auto');
+  $text = iconv($current_encoding, 'UTF-8', $text);
+  return $text;
+}
 try{
   $query = "select basket.*,a.*,cites.name as city_name,towns.name as town_name,
              if(basket.city_id = 1,".$config['dev_b'].",".$config['dev_o'].") as dev_price
@@ -25,6 +30,7 @@ try{
    where basket_items.basket_id = ?";
     $res = getData($con,$sql,[$id]);
     $data[$i]['items'] = $res;
+    $data[$i]['customer_name'] = correct_encoding($data[$i]['customer_name']);
     $i++;
   }
   $success="1";
