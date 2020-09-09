@@ -22,7 +22,7 @@ $store = trim($_REQUEST['store']);
 try{
   $count = "select count(*) as count from product ";
   $query = "select product.*,category.title as category_name,
-            MATCH (product.name,product.simple_des) AGAINST ('".$search."' IN NATURAL LANGUAGE MODE) AS score
+            MATCH (product.name,product.simple_des) AGAINST ('".$search."' IN NATURAL LANGUAGE MODE) AS score ,
             stores.name as store_name,image.img as img
             from product
             left join stores on stores.id = product.store_id
