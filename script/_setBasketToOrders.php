@@ -113,9 +113,12 @@ if($v->passes() && $msg == "") {
                   }else{
                      $order_no = $order_nos[$i];
                   }
-
+                  $mandop_id = $res[0]['staff_id'];
+                  if($_SESSION['role'] == 10){
+                   $mandop_id = -1;
+                  }
                   $sql = "insert into orders (order_no,total_price,customer_name,customer_phone,city_id,town_id,address,note,mandop_id,manager_id,store_id,discount,type,oldOrder_id,company_id) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-                  $order_id = setDataWithLastID($con,$sql,[$order_no,$total,$res[0]['customer_name'],$res[0]['customer_phone'],$res[0]['city_id'],$res[0]['town_id'],$res[0]['address'],$res[0]['note'],$res[0]['staff_id'],$_SESSION['userid'],$store['stores'],$dis,$res[0]['type'],$res[0]['oldOrder_id'],$_SESSION['company_id']]);
+                  $order_id = setDataWithLastID($con,$sql,[$order_no,$total,$res[0]['customer_name'],$res[0]['customer_phone'],$res[0]['city_id'],$res[0]['town_id'],$res[0]['address'],$res[0]['note'],$mandop_id,$_SESSION['userid'],$store['stores'],$dis,$res[0]['type'],$res[0]['oldOrder_id'],$_SESSION['company_id']]);
                   foreach($items as $item){
                     $sql = "insert into order_items (order_id,configurable_product_id,qty,mandop_id,storage_manager_id,price,company_id)
                            values (?,?,?,?,?,?,?)";

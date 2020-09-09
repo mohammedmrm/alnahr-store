@@ -109,9 +109,11 @@ legend
             	</select>
             </div>
             <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-            	<label>الفرع المرسل له:</label>
-            	<select id="to_branch" name="to_branch" onchange="getclient()" class="form-control kt-input" data-col-index="2">
-            		<option value="">Select</option>
+            	<label>حاله الاحاله:</label>
+            	<select id="assignStatus" name="assignStatus" onchange="getclient()" class="form-control kt-input" data-col-index="2">
+            		<option value="1">الطلبات غير المحاله</option>
+            		<option value="2">الطلبيات المحاله</option>
+            		<option value="3">الكل</option>
                 </select>
             </div>
             <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
@@ -140,39 +142,25 @@ legend
               </div>
             </div>
 
-        <table class="table table-striped table-bordered table-hover table-checkable responsive no-wrap" id="tb-orders">
+        <table class="table table-striped  table-bordered responsive nowrap" id="tb-orders">
 			       <thead>
 	  						<tr>
 										<th><input  id="allselector" type="checkbox"><span></span></th>
 										<th>رقم الشحنه</th>
                                         <th>رقم الوصل</th>
-										<th width="150px">اسم و هاتف العميل</th>
-										<th width="150px">رقم هاتف المستلم</th>
+										<th >اسم و هاتف العميل</th>
+										<th >رقم هاتف المستلم</th>
 										<th>عنوان المستلم</th>
+										<th>شركه التوصل</th>
 										<th>مبلغ الوصل</th>
                                         <th>مبلغ التوصيل</th>
                                         <th>الخصم</th>
                                         <th>حالة المبلغ</th>
-                                        <th width="100px">التاريخ</th>
+                                        <th >التاريخ</th>
 						   </tr>
       	            </thead>
                             <tbody id="ordersTable">
                             </tbody>
-                            <tfoot>
-	                <tr>
-										<th></th>
-										<th>رقم الشحنه</th>
-										<th>رقم الوصل</th>
-										<th width="150px">اسم و هاتف العميل</th>
-										<th width="150px">رقم هاتف المستلم</th>
-										<th>عنوان المستلم</th>
-										<th>مبلغ الوصل</th>
-                                        <th>مبلغ التوصيل</th>
-                                        <th>الخصم</th>
-                                        <th>حالة المبلغ</th>
-                                        <th width="100px">التاريخ</th>
-				   </tr>
-	           </tfoot>
 		</table>
         <div class="kt-section__content kt-section__content--border">
 		<nav aria-label="...">
@@ -229,6 +217,7 @@ $.ajax({
   success:function(res){
    console.log(res);
    //saveEventDataLocally(res)
+   $("#tb-orders").removeClass("loading");
    $("#tb-orders").DataTable().destroy();
    $('#ordersTable').html("");
    $("#pagination").html("");
@@ -284,6 +273,7 @@ $.ajax({
             '<td>'+this.store_name+'<br />'+phone_format(this.client_phone)+'</td>'+
             '<td>'+phone_format(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'<br />'+this.address+'</td>'+
+            '<td>'+this.dev_comp_name+'</td>'+
             '<td>'+formatMoney(this.total_price)+'</td>'+
             '<td>'+formatMoney(this.dev_price)+'</td>'+
             '<td>'+formatMoney(this.discount)+'</td>'+
@@ -293,16 +283,12 @@ $.ajax({
      });
 
      var myTable= $('#tb-orders').DataTable({
-      "oLanguage": {
-        "sLengthMenu": "عرض_MENU_سجل",
-        "sSearch": "بحث:"
-      },
        "bPaginate": false,
        "bLengthChange": false,
        "bFilter": false,
        serverPaging: true
       });
-      $("#tb-orders").removeClass("loading");
+
     },
    error:function(e){
      $("#tb-orders").removeClass("loading");
@@ -410,7 +396,8 @@ function sendOrders(){
         data:$("#ordertabledata").serialize(),
         success:function(res){
           console.log(res);
-          Toast.success("تم الاحاله"); 
+          Toast.success("تم الاحاله");
+          getorders();
         },
         error:function(e){
            Toast.error("خطأ!");

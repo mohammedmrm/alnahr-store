@@ -17,6 +17,7 @@ $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
 $driver = $_REQUEST['driver'];
 $repated = $_REQUEST['repated'];
+$assignStatus = $_REQUEST['assignStatus'];
 $start = trim($_REQUEST['start']);
 $end = trim($_REQUEST['end']);
 $limit = trim($_REQUEST['limit']);
@@ -45,7 +46,7 @@ try{
               HAVING COUNT(orders.id) > 1
             ) b on b.order_no = orders.order_no";
 
-  $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
+  $query = "select orders.*,if(orders.city_id = 1,".$config['dev_b'].",".$config['dev_o'].") as dev_price, date_format(orders.date,'%Y-%m-%d') as date,if(companies.name is null,'غير محال',companies.name)as dev_comp_name,
             cites.name as city,towns.name as town,clients.phone as client_phone,mandop.name as mandop_name,
             order_status.status as status_name,staff.name as staff_name,b.rep as repated,stores.name as store_name
             from orders
@@ -54,6 +55,7 @@ try{
             left join staff on  staff.id = orders.manager_id
             left join stores on  stores.id = orders.store_id
             left join clients on  clients.id = stores.client_id
+            left join companies on  companies.id = orders.delivery_company_id
             left join staff  mandop on  mandop.id = orders.mandop_id
             left join order_status on  order_status.id = orders.order_status_id
             left join (
@@ -68,6 +70,11 @@ try{
   $filter = " and orders.company_id = ? ";
   if($branch >= 1){
    $filter .= " and from_branch =".$branch;
+  }
+  if($assignStatus == 1){
+     $filter .= " and (bar_code = 0 or bar_code is NULL)";
+  }else if($assignStatus == 2){
+    $filter .= " and bar_code <> 0";
   }
   if($to_branch >= 1){
    $filter .= " and to_branch =".$to_branch;
