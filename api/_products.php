@@ -16,9 +16,12 @@ $page = trim($_REQUEST['page']);
 if(empty($page) || $page <=0){
   $page=1;
 }
+
 $search= trim($_REQUEST['search']);
+if(!empty($search)){
 $search  = str_replace(" "," * ",$search);
 $search  .= " *";
+}
 $cat = trim($_REQUEST['category']);
 $store = trim($_REQUEST['store']);
 try{
@@ -38,14 +41,15 @@ try{
     $filter .= " and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id=".$userid.")";
   }
   $filter .= " and product.company_id=?";
-  if ($search != "") {
-        $filter .= ' and (MATCH (product.name,product.simple_des) AGAINST ("'.$search.'" IN NATURAL LANGUAGE MODE))';
-  }
+
   if ($cat >= 1) {
         $filter .=' and product.category_id='.$cat;
    }
   if ($store >= 1) {
         $filter .=' and product.store_id='.$store;
+  }
+  if ($search != "") {
+        $filter .= ' and (MATCH (product.name,product.simple_des) AGAINST ("'.$search.'" IN NATURAL LANGUAGE MODE))';
   }
   if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
