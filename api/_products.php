@@ -17,6 +17,7 @@ if(empty($page) || $page <=0){
   $page=1;
 }
 $search= trim($_REQUEST['search']);
+$search  = str_replace(" ","* ",$search);
 $cat = trim($_REQUEST['category']);
 $store = trim($_REQUEST['store']);
 try{
@@ -89,5 +90,5 @@ try{
    $success="0";
 }
 
-echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page),JSON_PRETTY_PRINT));
+echo (json_encode(array($search,'code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>$page),JSON_PRETTY_PRINT));
 ?>
