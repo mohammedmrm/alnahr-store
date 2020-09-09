@@ -17,7 +17,7 @@ if(empty($page) || $page <=0){
   $page=1;
 }
 $search= trim($_REQUEST['search']);
-$search  = str_replace(" ","* ",$search);
+$search  = str_replace(" "," * ",$search);
 $search  .= " *";
 $cat = trim($_REQUEST['category']);
 $store = trim($_REQUEST['store']);
