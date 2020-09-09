@@ -22,8 +22,9 @@ $store = trim($_REQUEST['store']);
 try{
   $count = "select count(*) as count from product ";
   $query = "select product.*,category.title as category_name,
-             stores.name as store_name,image.img as img
-             from product
+            MATCH (product.name,product.simple_des) AGAINST ('".$search."' IN NATURAL LANGUAGE MODE) AS score
+            stores.name as store_name,image.img as img
+            from product
             left join stores on stores.id = product.store_id
             left join category on category.id = product.category_id
             left join (
@@ -36,7 +37,7 @@ try{
   }
   $filter .= " and product.company_id=?";
   if ($search != "") {
-        $filter .= ' and (MATCH (product.name) AGAINST ("'.$search.'" IN BOOLEAN MODE))';
+        $filter .= ' and (MATCH (product.name,product.simple_des) AGAINST ("'.$search.'" IN NATURAL LANGUAGE MODE))';
   }
   if ($cat >= 1) {
         $filter .=' and product.category_id='.$cat;
@@ -51,7 +52,7 @@ try{
     $query .= " ".$filter;
   }
   $lim = " limit ".(($page-1) * $limit).",".$limit;
-  $query .=  $lim;
+  $query .= " ORDER BY  score DESC ". $lim;
   $data = getData($con,$query,[$head_company_id]);
   $ps = getData($con,$count,[$head_company_id]);
   $pages= ceil($ps[0]['count']/$limit);
