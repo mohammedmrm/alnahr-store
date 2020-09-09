@@ -2,7 +2,7 @@
 session_start();
 error_reporting(0);
 header("Access-Control-Allow-Origin: *");
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8');
 require_once("_apiAccess.php");
 access();
 require_once("../script/dbconnection.php");
@@ -18,8 +18,8 @@ return $text;
 }
 $success = 0;
 $customer_name    = correct_encoding($_REQUEST['name']);
-$customer_phone   = str_replace('-','',$_REQUEST['phone']);;
-$customer_phone   = str_replace(' ','',$_REQUEST['phone']);;
+$customer_phone   = str_replace('-','',$_REQUEST['phone']);
+$customer_phone   = str_replace(' ','',$customer_phone);
 $city= $_REQUEST['city'];
 if(empty($city)){
   $city = 0;

@@ -2,7 +2,8 @@
 session_start();
 error_reporting(0);
 header('Content-Type: application/json');
-//require_once("_access.php");
+require_once("_access.php");
+access([1, 2, 3, 5, 4,10]);
 require_once("dbconnection.php");
 $limit = trim($_REQUEST['limit']);
 if(empty($limit) || $limit <=0){
@@ -16,7 +17,9 @@ $name = trim($_REQUEST['name']);
 
 
 try{
-  $count = "select count(*) as count from configurable_product left join product on configurable_product.product_id = product.id  ";
+  $count = "select count(*) as count from configurable_product
+            left join product on configurable_product.product_id = product.id
+            left join stores on product.store_id = stores.id ";
   $query = "select configurable_product.*,stores.name as store_name,if(img is null or img = 'default.jpg',a.path,img) as path,configurable_product.id as c_id from configurable_product
             left join product on configurable_product.product_id = product.id
             left join stores on product.store_id = stores.id
@@ -45,7 +48,7 @@ try{
 
       }
   }else if($_SESSION['role'] == 10){
-     $f1 = ' and product.client_id='.$_SESSION['userid'].')';
+     $f1 = ' and stores.client_id='.$_SESSION['userid'];
   }
   $filter .= $f1;
 

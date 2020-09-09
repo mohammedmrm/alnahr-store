@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
-access([1,2,5,4]);
+access([1,2,5,4,10]);
 require_once("dbconnection.php");
 require_once("../config.php");
 
@@ -38,6 +38,7 @@ if(!empty($end)) {
 
 try{
   $count = "select count(*) as count from orders
+            left join stores on  stores.id = orders.store_id
             left join (
              select order_no,count(*) as rep from orders
               GROUP BY order_no
@@ -101,6 +102,9 @@ try{
   }
   if(!empty($order)){
     $filter .= " and orders.order_no like '%".$order."%'";
+  }
+  if($_SESSION['role'] == 10){
+    $filter .= " and stores.client_id=".$_SESSION['userid'];
   }
   ///-----------------status
   if($status == 4){

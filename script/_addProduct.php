@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
-access([1,2]);
+access([1,2,10]);
 require_once("dbconnection.php");
 require_once("_crpt.php");
 require_once("_sendNoti.php");
@@ -28,7 +28,10 @@ $type = $_REQUEST['type'];
 $location = $_REQUEST['location'];
 $attributes = $_REQUEST['attributes'];
 $config_matrix = $_REQUEST['config_matrix'];
-
+$staff_id=$_SESSION['userid'];
+if($_SESSION['role'] == 10){
+  $staff_id=-1;
+}
 
 $imgs = $_FILES['imgs'];
 $valid_file_extensions = array(".jpg", ".jpeg", ".png");
@@ -83,8 +86,8 @@ foreach($imgs["tmp_name"] as $val){
    $img_err =  "يجب رفع صورة واحدة على الاقل";
 }
 if($v->passes() && $img_err ==""){
-  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price,company_id) values (?,?,?,?,?,?,?,?,?)';
-  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price,$_SESSION['company_id']]);
+  $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price,company_id,staff_id) values (?,?,?,?,?,?,?,?,?,?)';
+  $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price,$_SESSION['company_id'],$staff_id]);
   if($result > 0){
     $success = 1;
     $product = 'select * from product where name = ? and type = ? and category_id = ? order by id DESC limit 1';;

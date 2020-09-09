@@ -7,6 +7,11 @@ try{
   $query = "select basket.*,cites.name as city from basket
    left join cites on cites.id = basket.city_id
    where staff_id=? and status > 0";
+  if($_SESSION['role'] == 10){
+   $query = "select basket.*,cites.name as city from basket
+   left join cites on cites.id = basket.city_id
+   where staff_id=? and status > 0 and user_type=1";
+  }
   $data = getData($con,$query,[$_SESSION['userid']]);
   $success="1";
   $i=0;

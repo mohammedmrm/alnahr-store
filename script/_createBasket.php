@@ -11,7 +11,11 @@ use Violin\Violin;
 require_once('../validator/autoload.php');
 $v = new Violin;
 
-
+if($_SESSION['role']==10){
+  $userType =1;
+}else{
+  $userType =0;
+}
 $success = 0;
 $customer_name    = $_REQUEST['customer_name'];
 $customer_phone   = $_REQUEST['customer_phone'];
@@ -87,9 +91,9 @@ if($res[0]['count'] > 150){
 }
 if($v->passes() && $max == "" && $oldOrder_err == "") {
   try{
-      $sql = 'insert into basket (customer_name,customer_phone,city_id,town_id,address,note,staff_id,type,oldOrder_id,company_id) values
-                                  (?,?,?,?,?,?,?,?,?,?)';
-      $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$_SESSION['userid'],$type,$oldOrder,$_SESSION['company_id']]);
+      $sql = 'insert into basket (customer_name,customer_phone,city_id,town_id,address,note,staff_id,type,oldOrder_id,company_id,user_type) values
+                                  (?,?,?,?,?,?,?,?,?,?,?)';
+      $result = setData($con,$sql,[$customer_name,$customer_phone,$city,$town,$address,$note,$_SESSION['userid'],$type,$oldOrder,$_SESSION['company_id'],$userType]);
       if($result > 0){
         $success = 1;
       }
