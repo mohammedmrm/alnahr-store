@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
 access([1,3,5]);
@@ -160,4 +160,3 @@ if($v->passes() && $msg == "") {
   $success = 0;
 }
 echo json_encode([$_POST,'success'=>$success,'error'=>$error,'msg'=>$msg]);
-?>
