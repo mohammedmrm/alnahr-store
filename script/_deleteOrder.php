@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require("_access.php");
 access([1,2,3,5]);
@@ -17,16 +17,26 @@ $v->validate([
     ]);
 
 if($v->passes()){
-         if($_SESSION['role'] == 1 || $_SESSION['role'] == 5){
+         $sql = "select * from orders where id=?";
+         $order = getData($con,$sql,[$id]);
+         $sql = "select * from order_items where order_id=?";
+         $items = getData($con,$sql,[$id]);
+         if($_SESSION['role'] == 1){
             $sql = "delete from orders where id = ?";
-         }else{
-            $sql = "delete from orders where id = ? and from_branch = '".$_SESSION['user_details']['branch_id']."'";
-         }
-         $result = setData($con,$sql,[$id]);
-         if($result > 0){
-            $success = 1;
-            $sql = "delete from tracking where order_id = ?";
             $result = setData($con,$sql,[$id]);
+            if($result > 0){
+              $i = 0;
+              foreach($items as $k=>$val){
+                $update = "update configurable_product set qty = qty + ? where id=?";
+                setData($con,$update,[$val['qty'],$val['configurable_product_id']]);
+                $i++;
+              }
+              $sql = "delete from order_items where order_id=?";
+              setData($con,$sql,[$id]);
+              $sql = "delete from tracking where order_id = ?";
+              $result = setData($con,$sql,[$id]);
+            }
+            $success = 1;
          }else{
             $msg = "فشل الحذف";
          }
