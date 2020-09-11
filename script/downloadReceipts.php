@@ -186,7 +186,8 @@ class MYPDF extends TCPDF {
 }
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 foreach($datas as $data){
-
+$type = "";
+$products="";
 $sql = "select category.title as cat_name from order_items
 LEFT join configurable_product on configurable_product.id = order_items.configurable_product_id
 left join product on configurable_product.product_id = product.id
@@ -395,7 +396,6 @@ $pdf->SetFont('aealarabiya', '', 10);
 $style['position'] = '';
 $pdf->setRTL(false);
 $pdf->write2DBarcode($id, 'QRCODE,M',10, 0, 30, 30, $style, 'N');
-
 }
 
 //Close and output PDF document
