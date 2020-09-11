@@ -40,13 +40,13 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
 $result =getData($con,$sql);
 if(count($res) == 1){
     $response = httpPost($res[0]['dns'].'/api/addOrdersByClient.php',['token'=>$res[0]['token'],'store'=>$store,'orders'=>$result]);
-    //$response = json_decode($response, true);
-/*    foreach($response['data'] as $k=>$val){
+    $response = json_decode($response, true);
+    foreach($response['data'] as $k=>$val){
         if(isset($val['barcode'])){
           $sql = "update orders set bar_code = ?,delivery_company_id=? where id=? ";
           $update = setData($con,$sql,[$val['barcode'],$company,$val['id']]);
         }
-      }*/
+      }
 }else{
   $msg = "يجب اختيار شركة التوصيل";
 }
