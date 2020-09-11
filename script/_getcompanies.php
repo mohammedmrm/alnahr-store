@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 require("_access.php");
-access([1,2,3,4,5,6]);
+access([1,2,3,4,5,6,10]);
 require("dbconnection.php");
 try{
   $query = "select * from companies where company_id=?";
