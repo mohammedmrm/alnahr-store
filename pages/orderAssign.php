@@ -396,7 +396,10 @@ function sendOrders(){
         data:$("#ordertabledata").serialize(),
         success:function(res){
           console.log(res);
-          Toast.success("تم الاحاله");
+          Toast.success("تم الاحاله "+res.response.count.added + " شحنه");
+          if(res.response.count.not > 0){
+            Toast.warming(res.response.count.not + " شحنه محاله مسبقاً");
+          }
           getorders();
         },
         error:function(e){
