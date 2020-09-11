@@ -398,7 +398,7 @@ function sendOrders(){
           console.log(res);
           Toast.success("تم الاحاله "+res.response.count.added + " شحنه");
           if(res.response.count.not > 0){
-            Toast.warming(res.response.count.not + " شحنه محاله مسبقاً");
+            Toast.warning(res.response.count.not + " شحنه محاله مسبقاً");
           }
           getorders();
         },
