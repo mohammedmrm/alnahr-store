@@ -271,6 +271,7 @@ function setBasketToOrders(id){
         if(res.success == 1){
           toastr.success('تم تسجيل الطلب');
           getBasketForPerpare();
+          $('#setBasketToOrderModal').modal('toggle');
         }else{
           toastr.warning(res.msg);
         }
