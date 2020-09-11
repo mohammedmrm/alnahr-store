@@ -70,11 +70,7 @@ $(document).ready(function(){
   getCities($("#e_city"));
   getBasketForPerpare();
   $("#tb-baskets").DataTable({
-        "oLanguage": {
-          "sLengthMenu": "عرض_MENU_سجل",
-          "sSearch": "بحث:"
-        },
-         "bPaginate": false,
+        "bPaginate": false,
          "bLengthChange": false,
          "bFilter": false,
   });
@@ -89,8 +85,9 @@ function getBasketForPerpare(store){
       $("#baskets").addClass("loading");
     },
     success:function(res){
-      $("#tb-baskets").DataTable().destroy();
       $("#baskets").removeClass("loading");
+      $("#tb-baskets").DataTable().destroy();
+      $("#basketsTable").html("");
       console.log(res);
       $.each(res.data,function(){
      $("#basketsTable").append(
@@ -273,7 +270,7 @@ function setBasketToOrders(id){
         console.log(res);
         if(res.success == 1){
           toastr.success('تم تسجيل الطلب');
-          getBasketForPerpare('');
+          getBasketForPerpare();
         }else{
           toastr.warning(res.msg);
         }
