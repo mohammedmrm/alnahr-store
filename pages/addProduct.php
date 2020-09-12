@@ -281,7 +281,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
 var des = new Quill('#des', {
   theme: 'snow'
 });
-$("#tb-Configrationtable").DataTable();
+//$("#tb-Configrationtable").DataTable();
 getStores($("#store"));
 getAttributes($("#attributes"));
 $(".selectpicker").selectpicker("refresh");
