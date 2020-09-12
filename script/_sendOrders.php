@@ -18,7 +18,7 @@ $response = 0;
 $data=[];
 $sql ="select * from companies where id=?";
 $res= getData($con,$sql,[$company]);
-$f='';
+$f=0;
 foreach ($ids as $id){
   if($id > 1){
     $f .= ' or orders.id = '.$id.' ';
@@ -61,5 +61,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo json_encode(["msg"=>$msg,"response"=>$response]);
+echo json_encode([$_REQUEST,"msg"=>$msg,"response"=>$response]);
 ?>

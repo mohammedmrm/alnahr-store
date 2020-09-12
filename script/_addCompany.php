@@ -37,7 +37,7 @@ $v->addRule('unique', function($value, $input, $args) {
     $column = $args[1];
     $value  = trim($value);
     if(!empty($value)){
-    $exists = getData($GLOBALS['con'],"SELECT * FROM Companys WHERE phone =".$value);
+    $exists = getData($GLOBALS['con'],"SELECT * FROM companies WHERE company_id=".$_SESSION['company_id']." and phone =".$value);
     }else{
       $exists = 0;
     }
@@ -87,5 +87,5 @@ if($v->passes() && $logo_err == "") {
            'Company_logo_err'=>$logo_err,
            ];
 }
-echo json_encode(['success'=>$success, 'error'=>$error]);
+echo json_encode([$_SESSION['company_id'],'success'=>$success, 'error'=>$error]);
 ?>

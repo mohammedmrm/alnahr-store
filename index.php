@@ -134,9 +134,7 @@ License: You must have a valid license purchased only from https://themes.getboo
         .nowarp {
           white-space: nowrap !important;
         }
-        .dropdown-menu {
-          z-index: 100 !important;
-        }
+
 
         ::placeholder ,:-ms-input-placeholder,::-webkit-input-placeholder {
           color: #FFFFFF !important;

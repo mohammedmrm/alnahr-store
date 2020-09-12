@@ -352,90 +352,77 @@ legend
 
 			<!--begin::Form-->
 			<form class="kt-form" id="editOrderForm">
+
 				<div class="kt-portlet__body">
+				<div class="row">
+                   <div class="col-md-6">
+                        <div class="form-group">
+    						<label>رقم الطلب:</label>
+    						<input type="name" id="e_order_no" name="e_order_no" class="form-control"  placeholder="">
+    						<span class="form-text  text-danger" id="e_order_no_err"></span>
+    					</div>
+                        <div class="form-group">
+    						<label>السعر الكلي:</label>
+    						<input type="name" id="e_price" name="e_price" class="form-control"  placeholder="">
+    						<span class="form-text  text-danger" id="e_price_err"></span>
+    					</div>
+                        <div class="form-group">
+    						<label>الخصم:</label>
+    						<input type="name" id="e_discount" name="e_discount" class="form-control"  placeholder="">
+    						<span class="form-text  text-danger" id="e_discount_err"></span>
+    					</div>
+                        <div class="form-group">
+      						<label>التاريخ:</label>
+      						<input type="text" id="e_date" name="e_date" class="form-control" data-col-index="5">
+      						<span class="form-text text-danger" id="e_date_err"></span>
+      				    </div>
+
+                        <div class="form-group">
+        						<label>اسم السوق او الصفحه:</label>
+        						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_store" id="e_store_id"  value="">
+                                </select>
+                                <span class="form-text text-danger" id="e_store_err"></span>
+        				</div>
+                   </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+      						<label>اسم المستلم:</label>
+      						<input type="text" id="e_customer_name" name="e_customer_name" class="form-control"  placeholder="">
+      						<span class="form-text text-danger" id="e_customer_name_err"></span>
+      				  </div>
+                      <div class="form-group">
+      						<label>هاتف المستلم:</label>
+      						<input type="text" id="e_customer_phone" name="e_customer_phone" class="form-control"  placeholder="">
+      						<span class="form-text text-danger" id="e_customer_phone_err"></span>
+      				  </div>
+                      <div class="form-group">
+      						<label>المحافظة:</label>
+      						<select onchange="updateTown()" data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_city" id="e_city"  value="">
+                              </select>
+                              <span class="form-text text-danger" id="e_city_err"></span>
+      				  </div>
+                      <div class="form-group">
+      						<label>المدينة(القضاء او الحي):</label>
+      						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_town" id="e_town"  value="">
+                              </select>
+                              <span class="form-text text-danger" id="e_town_err"></span>
+      				</div>
                     <div class="form-group">
-						<label>رقم الطلب:</label>
-						<input type="name" id="e_order_no" name="e_order_no" class="form-control"  placeholder="">
-						<span class="form-text  text-danger" id="e_order_no_err"></span>
-					</div>
-                    <div class="form-group">
-						<label>السعر المستلم:</label>
-						<input type="name" id="e_iprice" name="e_iprice" class="form-control"  placeholder="">
-						<span class="form-text  text-danger" id="e_iprice_err"></span>
-					</div>
-                    <div class="form-group">
-						<label>مبلغ الوصل:</label>
-						<input type="name" id="e_price" name="e_price" class="form-control"  placeholder="">
-						<span class="form-text  text-danger" id="e_price_err"></span>
-					</div>
-                  <div class="form-group">
-  						<label>الوزن:</label>
-  						<input type="number" value="1" id="e_weight" name="e_weight" class="form-control"  placeholder="">
-  						<span class="form-text text-danger" id="e_weight_err"></span>
-  				  </div>
-                  <div class="form-group">
-  						<label>العدد:</label>
-  						<input type="number" value="1" id="e_qty" name="e_qty" class="form-control"  placeholder="">
-  						<span class="form-text text-danger" id="e_qty_err"></span>
-  				  </div>
-                  <div class="form-group">
-  						<label>التاريخ:</label>
-  						<input type="text" id="e_date" name="e_date" class="form-control" data-col-index="5">
-  						<span class="form-text text-danger" id="e_date_err"></span>
-  				  </div>
-                  <div class="form-group">
-  						<label>الفرع:</label>
-  						<select onchange="updateClient()" data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_branch" id="e_branch"  value="">
-                          </select>
-                          <span class="form-text text-danger" id="e_branch_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>اسم السوق او الصفحه:</label>
-  						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_store" id="e_store_id"  value="">
-                          </select>
-                          <span class="form-text text-danger" id="e_store_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>اسم المستلم:</label>
-  						<input type="text" id="e_customer_name" name="e_customer_name" class="form-control"  placeholder="">
-  						<span class="form-text text-danger" id="e_customer_name_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>اسم المستلم:</label>
-  						<input type="text" id="e_customer_phone" name="e_customer_phone" class="form-control"  placeholder="">
-  						<span class="form-text text-danger" id="e_customer_phone_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>المحافظة:</label>
-  						<select onchange="updateTown()" data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_city" id="e_city"  value="">
-                          </select>
-                          <span class="form-text text-danger" id="e_city_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>المدينة(القضاء او الحي):</label>
-  						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_town" id="e_town"  value="">
-                          </select>
-                          <span class="form-text text-danger" id="e_town_err"></span>
-  				</div>
-                  <div class="form-group">
-  						<label>الفرع المرسل له:</label>
-  						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_branch_to" id="e_branch_to"  value="">
-                        </select>
-                        <span class="form-text text-danger" id="e_branch_to_err"></span>
-  				</div>
-                  <div class="form-group">
-      				<label>ملاحظات</label>
-      				<textarea type="text" class="form-control" id="e_order_note" name="e_order_note" value=""></textarea>
-      				<span id="e_order_note_err" class="form-text text-danger"></span>
-      			</div>
+          				<label>ملاحظات</label>
+          				<textarea type="text" class="form-control" id="e_order_note" name="e_order_note" value=""></textarea>
+          				<span id="e_order_note_err" class="form-text text-danger"></span>
+          			</div>
                 </div>
+                </div>
+                </div>
+
+                <input type="hidden" name="e_Orderid" id="editOrderid"/>
 	            <div class="kt-portlet__foot kt-portlet__foot--solid">
 					<div class="kt-form__actions kt-form__actions--right">
 						<button type="button" onclick="updateOrder()" class="btn btn-brand">حفظ التغيرات</button>
 						<button type="reset" data-dismiss="modal" class="btn btn-secondary">الغاء</button>
 					</div>
 				</div>
-                <input type="hidden" name="e_Orderid" id="editOrderid"/>
 			</form>
 			<!--end::Form-->
 		</div>
@@ -455,7 +442,7 @@ legend
         </div>
         <div class="modal-body">
 		<!--begin::Portlet-->
-<div class="kt-portlet kt-portlet--height-fluid">
+         <div class="kt-portlet kt-portlet--height-fluid">
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-label">
                     <h3 class="kt-portlet__head-title">تتبع الطلبية</h3>
@@ -876,30 +863,20 @@ function editOrder(id){
       if(res.success == 1){
         $.each(res.data,function(){
           $('#e_order_no').val(this.order_no);
-          $('#e_price').val(this.price);
-          $('#e_iprice').val(this.new_price);
+          $('#e_price').val(this.total_price);
+          $('#e_discount').val(this.discount);
           $('#e_customer_phone').val(this.customer_phone);
           $('#e_customer_name').val(this.customer_name);
           $('#e_date').val(this.date);
-
-          $('#e_city').selectpicker('val',this.to_city);
           $('#e_city').val(this.to_city);
-          $('#e_branch').val(this.from_branch);
+          $('#e_city').selectpicker('refresh');
+
 
           getTowns($('#e_town'),$('#e_city').val());
-
-
-          $("#e_weight").val(this.weight);
-          $("#e_qty").val(this.qty);
           $("#e_order_note").val(this.note);
-
-
 
           $('#e_town').selectpicker('val',this.to_town);
           $('#e_town').val(this.to_town);
-
-          $('#e_branch_to').selectpicker('val',this.to_branch);
-          $('#e_branch_to').val(this.to_branch);
 
           $('#e_store_id').selectpicker('val',this.store_id);
           $('#e_store_id').val(this.store_id);
@@ -934,8 +911,7 @@ function updateOrder(){
          Toast.success('تم الاضافة');
          $("#kt_form .text-danger").text("");
        }else{
-          if(res.error["premission"] == 1){
-           $("#e_order_no_err").text(res.error["order_no"]);
+          $("#e_order_no_err").text(res.error["order_no"]);
            $("#e_order_type_err").text(res.error["order_type"]);
            $("#e_price_err").text(res.error["order_price"]);
            $("#e_iprice_err").text(res.error["order_iprice"]);
@@ -954,9 +930,6 @@ function updateOrder(){
            $("#e_order_note_err").text(res.error["order_note"]);
            $("#e_date_err").text(res.error["date"]);
             Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
-           }else{
-            Toast.warning("لاتملك صلاحيات تعديل هذا الطلب",'خطأ');
-           }
        }
     },
     error:function(e){

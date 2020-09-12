@@ -73,7 +73,7 @@ try{
     $res = getData($con,$sql,[$id]);
     $i = 0;
     foreach($res as $attr){
-      $sql = "select attribute_config.*, attribute.id as attribute_id from attribute
+      $sql = "select attribute_config.*, attribute.id as attribute_id,configurable_product.qty as qty from attribute
               LEFT JOIN attribute_config on attribute_config.attribute_id = attribute.id
               left join sub_option on sub_option.attribute_config_id = attribute_config.id
               left join configurable_product on configurable_product.id = sub_option.configurable_product_id
