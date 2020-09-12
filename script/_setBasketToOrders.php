@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require_once("_access.php");
 access([1,3,5]);
@@ -48,6 +48,7 @@ foreach ($order_nos as $no){
 }
 
 if($v->passes() && $msg == "") {
+  try{
   $sql = 'SELECT basket.*,COUNT(basket_items.id) as allitems,SUM(configurable_product.price * basket_items.qty) as total  from basket
           left join basket_items on basket_items.basket_id = basket.id
           left join configurable_product on configurable_product.id = basket_items.configurable_product_id
@@ -153,6 +154,10 @@ if($v->passes() && $msg == "") {
   }else {
     $msg = "السلة غير موجودة";
   }
+  }catch(PDOException $ex) {
+   $msg=["error"=>$ex];
+   $success="0";
+}
 }else{
   $error = [
            'id'=> implode($v->errors()->get('id')),
