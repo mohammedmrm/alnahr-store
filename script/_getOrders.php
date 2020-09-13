@@ -10,6 +10,7 @@ require_once("../config.php");
 //$branch = $_REQUEST['branch'];
 $to_branch = $_REQUEST['to_branch'];
 $city = $_REQUEST['city'];
+$town = $_REQUEST['town'];
 $customer = $_REQUEST['customer'];
 $order = $_REQUEST['order_no'];
 $store= $_REQUEST['store'];
@@ -18,6 +19,7 @@ $status = $_REQUEST['orderStatus'];
 $driver = $_REQUEST['driver'];
 $repated = $_REQUEST['repated'];
 $assignStatus = $_REQUEST['assignStatus'];
+$islimited = $_REQUEST['islimited'];
 $start = trim($_REQUEST['start']);
 $end = trim($_REQUEST['end']);
 $limit = trim($_REQUEST['limit']);
@@ -90,10 +92,13 @@ try{
 
   }
   if($city >= 1){
-    $filter .= " and city_id=".$city;
+    $filter .= " and orders.city_id=".$city;
+  }
+  if($town>= 1){
+    $filter .= " and orders.town_id=".$town;
   }
   if(($money_status == 1 || $money_status == 0) && $money_status !=""){
-    $filter .= " and money_status='".$money_status."'";
+    $filter .= " and orders.money_status='".$money_status."'";
   }
   if($store >= 1){
     $filter .= " and orders.store_id=".$store;

@@ -58,7 +58,7 @@ try{
     $query .= " ".$filter;
   }
   $lim = " limit ".(($page-1) * $limit).",".$limit;
-  $query .= " ORDER BY  score DESC ". $lim;
+  $query .= " ORDER BY  score,product.name DESC ". $lim;
   $data = getData($con,$query,[$head_company_id]);
   $ps = getData($con,$count,[$head_company_id]);
   $pages= ceil($ps[0]['count']/$limit);

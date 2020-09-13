@@ -17,7 +17,18 @@ $store= $_REQUEST['store'];
 $driver = $_REQUEST['driver'];
 $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
+$assignStatus = $_REQUEST['assignStatus'];
 $repated = $_REQUEST['repated'];
+
+if(empty($limit)){
+  $limit = 10;
+}
+$sort ="";
+$page = trim($_REQUEST['p']);
+if(empty($page) || $page <=0){
+  $page =1;
+}
+
 $start = trim($_REQUEST['start']);
 $end = trim($_REQUEST['end']);
 if($city == 1){
@@ -79,6 +90,7 @@ try{
                SUM(IF (city_id = 1,1,0)) as  b_orders,
                SUM(IF (city_id > 1,1,0)) as  o_orders
             from orders
+            left join stores on  stores.id = orders.store_id
             left join (
              select order_no,count(*) as rep from orders
               GROUP BY order_no
@@ -113,7 +125,11 @@ try{
   }else if($repated == 2){
    $filter .= " and b.rep == null";
   }
-
+  if($assignStatus == 1){
+     $filter .= " and (bar_code = 0 or bar_code is NULL)";
+  }else if($assignStatus == 2){
+    $filter .= " and bar_code <> 0";
+  }
   if($invoice == 1){
     $filter .= " and (orders.invoice_id ='' or orders.invoice_id =0)";
   }else if($invoice == 2){
@@ -126,7 +142,7 @@ try{
     $filter .= " and money_status='".$money_status."'";
   }
   if($client >= 1){
-    $filter .= " and client_id=".$client;
+    $filter .= " and stores.client_id=".$client;
   }
   if($store>= 1){
     $filter .= " and store_id=".$store;
@@ -152,11 +168,16 @@ try{
   if(validateDate($start) && validateDate($end)){
       $filter .= " and orders.date between '".$start."' AND '".$end."'";
      }
+     if($islimited == 1){
+       $limit = " limit ".(($page-1) * $limit).",".$limit;
+     }else{
+       $limit = "";
+     }
   if($filter != ""){
     $filter = preg_replace('/^ and/', '', $filter);
     $filter = $where." ".$filter;
     $count .= " ".$filter;
-    $query .= " ".$filter." group by orders.id order by city_id,town_id,orders.id";
+    $query .= " ".$filter." group by orders.id order by city_id,town_id,orders.id" . $limit;
   }else{
     $query .=" group by orders.id order by city_id,town_id,orders.id";
   }

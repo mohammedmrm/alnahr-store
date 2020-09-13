@@ -604,7 +604,7 @@ getStores($("#store"));
 getStores($("#e_store_id"));
 function download_Receipts(){
     var domain = "script/downloadReceipts.php?";
-    var data = $("#ordertabledata").serialize();
+    var data = $("#ordertabledata").serialize()+"&islimited=1";
     window.open(domain + data, '_blank');
 }
 function getorders(){

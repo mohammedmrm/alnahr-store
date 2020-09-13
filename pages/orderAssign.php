@@ -122,26 +122,18 @@ legend
             		<option value="">... اختر...</option>
             		<option value="1">تم تسليم المبلغ</option>
             		<option value="0">لم يتم تسليم المبلغ</option>
-                </select></div>
-          <div class="kt-separator kt-separator--border-dashed kt-separator--space-md"></div>
+                </select>
+            </div>
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                	<label>عدد السجلات</label>
+                	<input onchange="getorders()" type="number" value="10" class="form-control kt-input" name="limit" data-col-index="7" />
+            </div>
+            <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                    <br />
+                    <input id="downloadReceipts" name="downloadReceipts" type="button" onclick="download_Receipts()" value="تحميل الوصولات"  class="btn btn-warning" placeholder="" data-col-index="1">
+            </div>
           </div>
           </fieldset>
-
-          <div class="row kt-margin-b-20">
-            <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
-              	<label>عدد السجلات في الصفحة الواحدة</label>
-              	<select onchange="getorders()" class="form-control kt-input" name="limit" data-col-index="7">
-              		<option value="10">10</option>
-              		<option value="15">15</option>
-              		<option value="20">20</option>
-              		<option value="25">25</option>
-              		<option value="30">30</option>
-              		<option value="50">50</option>
-              		<option value="100">100</option>
-              	</select>
-              </div>
-            </div>
-
         <table class="table table-striped  table-bordered responsive nowrap" id="tb-orders">
 			       <thead>
 	  						<tr>
@@ -206,6 +198,12 @@ legend
 <script src="js/getCompanies.js" type="text/javascript"></script>
 <script src="js/getCities.js" type="text/javascript"></script>
 <script type="text/javascript">
+function download_Receipts(){
+    var domain = "script/downloadReceipts.php?";
+    var data = $("#ordertabledata").serialize();
+    window.open(domain + data, '_blank');
+}
+getStores($('#store'));
 function getorders(){
 $.ajax({
   url:"script/_getOrders.php",

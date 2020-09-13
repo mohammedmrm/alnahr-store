@@ -57,7 +57,7 @@ $id = $_REQUEST['e_Orderid'];
 $number = $_REQUEST['e_order_no'];
 $order_type = 'multi';
 $order_price = $_REQUEST['e_price'];
-$order_iprice= $_REQUEST['e_discount'];
+$order_discount= $_REQUEST['e_discount'];
 $client = $_REQUEST['e_client'];
 $store = $_REQUEST['e_store'];
 $client_phone = $_REQUEST['e_client_phone'];
@@ -151,7 +151,7 @@ if($v->passes() && $date_err =="" ) {
       $sql ="select * from companies where id=".$order[0]['delivery_company_id'];
       $res= getData($con,$sql);
       $response = httpPost($res[0]['dns'].'api/updateOrder.php',['token'=>$res[0]['token'],'order'=>$_REQUEST,'price'=>$price,'barcode'=>$order[0]['bar_code']]);
-      $response = json_decode($response, true);
+      $response = json_decode(substr($response, 3));
     }
   }
 }else{
@@ -181,5 +181,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo json_encode([$res[0]['dns'].'api/updateOrder.php','success'=>$success, 'error'=>$error,'response'=>$response]);
+echo json_encode([$order_discount,$res[0]['dns'].'api/updateOrder.php','success'=>$success, 'error'=>$error,'response'=>$response]);
 ?>
