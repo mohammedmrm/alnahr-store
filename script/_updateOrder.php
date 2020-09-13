@@ -151,7 +151,7 @@ if($v->passes() && $date_err =="" ) {
       $sql ="select * from companies where id=".$order[0]['delivery_company_id'];
       $res= getData($con,$sql);
       $response = httpPost($res[0]['dns'].'api/updateOrder.php',['token'=>$res[0]['token'],'order'=>$_REQUEST,'price'=>$price,'barcode'=>$order[0]['bar_code']]);
-      //$response = json_decode($response, true);
+      $response = json_decode($response, true);
     }
   }
 }else{

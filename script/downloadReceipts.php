@@ -383,7 +383,7 @@ $style2 = array(
     'stretchtext' => 1
 );
 // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-$pdf->write1DBarcode($data['bar_code'], 'S25+', 0, 185, 100, 15, 0.4, $style2, 'N');
+$pdf->write1DBarcode($data['bar_code'], 'C39', 0, 185, 100, 15, 0.4, $style2, 'N');
 $pdf->SetTextColor(25,25,112);
 $pdf->SetFont('aealarabiya', '', 9);
 
