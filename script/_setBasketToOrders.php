@@ -108,8 +108,8 @@ if($v->passes() && $msg == "") {
                   $per =   $total/$total_price;
                   $dis = 250 * round(($discount * $per)/250);
                   if($order_nos[$i] == ""){
-                    $sql="select * from receipts where company_id=? and (to_receipt - from_receipt ) >= ? limit 1";
-                    $order = getData($con,$sql,[$company,($required_receipts-$manual)]);
+                    $sql="select * from receipts where delivery_company_id=? and (to_receipt - from_receipt ) >= ? and company_id=? limit 1";
+                    $order = getData($con,$sql,[$company,($required_receipts-$manual),$_SESSION['company_id']]);
                     $order_no = $order[0]['from_receipt'];
                   }else{
                      $order_no = $order_nos[$i];

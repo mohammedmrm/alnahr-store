@@ -8,13 +8,6 @@ require("dbconnection.php");
 $company = $_REQUEST['company'];
 $start = $_REQUEST['start'];
 $end = $_REQUEST['end'];
-if(empty($end)) {
-   $end = date('Y-m-d', strtotime(' + 1 day'));
-}
-if(empty($start)) {
-   $start = date('Y-m-d',strtotime(' - 1 day'));
-}
-
 try{
   $query = "select *, receipts.id as f_id,
       if(companies.logo is null,'logos/logo.png',companies.logo) as logo,
@@ -23,7 +16,7 @@ try{
   left join companies on companies.id = receipts.company_id";
 
   $where = "where";
-  $filter = "";
+  $filter = " and receipts.company_id=".$_SESSION['company_id'];
      function validateDate($date, $format = 'Y-m-d')
      {
         $d = DateTime::createFromFormat($format, $date);
