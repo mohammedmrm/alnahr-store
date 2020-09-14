@@ -80,7 +80,7 @@ if($v->passes() && $img_err =="") {
         $i=0;
         foreach($imgs["tmp_name"] as $val){
             $imgid = uniqid();
-            mkdir("../img/product/".$res['id']."/", 0700);
+            mkdir("../img/product/".$id."/", 0700);
             $ext = strrchr($imgs["name"][$i], ".");
             $destination = "../img/product/".$id."/".$imgid.$ext;
             $imgPath = $id."/".$imgid.$ext;
