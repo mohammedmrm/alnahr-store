@@ -50,8 +50,8 @@ $valid_file_extensions = array(".jpg", ".jpeg", ".png",".gif");
 if(count($imgs['tmp_name']) > 0 && $imgs['size'][0] > 0){
 $i = 0;
 foreach($imgs["tmp_name"] as $val){
-     if($imgs['size'][$i] == 0 || $imgs['size'][$i] >= "2048000"){
-      $img_err =  " يجب تحميل صورة صالحة بحجم اقل من 2MB - (" . ($i+1).")";
+     if($imgs['size'][$i] == 0 || $imgs['size'][$i] >= "5088000"){
+      $img_err =  " يجب تحميل صورة صالحة بحجم اقل من 5MB - (" . ($i+1).")";
       break;
      }else{
        $ext = strrchr($imgs["name"][$i], ".");
