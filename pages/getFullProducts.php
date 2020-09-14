@@ -212,6 +212,7 @@ margin-right: 2.5%; }
                         <hr />
 						<div class="action">
 							<button class="add-to-cart btn btn-default" data-toggle="modal" data-target="#baskets" type="button">اضافه للسله</button>
+							<button class="like btn btn-default" onclick="editProduct()" data-toggle="modal" data-target="#editProduct" type="button"><span class="fa fa-edit"></span></button>
 							<button class="like btn btn-default" onclick="deleteProduct()" type="button"><span class="fa fa-trash"></span></button>
 						</div>
 					</div>
@@ -233,6 +234,88 @@ margin-right: 2.5%; }
   </div>
 </div>
 </div>
+<div class="modal fade" id="editProduct" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">تعديل منتج</h4>
+      </div>
+      <div class="modal-body">
+        <!--Begin:: App Content-->
+        <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
+          <div class="kt-portlet">
+            <form class="kt-form kt-form--label-right" id="editProductForm">
+              <div class="kt-portlet__body">
+                <div class="kt-section kt-section--first">
+                  <div class="kt-section__body">
+                    <div class="form-group row">
+                      <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
+                        <label>اسم المنتج</label>
+                        <input  type="text" class="form-control" id="e_name" name="e_name"/>
+                        <span class="form-text text-danger" id="e_name_err"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>سعر المنتج</label>
+                        <input type="number" step="250" min="0" class="form-control" id="e_price" name="e_price" />
+                        <span class="form-text text-danger" id="e_price_err"></span>
+                      </div>
+                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>تعديل السعر للمنتجات الفرعيه</label><br />
+                        <input type="checkbox" value="checked" value="1" checked  class="form-control" id="e_price_forall" name="e_price_forall" />
+                        <span class="form-text text-danger" id="e_price_forall_err"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
+                        <label>الصور</label>
+                        <input type="file" multiple="multiple" class="form-control" id="e_img" name="e_img[]" />
+                        <span class="form-text text-danger" id="e_img_err"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
+                        <label>الوصف المختصر</label>
+                        <textarea type="text" class="form-control" id="e_simple_des" name="e_simple_des"></textarea>
+                        <span class="form-text text-danger" id="e_simple_des_err"></span>
+                      </div>
+                      <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
+                        <label>الوصف</label>
+                        <textarea type="text" class="form-control summernote" id="e_des" name="edes"></textarea>
+                        <span class="form-text text-danger" id="e_des_err"></span>
+                      </div>
+                    </div>
+                    <input type="hidden" id="e_product_id" name="e_product_id" />
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                  <div class="row">
+                    <div class="col-lg-3 col-xl-3">
+                    </div>
+                    <div class="col-lg-9 col-xl-9">
+                      <button type="button" onclick="updateProduct()" class="btn btn-danger">تحديث</button>&nbsp;
+                      <button type="reset" data-dismiss="modal" class="btn btn-secondary">الغأ</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--End:: App Content-->
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="modal fade" id="baskets" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -497,6 +580,9 @@ margin-right: 2.5%; }
 <script src="js/getCities.js" type="text/javascript"></script>
 <script src="js/getTowns.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+
+$('.summernote').summernote();
     getBasketByStaff($('#basket'));
     getBasketByStaff($('#e_basket_id'));
     getCities($('#city'));
@@ -954,26 +1040,23 @@ function setImg(path){
       }
     }
 
-    function editProduct(id) {
+    function editProduct() {
+        $("#e_product_id").val($("#product_id").val());
         $.ajax({
-            url: "script/_getProduct.php",
+            url: "script/_getProductDetails.php",
             type: "POST",
             data: {
-                id: id
+                id: $("#product_id").val()
             },
             success: function(res) {
-                getProducts();
+                $(".text-dange").text("");
                 console.log(res);
-
                 if (res.success == 1) {
                     $.each(res.data, function() {
-                        $("#e_name").val(this.sub_name);
-                        $("#e_sku").val(this.sku);
-                        $("#e_qty").val(this.qty);
-                        $("#e_location").val(this.location);
-                        $("#e_buy_price").val(this.buy_price);
+                        $("#e_name").val(this.name);
                         $("#e_price").val(this.price);
-                        $("#e_product_id").val(id);
+                        $("#e_simple_des").val(this.simple_des);
+                        $("#e_des").val(this.des);
                     });
                 } else {
                     toastr.warning("حدث خطاء! حاول مرة اخرى.");
@@ -991,10 +1074,11 @@ function setImg(path){
         var myform = document.getElementById('editProductForm');
         var fd = new FormData(myform);
         $.ajax({
-            url: "script/_updateConfigrableProduct.php",
+            url: "script/_updateProduct.php",
             type: "POST",
             beforeSend: function() {
                 $("#editProductForm").addClass('loading');
+                $(".text-dange").text("");
             },
             data: fd,
             processData: false, // tell jQuery not to process the data
@@ -1004,17 +1088,14 @@ function setImg(path){
                 $("#editProductForm").removeClass('loading');
                 console.log(res);
                 if (res.success == 1) {
-                    $('#editProductModal').modal('hide');
+                    $('#editProduct').modal('hide');
                     getProducts();
                     toastr.success("تم تحديث المنتج");
                 } else {
-                    $("#e_product_id_err").text(res.error.id);
                     $("#e_name_err").text(res.error.name);
-                    $("#e_sku_err").text(res.error.sku);
-                    $("#e_qty_err").text(res.error.qty);
+                    $("#e_simple_des_err").text(res.error.simple_des);
+                    $("#e_des_err").text(res.error.des);
                     $("#e_price_err").text(res.error.price);
-                    $("#e_buy_price_err").text(res.error.buy_price);
-                    $("#e_location_err").text(res.error.location);
                     $("#e_img_err").text(res.error.img);
                     toastr.warning("يوجد بعض الاخطاء");
                 }

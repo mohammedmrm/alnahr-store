@@ -17,6 +17,7 @@ $store= $_REQUEST['store'];
 $driver = $_REQUEST['driver'];
 $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
+$ids = $_REQUEST['ids'];
 $assignStatus = $_REQUEST['assignStatus'];
 $repated = $_REQUEST['repated'];
 
@@ -52,6 +53,7 @@ $fontSize = $_REQUEST['fontSize'];
 if($fontSize < 5 || $fontSize > 100 || empty($fontSize)){
    $fontSize = 12;
 }
+
 $sty= <<<EOF
 <style>
   .title {
@@ -120,6 +122,22 @@ try{
    $filter .= " and driver_id =".$driver;
   }
 
+  ////---select orders olny
+  if(count($ids) > 0){
+      $a = 0;
+      foreach($ids as $id){
+        if($a==0){
+          $f = " orders.id =".$id;
+        }else{
+          $f .= " or orders.id =".$id;
+        }
+        $a++;
+     }
+     $f = " and ( ".$f." )";
+  }
+  $filter .= $f;
+
+  ///------if reparted
   if($repated == 1){
    $filter .= " and b.rep >= 2";
   }else if($repated == 2){

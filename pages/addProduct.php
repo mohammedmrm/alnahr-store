@@ -58,7 +58,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
   					</div>
   					<div class="form-group">
   						<label>وصف المنتج</label>
-  						<textarea type="name" id="des" name="des" class="form-control"  placeholder=""></textarea>
+  						<textarea type="name" id="des" name="des" class="form-control summernote"  placeholder=""></textarea>
                         <span class="form-text  text-danger" id="des_err"></span>
   					</div>
   	              </div>
@@ -278,10 +278,7 @@ function categoryTree($parent_id = -1, $sub_mark = ''){
  <script src="js/getStores.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-var des = new Quill('#des', {
-  theme: 'snow'
-});
-//$("#tb-Configrationtable").DataTable();
+$('.summernote').summernote();
 getStores($("#store"));
 getAttributes($("#attributes"));
 $(".selectpicker").selectpicker("refresh");
