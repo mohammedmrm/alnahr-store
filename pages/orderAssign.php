@@ -200,7 +200,7 @@ legend
 <script type="text/javascript">
 function download_Receipts(){
     var domain = "script/downloadReceipts.php?";
-    var data = $("#ordertabledata").serialize();
+    var data = $("#ordertabledata").serialize()+"&islimited=1";
     window.open(domain + data, '_blank');
 }
 getStores($('#store'));
@@ -284,7 +284,8 @@ $.ajax({
        "bPaginate": false,
        "bLengthChange": false,
        "bFilter": false,
-       serverPaging: true
+       serverPaging: true,
+       "scrollX":true,
       });
 
     },

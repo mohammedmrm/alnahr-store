@@ -19,10 +19,12 @@ $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
 $ids = $_REQUEST['ids'];
 $assignStatus = $_REQUEST['assignStatus'];
+$islimited = $_REQUEST['islimited'];
 $repated = $_REQUEST['repated'];
+$limit = $_REQUEST['limit'];
 
-if(empty($limit)){
-  $limit = 10;
+if(empty($limit) || $limit > 100){
+  $limit = 100;
 }
 $sort ="";
 $page = trim($_REQUEST['p']);
@@ -197,7 +199,7 @@ try{
     $count .= " ".$filter;
     $query .= " ".$filter." group by orders.id order by city_id,town_id,orders.id" . $limit;
   }else{
-    $query .=" group by orders.id order by city_id,town_id,orders.id";
+    $query .=" group by orders.id order by city_id,town_id,orders.id". $limit;;
   }
   $count = getData($con,$count);
   $orders = $count[0]['count'];

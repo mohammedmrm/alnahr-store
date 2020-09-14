@@ -1,12 +1,5 @@
 
 <div class="kt-portlet kt-portlet--tabs">
-             <fieldset><legend>السوق (الصفحة او البيج)</legend>
-                 <div class="form-group">
-                       <div class="form-input col-lg-2">
-                            <select class="selectpicker form-control" id="store" name="store"></select>
-                       </div>
-                 </div>
-            </fieldset>
             <div class="kt-portlet__head">
                 <div class="kt-portlet__head-toolbar">
                     <ul class="nav nav-tabs  nav-tabs-line nav-tabs-line-2x nav-tabs-line-danger" role="tablist">
@@ -32,7 +25,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="baskets" role="tabpanel">
                     <h1 class="fa-2x">السلات المطلوب تحضيرها</h1>
-	                <table class="table table-striped  table-bordered responsive nowrap" style="white-space: nowrap;" id="tb-baskets">
+	                <table class="table table-striped  table-bordered nowrap" style="white-space: nowrap;" id="tb-baskets">
         			       <thead>
         	  						<tr>
         										<th>رقم السلة</th>
@@ -52,7 +45,139 @@
 
                     </div>
                     <div class="tab-pane" id="made" role="tabpanel">
-                      <h1 class="fa-2x text-success">الطلبيات المجهزة</h1>
+                            <h3 class="kt-portlet__head-title"> الطلبيات </h3>
+
+                                <div class="kt-portlet__body">
+                            		<!--begin: Datatable -->
+                                    <form id="ordertabledata" class="kt-form kt-form--fit kt-margin-b-20">
+                                      <fieldset><legend>فلتر</legend>
+                                      <div class="row kt-margin-b-20">
+                                       <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>العميل:</label>
+                                        	<select onchange="getorders();getStores($('#store'),$(this).val());" data-show-subtext="true" data-live-search="true"  class="selectpicker form-control kt-input" id="client" name="client" data-col-index="7">
+                                        		<option value="">Select</option>
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>الصفحة (البيج):</label>
+                                        	<select onchange="getorders()" data-show-subtext="true" data-live-search="true"  class="selectpicker form-control kt-input" id="store" name="store" data-col-index="7">
+                                        		<option value="">Select</option>
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>الحالة:</label>
+                                        	<select onchange="getorders()" class="form-control kt-input" id="orderStatus" name="orderStatus" data-col-index="7">
+                                        		<option value="">Select</option>
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>المحافظة المرسل لها:</label>
+                                        	<select id="city" name="city" onchange="getorders();getTowns2($('#town'),$(this).val());" class="form-control kt-input" data-col-index="2">
+                                        		<option value="">Select</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>المنطقه:</label>
+                                            <select id="town" name="town" data-live-search="true" onchange="getorders()" class="form-control kt-input" data-col-index="2">
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-3 kt-margin-b-10-tablet-and-mobile">
+                                        <label>الفترة الزمنية :</label>
+                                        <div class="input-daterange input-group" id="kt_datepicker">
+                              				<input onchange="getorders()" type="text" class="form-control kt-input" name="start" id="start" placeholder="من" data-col-index="5">
+                              				<div class="input-group-append">
+                              					<span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                              				</div>
+                              				<input onchange="getorders()" type="text" class="form-control kt-input" name="end"  id="end" placeholder="الى" data-col-index="5">
+                                      	</div>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>رقم الوصل:</label>
+                                        	<input id="order_no" name="order_no" onkeyup="getorders()" type="text" class="form-control kt-input" placeholder="" data-col-index="0">
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>اسم او هاتف المستلم:</label>
+                                        	<input name="customer" onkeyup="getorders()" type="text" class="form-control kt-input" placeholder="" data-col-index="1">
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>حاله الاحاله:</label>
+                                        	<select id="assignStatus" name="assignStatus" onchange="getclient()" class="form-control kt-input" data-col-index="2">
+                                        		<option value="1">الطلبات غير المحاله</option>
+                                        		<option value="2">الطلبيات المحاله</option>
+                                        		<option value="3">الكل</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>حالة تسليم المبلغ للعميل:</label>
+                                            <select name="money_status" onchange="getorders()" class="form-control kt-input" data-col-index="2">
+                                        		<option value="">... اختر...</option>
+                                        		<option value="1">تم تسليم المبلغ</option>
+                                        		<option value="0">لم يتم تسليم المبلغ</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                                <label>.</label>
+                                                <input id="downloadReceipts" name="downloadReceipts" type="button" onclick="download_Receipts()" value="تحميل الوصولات"  class="btn btn-warning form-control">
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                            	<label>عدد السجلات</label>
+                                            	<input onchange="getorders()" type="number" value="10" class="form-control kt-input" name="limit" data-col-index="7" />
+                                        </div>
+                                      </div>
+                                      </fieldset>
+                                      <table class="table table-striped  table-bordered responsive nowrap" id="tb-orders">
+                            			       <thead>
+                            	  						<tr>
+                    										<th><input  id="allselector" type="checkbox"><span></span></th>
+                    										<th>رقم الشحنه</th>
+                                                            <th>رقم الوصل</th>
+                    										<th >اسم و هاتف العميل</th>
+                    										<th >رقم هاتف المستلم</th>
+                    										<th>عنوان المستلم</th>
+                    										<th>شركه التوصل</th>
+                    										<th>مبلغ الوصل</th>
+                                                            <th>مبلغ التوصيل</th>
+                                                            <th>الخصم</th>
+                                                            <th>حالة المبلغ</th>
+                                                            <th >التاريخ</th>
+                            						   </tr>
+                                  	            </thead>
+                                                <tbody id="ordersTable">
+                                                </tbody>
+                            		</table>
+                                    <div class="kt-section__content kt-section__content--border">
+                            		<nav aria-label="...">
+                            			<ul class="pagination" id="pagination">
+
+                            			</ul>
+                                    <input type="hidden" id="p" name="p" value="<?php if(!empty($_GET['p'])){ echo $_GET['p'];}else{ echo 1;}?>"/>
+                            		</nav>
+                                 	</div>
+                                    <hr />
+                                      <fieldset><legend>التحديثات</legend>
+                                      <div class="row kt-margin-b-20">
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>شركة التوصيل:</label>
+                                        	<select onchange="getApiStore($(this).val())" class="selectpicker form-control kt-input" data-live-search="true" name="company" id="company" data-col-index="2">
+                                        		<option value="">... اختر شركه التوصيل ...</option>
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>احاله المحدد بأسم السوق:</label>
+                                        	<select  id="apistore" name="apistore" class="selectpicker form-control kt-input" data-col-index="2">
+                                        		<option value="">... اختر ...</option>
+                                        	</select>
+                                        </div>
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>احالة:</label>
+                                        	<input type="button" onclick="sendOrders()" class="form-control btn btn-success" value="نفذ" />
+                                        </div>
+                                      </div>
+                                      </fieldset>
+                                    </form>
+                            		<!--end: Datatable -->
+                            </div>
                     </div>
                     <div class="tab-pane" id="invoices" role="tabpanel">
                       الكشوفات
@@ -60,11 +185,218 @@
                 </div>
             </div>
         </div>
+<script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+<!--begin::Page Scripts(used by this page) -->
+<script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
 
 <script src="js/getStores.js" type="text/javascript"></script>
 <script src="js/getCities.js" type="text/javascript"></script>
 <script src="js/getTowns.js" type="text/javascript"></script>
+<script src="js/getClients.js" type="text/javascript"></script>
+<script src="js/getorderStatus.js" type="text/javascript"></script>
+<script src="js/getCompanies.js" type="text/javascript"></script>
 <script type="text/javascript">
+function download_Receipts(){
+    var domain = "script/downloadReceipts.php?";
+    var data = $("#ordertabledata").serialize()+"&islimited=1";
+    window.open(domain + data, '_blank');
+}
+getStores($('#store'));
+function getorders(){
+$.ajax({
+  url:"script/_getOrders.php",
+  type:"POST",
+  data:$("#ordertabledata").serialize(),
+  beforeSend:function(){
+    $("#tb-orders").addClass("loading");
+  },
+  success:function(res){
+   console.log(res);
+   //saveEventDataLocally(res)
+   $("#tb-orders").removeClass("loading");
+   //$("#tb-orders").DataTable().destroy();
+   $('#ordersTable').html("");
+   $("#pagination").html("");
+   if(res.pages >= 1){
+     if(res.page > 1){
+         $("#pagination").append(
+          '<li class="page-item"><a href="#" onclick="getorderspage('+(Number(res.page)-1)+')" class="page-link">السابق</a></li>'
+         );
+     }else{
+         $("#pagination").append(
+          '<li class="page-item disabled"><a href="#" class="page-link">السابق</a></li>'
+         );
+     }
+     if(Number(res.pages) <= 5){
+       i = 1;
+     }else{
+       i =  Number(res.page) - 5;
+     }
+     if(i <=0 ){
+       i=1;
+     }
+     for(i; i <= res.pages; i++){
+       if(res.page != i){
+         $("#pagination").append(
+          '<li class="page-item"><a href="#" onclick="getorderspage('+(i)+')"  class="page-link">'+i+'</a></li>'
+         );
+       }else{
+         $("#pagination").append(
+          '<li class="page-item active"><span class="page-link">'+i+'</span></li>'
+         );
+       }
+       if(i == Number(res.page) + 5 ){
+         break;
+       }
+     }
+     if(res.page < res.pages){
+         $("#pagination").append(
+          '<li class="page-item"><a href="#" onclick="getorderspage('+(Number(res.page)+1)+')" class="page-link">التالي</a></li>'
+         );
+     }else{
+         $("#pagination").append(
+          '<li class="page-item disabled"><a href="#" class="page-link">التالي</a></li>'
+         );
+     }
+   }
+   i=0;
+   $.each(res.data,function(){
+      $('#ordersTable').append(
+       '<tr>'+
+            '<td class=""><input type="checkbox" value="'+this.id+'" name="ids[]" rowid="'+this.id+'"><span></span></td>'+
+            '<td>'+this.id+'</td>'+
+            '<td>'+this.order_no+'</td>'+
+            '<td>'+this.store_name+'<br />'+phone_format(this.client_phone)+'</td>'+
+            '<td>'+phone_format(this.customer_phone)+'</td>'+
+            '<td>'+this.city+'/'+this.town+'<br />'+this.address+'</td>'+
+            '<td>'+this.dev_comp_name+'</td>'+
+            '<td>'+formatMoney(this.total_price)+'</td>'+
+            '<td>'+formatMoney(this.dev_price)+'</td>'+
+            '<td>'+formatMoney(this.discount)+'</td>'+
+            '<td>'+this.money_status+'</td>'+
+            '<td>'+this.date+'</td>'+
+         '</tr>');
+     });
+    },
+   error:function(e){
+     $("#tb-orders").removeClass("loading");
+    console.log(e);
+  }
+});
+}
+function getTowns2(elem,city){
+   $.ajax({
+     url:"script/_getTowns.php",
+     type:"POST",
+     data:{city: city},
+     beforeSent:function(){
+
+     },
+     success:function(res){
+       elem.html("");
+       elem.append("<option value=''>-- اختر --</option>");
+       $.each(res.data,function(){
+         elem.append("<option value='"+this.id+"'>"+this.name+"</option>");
+       });
+       elem.selectpicker('refresh');
+       console.log(res);
+     },
+     error:function(e){
+        elem.append("<option value='' class='bg-danger'>خطأ اتصل بمصمم النظام</option>");
+        console.log(e);
+     }
+   });
+}
+getTowns2($("#town"),1);
+function getorderspage(page){
+    $("#p").val(page);
+    getorders();
+}
+getClients($("#client"));
+function getclient(){
+ getClients($("#client"),$("#branch").val());
+ getorders();
+}
+
+$(document).ready(function(){
+  getCompanies($('#company'));
+  getorders();
+$("#allselector").change(function() {
+    var ischecked= $(this).is(':checked');
+    if(!ischecked){
+      $('input[name="ids\[\]"]').attr('checked', false);;
+    }else{
+      $('input[name="ids\[\]"]').attr('checked', true);;
+    }
+});
+$('#start').datepicker({
+    format: "yyyy-mm-dd",
+    showMeridian: true,
+    todayHighlight: true,
+    autoclose: true,
+    pickerPosition: 'bottom-left',
+    defaultDate:'now'
+});
+$('#end').datepicker({
+    format: "yyyy-mm-dd",
+    showMeridian: true,
+    todayHighlight: true,
+    autoclose: true,
+    pickerPosition: 'bottom-left',
+    defaultDate:'now'
+});
+getorderStatus($("#orderStatus"));
+getCities($("#city"));
+});
+function getApiStore(id){
+      $.ajax({
+        url:"script/_getApiStore.php",
+        type:"POST",
+        data:$("#ordertabledata").serialize(),
+        success:function(res){
+          $("#apistore").html("");
+          console.log(res);
+          if(res.response != null){
+          if(res.response.success == 1){
+            $.each(res.response.data,function(){
+              $("#apistore").append(
+                '<option value="'+this.id+'">'+this.name+'</option>'
+              );
+            });
+          }else{
+            toastr.warning("لايمكن طلب تحميل الاسواق",'فشل الاتصال');
+          }
+          }else{
+            toastr.warning("تاكد من معلومات الشركه",'فشل الاتصال');
+          }
+           $("#apistore").selectpicker("refresh");
+        },
+        error:function(e){
+          toastr.error("خطأ!");
+          console.log(e);
+        }
+      });
+}
+function sendOrders(){
+      $.ajax({
+        url:"script/_sendOrders.php",
+        type:"POST",
+        data:$("#ordertabledata").serialize(),
+        success:function(res){
+          console.log(res);
+          Toast.success("تم الاحاله "+res.response.count.added + " شحنه");
+          if(res.response.count.not > 0){
+            Toast.warning(res.response.count.not + " شحنه محاله مسبقاً");
+          }
+          getorders();
+        },
+        error:function(e){
+           Toast.error("خطأ!");
+          console.log(e);
+        }
+      });
+}
+
 $(document).ready(function(){
   getStores($("#store"));
   getCities($("#e_city"));
@@ -270,8 +602,9 @@ function setBasketToOrders(id){
         console.log(res);
         if(res.success == 1){
           toastr.success('تم تسجيل الطلب');
-          getBasketForPerpare();
           $('#setBasketToOrderModal').modal('toggle');
+          getBasketForPerpare();
+          getorders();
         }else{
           toastr.warning(res.msg);
         }
