@@ -30,7 +30,7 @@ require_once("../config.php");
 $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                             ((if(earnings_fix is null,0,earnings_fix)) + ((if(earnings_total is null,0,earnings_total/100)) * orders.total_price)) as mandop_earnings,
                             cites.name as city,towns.name as town,clients.phone as client_phone,mandop.name as mandop_name,
-                            order_status.status as status_name,staff.name as staff_name,b.rep as repated,stores.name as store_name
+                            order_status.status as status_name,staff.name as staff_name,stores.name as store_name
                             from orders
                             left join cites on  cites.id = orders.city_id
                             left join towns on  towns.id = orders.town_id
@@ -40,11 +40,6 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                             left join staff  mandop on  mandop.id = orders.mandop_id
                             left join order_status on  order_status.id = orders.order_status_id
                             left join mandop_stores on  mandop_stores.store_id = stores.id
-                            left join (
-                            select order_no,count(*) as rep from orders
-                            GROUP BY order_no
-                            HAVING COUNT(orders.id) > 1
-                            ) b on b.order_no = orders.order_no
                             ";
                     $where = "where";
                     $filter = "orders.confirm = 1 and orders.mandop_id =" . $userid;
