@@ -62,15 +62,15 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                         $filter .= " and (customer_name like '%" . $customer . "%' or customer_phone like '%" . $customer . "%') ";
                     }
                     if ($order) {
-                        $filter .= " and orders.order_no like '%" + order + "%'";
+                        $filter .= " and orders.order_no like '%" . $order . "%'";
                     }
                     ///-----------------status
                     if ($status == 4) {
-                        $filter += " and (order_status_id =" + status + " or order_status_id = 6 or order_status_id = 5)";
+                        $filter += " and (order_status_id =" . $status . " or order_status_id = 6 or order_status_id = 5)";
                     } else if ($status == 9) {
-                        $filter += " and (order_status_id =" + status + " or order_status_id =11 or order_status_id = 6 or order_status_id = 5)";
+                        $filter += " and (order_status_id =" . $status .  " or order_status_id =11 or order_status_id = 6 or order_status_id = 5)";
                     } else if ($status >= 1) {
-                        $filter += " and order_status_id =" + status;
+                        $filter += " and order_status_id =". $status ;
                     }
                     if ($filter != "") {
                         $filter = $where . " " . $filter;
@@ -82,5 +82,5 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
 if(count($data) > 0){
     $success = 1;
 }
-echo (json_encode(array($query,'code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data),JSON_PRETTY_PRINT));
+echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data),JSON_PRETTY_PRINT));
 ?>
