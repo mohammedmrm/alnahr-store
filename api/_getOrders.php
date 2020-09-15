@@ -87,5 +87,5 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
 if(count($data) > 0){
     $success = 1;
 }
-echo (json_encode(array('code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data)));
+echo (json_encode(array($query,'code'=>200,'message'=>$msg,"success"=>$success,"data"=>$data),JSON_PRETTY_PRINT));
 ?>
