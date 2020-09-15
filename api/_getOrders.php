@@ -39,7 +39,7 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                             left join clients on  clients.id = stores.client_id
                             left join staff  mandop on  mandop.id = orders.mandop_id
                             left join order_status on  order_status.id = orders.order_status_id
-                            left join mandop_stores on  mandop_stores.store_id = stores.id
+                            left join mandop_stores on  mandop_stores.store_id = stores.id and  mandop_stores.mandop_id = orders.mandop_id
                             ";
                     $where = "where";
                     $filter = "orders.confirm = 1 and orders.mandop_id =" . $userid;
@@ -66,11 +66,11 @@ $query = "select orders.*, date_format(orders.date,'%Y-%m-%d') as date,
                     }
                     ///-----------------status
                     if ($status == 4) {
-                        $filter += " and (order_status_id =" . $status . " or order_status_id = 6 or order_status_id = 5)";
+                        $filter .= " and (order_status_id =" . $status . " or order_status_id = 6 or order_status_id = 5)";
                     } else if ($status == 9) {
-                        $filter += " and (order_status_id =" . $status .  " or order_status_id =11 or order_status_id = 6 or order_status_id = 5)";
+                        $filter .= " and (order_status_id =" . $status .  " or order_status_id =11 or order_status_id = 6 or order_status_id = 5)";
                     } else if ($status >= 1) {
-                        $filter += " and order_status_id =". $status ;
+                        $filter .= " and order_status_id =". $status ;
                     }
                     if ($filter != "") {
                         $filter = $where . " " . $filter;
