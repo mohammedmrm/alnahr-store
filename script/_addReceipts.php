@@ -28,8 +28,8 @@ if(empty($from) || empty($to)){
   $msg = "";
 }
 if($msg == ""){
-  $sql = "insert into receipts (from_receipt,to_receipt,company_id) values(?,?,?)";
-  $res = setData($con,$sql,[$from,$to,$company]);
+  $sql = "insert into receipts (from_receipt,to_receipt,company_id,delivery_company_id) values(?,?,?,?)";
+  $res = setData($con,$sql,[$from,$to,$_SESSION['company_id'],$company]);
   if($res > 0){
     $success = 1;
   }
