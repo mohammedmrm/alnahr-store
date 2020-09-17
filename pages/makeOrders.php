@@ -13,11 +13,11 @@
                                 <i class="flaticon-list"></i> المجهزه
                             </a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link fa-1x" data-toggle="tab" href="#invoices" role="tab" aria-selected="true">
                                 <i class="fa fa-file-pdf"></i> كشوفات
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
