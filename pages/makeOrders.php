@@ -115,7 +115,14 @@
                                         		<option value="0">لم يتم تسليم المبلغ</option>
                                             </select>
                                         </div>
-
+                                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                        	<label>حالة الطباعه:</label>
+                                            <select name="print" onchange="getorders()" class="form-control kt-input" data-col-index="2">
+                                        		<option value="">الكل</option>
+                                        		<option value="1">غير المطبوع</option>
+                                        		<option value="2">المطبوع</option>
+                                            </select>
+                                        </div>
                                         <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
                                                 <label>.</label>
                                                 <input id="downloadReceipts" name="downloadReceipts" type="button" onclick="download_Receipts()" value="تحميل الوصولات"  class="btn btn-warning form-control">

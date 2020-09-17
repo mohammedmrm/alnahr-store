@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require("_access.php");
 access([1,2]);
@@ -71,28 +71,31 @@ if(isset($_FILES['e_company_logo']['tmp_name']) && $_FILES['e_company_logo']['si
 if($v->passes() && $img_err =="") {
   $sql = 'update companies set name = ?, token=?,phone=?,text1=?,text2=?,dns=? where id=?';
   $result = setData($con,$sql,[$name,$token,$phone,$text1,$text2,$dns,$id]);
-  if(isset($_FILES['e_company_logo']['tmp_name']) && $_FILES['e_company_id']['size'] != 0){
+  if(isset($_FILES['e_company_logo']['tmp_name']) && $_FILES['e_company_logo']['size'] != 0){
+    $sql = "select * from companies where id=?";
+    $res = getData($con,$sql,[$id]);
+    unlink("../img/logos/companies/".$res[0]['logo']);
     $id1 = uniqid();
     $destination = "../img/logos/companies/".$id1.".png";
     $imgpath = $id1.".png";
     move_uploaded_file($_FILES['e_company_logo']["tmp_name"], $destination);
     $sql = 'update companies set logo = ?  where id=? ';
-    $result = setData($con,$sql,[$name,$email,$phone,$role,$branch,$imgpath,$id]);
+    $result = setData($con,$sql,[$imgpath,$id]);
   }
    if($result > 0){
     $success = 1;
   }
 }else{
   $error = [
-           'company_id_err'   =>implode($v->errors()->get('id')),
-           'company_name_err' =>implode($v->errors()->get('company_name')),
-           'company_phone_err'=>implode($v->errors()->get('company_phone')),
-           'company_token_err'=>implode($v->errors()->get('company_token')),
-           'company_dns_err'  =>implode($v->errors()->get('company_dns')),
-           'company_logo_err' =>$img_err,
-           'company_text1_err'=>implode($v->errors()->get('company_text1')),
-           'company_text2_err'=>implode($v->errors()->get('company_text2')),
+           'id'   =>implode($v->errors()->get('id')),
+           'name' =>implode($v->errors()->get('company_name')),
+           'phone'=>implode($v->errors()->get('company_phone')),
+           'token'=>implode($v->errors()->get('company_token')),
+           'dns'  =>implode($v->errors()->get('company_dns')),
+           'logo' =>$img_err,
+           'text1'=>implode($v->errors()->get('company_text1')),
+           'text2'=>implode($v->errors()->get('company_text2')),
            ];
 }
-echo json_encode(['success'=>$success, 'error'=>$error]);
+echo json_encode([$_FILES,'success'=>$success, 'error'=>$error]);
 ?>

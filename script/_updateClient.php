@@ -16,7 +16,6 @@ $id        = $_REQUEST['editclientid'];
 $name      = $_REQUEST['e_client_name'];
 $email     = $_REQUEST['e_client_email'];
 $phone     = $_REQUEST['e_client_phone'];
-$branch    = $_REQUEST['e_client_branch'];
 $password  = $_REQUEST['e_client_password'];
 
 
@@ -46,17 +45,16 @@ $v->validate([
     'client_email'   => [$email,   'email'],
     'client_phone'   => [$phone,   "required|unique|isPhoneNumber"],
     'client_password'=> [$password,"min(6)|max(18)"],
-    'client_branch'  => [$branch,  'required|int']
 ]);
 
 if($v->passes()) {
    if(empty($password)){
-   $sql = 'update clients set name = ?, email=?,phone=?,branch_id=? where id=?';
-   $result = setData($con,$sql,[$name,$email,$phone,$branch,$id]);
+   $sql = 'update clients set name = ?, email=?,phone=? where id=?';
+   $result = setData($con,$sql,[$name,$email,$phone,$id]);
    }else{
    $password= hashPass($password);
-   $sql = 'update clients set password=?,name = ?, email=?,phone=?,branch_id=? where id=?';
-   $result = setData($con,$sql,[$password,$name,$email,$phone,$branch,$id]);
+   $sql = 'update clients set password=?,name = ?, email=?,phone=? where id=?';
+   $result = setData($con,$sql,[$password,$name,$email,$phone,$id]);
    }
   if($result > 0){
     $success = 1;

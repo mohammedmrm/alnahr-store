@@ -133,29 +133,23 @@ getAllclients($("#getAllclientsTable"));
 			<form class="kt-form" id="editClientForm">
 				<div class="kt-portlet__body">
 					<div class="form-group">
-						<label>الفرع</label>
-						<select data-show-subtext="true" data-live-search="true" type="text" class="selectpicker form-control dropdown-primary" name="e_client_branch" id="e_client_branch"  value="">
-                        </select>
-                        <span class="form-text text-danger" id="e_client_branch_err"></span>
-					</div>
-					<div class="form-group">
 						<label>الاسم الكامل:</label>
 						<input type="name" id="e_client_name" name="e_client_name" class="form-control"  placeholder="ادخل الاسم الكامل">
 						<span class="form-text  text-danger" id="e_client_name_err"></span>
 					</div>
 					<div class="form-group">
 						<label>الايميل:</label>
-						<input type="email" id="e_client_email" name="e_client_email" class="form-control" placeholder="ادخل البريد الالكتروني">
+						<input type="email" autocomplete="new-password" id="e_client_email" name="e_client_email" class="form-control" placeholder="ادخل البريد الالكتروني">
 						<span class="form-text text-danger" id="e_client_email_err"></span>
 					</div>
 					<div class="form-group">
 						<label>رقم الهاتف:</label>
-						<input type="text" id="e_client_phone" name="e_client_phone" class="form-control" placeholder="ادخل رقم الهاتف">
+						<input type="text" autocomplete="new-password" id="e_client_phone" name="e_client_phone" class="form-control" placeholder="ادخل رقم الهاتف">
 						<span  id="e_client_phone_err"class="form-text  text-danger"></span>
 					</div>
 					<div class="form-group">
 						<label>كلمة السر:</label>
-						<input type="password" id="e_client_password" name="e_client_password" class="form-control" placeholder="ادخل كلمة السر">
+						<input type="password" autocomplete="new-password" id="e_client_password" name="e_client_password" class="form-control" placeholder="ادخل كلمة السر">
 						<span class="form-text  text-danger" id="e_client_password_err"></span>
 					</div>
 	            </div>
@@ -181,8 +175,6 @@ getAllclients($("#getAllclientsTable"));
 function editClient(id){
   $(".text-danger").text("");
   $("#editclientid").val(id);
-  getCities($("#e_Client_city"));
-  getManagers($("#e_Client_manager"));
   $.ajax({
     url:"script/_getClientByID.php",
     data:{id: id},
@@ -196,8 +188,7 @@ function editClient(id){
           $('#e_client_name').val(this.name);
           $('#e_client_email').val(this.email);
           $('#e_client_phone').val(this.phone);
-          $('#e_client_branch').selectpicker('val', this.branch_id);
-        });
+         });
       }
       console.log(res);
     },
@@ -224,7 +215,6 @@ function updateClient(){
           Toast.success('تم التحديث');
           getAllclients($("#getAllclientsTable"));
        }else{
-           $("#e_client_branch_err").text(res.error["client_branch_err"]);
            $("#e_client_name_err").text(res.error["client_name_err"]);
            $("#e_client_email_err").text(res.error["client_email_err"]);
            $("#e_client_phone_err").text(res.error["client_phone_err"]);

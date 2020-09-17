@@ -146,7 +146,7 @@ getAllcompanies($("#getAllcompaniesTable"));
 					</div>
 					<div class="form-group">
 						<label>شعار الشركه:</label>
-						<input type="file" id="e_Company_phone" name="e_company_logo" class="form-control" placeholder="ادخل رقم الهاتف">
+						<input type="file" id="e_company_logo" name="e_company_logo" class="form-control" placeholder="ادخل رقم الهاتف">
 						<span  id="e_Company_logo_err"class="form-text  text-danger"></span>
 					</div>
   					<div class="form-group">
@@ -191,16 +191,10 @@ getAllcompanies($("#getAllcompaniesTable"));
 
     </div>
   </div>
-
-<script type="text/javascript" src="js/getCities.js"></script>
-<script type="text/javascript" src="js/getManagers.js"></script>
-<script type="text/javascript" src="js/getBraches.js"></script>
 <script>
 function editCompany(id){
   $(".text-danger").text("");
   $("#editCompanyid").val(id);
-  getCities($("#e_Company_city"));
-  getManagers($("#e_Company_manager"));
   $.ajax({
     url:"script/_getCompanyByID.php",
     data:{id: id},
@@ -212,10 +206,12 @@ function editCompany(id){
       if(res.success == 1){
         $.each(res.data,function(){
           $('#e_Company_name').val(this.name);
-          $('#e_Company_email').val(this.email);
+          $('#e_Company_token').val(this.token);
+          $('#e_Company_dns').val(this.dns);
           $('#e_Company_phone').val(this.phone);
-          $('#e_Company_branch').selectpicker('val', this.branch_id);
-        });
+          $('#e_Company_text1').val(this.text1);
+          $('#e_Company_text2').val(this.text2);
+       });
       }
       console.log(res);
     },
@@ -227,10 +223,15 @@ function editCompany(id){
 }
 function updateCompany(){
     $(".text-danger").text("");
+    var myform = document.getElementById('editCompanyForm');
+    var fd = new FormData(myform);
     $.ajax({
        url:"script/_updateCompany.php",
        type:"POST",
-       data:$("#editCompanyForm").serialize(),
+       data:fd,
+       processData: false,  // tell jQuery not to process the data
+       contentType: false,
+       cache: false,
        beforeSend:function(){
         $("#editCompanyForm").addClass('loading');
        },
@@ -242,12 +243,12 @@ function updateCompany(){
           Toast.success('تم التحديث');
           getAllcompanies($("#getAllcompaniesTable"));
        }else{
-           $("#e_Company_name_err").text(res.error["company_name_err"]);
-           $("#e_Company_dns_err").text(res.error["company_dns_err"]);
-           $("#e_Company_phone_err").text(res.error["company_phone_err"]);
-           $("#e_Company_token_err").text(res.error["company_token_err"]);
-           $("#e_Company_text1_err").text(res.error["company_text1_err"]);
-           $("#e_Company_text2_err").text(res.error["company_text2_err"]);
+           $("#e_Company_name_err").text(res.error["name"]);
+           $("#e_Company_dns_err").text(res.error["dns"]);
+           $("#e_Company_phone_err").text(res.error["phone"]);
+           $("#e_Company_token_err").text(res.error["token"]);
+           $("#e_Company_text1_err").text(res.error["text1"]);
+           $("#e_Company_text2_err").text(res.error["text2"]);
            Toast.warning("هناك بعض المدخلات غير صالحة",'خطأ');
        }
        },

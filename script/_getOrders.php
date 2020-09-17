@@ -16,6 +16,7 @@ $order = $_REQUEST['order_no'];
 $store= $_REQUEST['store'];
 $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
+$print = $_REQUEST['print'];
 $driver = $_REQUEST['driver'];
 $repated = $_REQUEST['repated'];
 $assignStatus = $_REQUEST['assignStatus'];
@@ -77,6 +78,11 @@ try{
      $filter .= " and (bar_code = 0 or bar_code is NULL)";
   }else if($assignStatus == 2){
     $filter .= " and bar_code <> 0";
+  }
+  if($print == 1){
+    $filter .= " and orders.print = 0";
+  }else if($print == 2){
+     $filter .= " and orders.print > 0";
   }
   if($to_branch >= 1){
    $filter .= " and to_branch =".$to_branch;

@@ -17,6 +17,7 @@ $store= $_REQUEST['store'];
 $driver = $_REQUEST['driver'];
 $invoice= $_REQUEST['invoice'];
 $status = $_REQUEST['orderStatus'];
+$print = $_REQUEST['print'];
 $ids = $_REQUEST['ids'];
 $assignStatus = $_REQUEST['assignStatus'];
 $islimited = $_REQUEST['islimited'];
@@ -123,7 +124,11 @@ try{
   if($driver >= 1){
    $filter .= " and driver_id =".$driver;
   }
-
+  if($print == 1){
+    $filter .= " and orders.print = 0";
+  }else if($print == 2){
+     $filter .= " and orders.print > 0";
+  }
   ////---select orders olny
   if(count($ids) > 0){
       $a = 0;
@@ -244,6 +249,8 @@ $items = getData($con,$sql,[$data['id']]);
 foreach($items as $item){
   $products .= $item['sub_name']." | ";
 }
+$sql = "update orders set print = print +1 where orders.id=?";
+setData($con,$sql,[$data['id']]);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('07822816693');
