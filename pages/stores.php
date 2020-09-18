@@ -132,8 +132,14 @@ getAllStores($("#getAllStoresTable"));
 			<form class="kt-form" id="editStoreForm">
 				<div class="kt-portlet__body">
 					<div class="form-group">
+						<label>العميل:</label>
+						<select type="name" id="e_client" name="e_client" class="form-control"  placeholder="">
+                        </select>
+						<span class="form-text  text-danger" id="e_client_err"></span>
+					</div>
+					<div class="form-group">
 						<label>الاسم البيج:</label>
-						<input type="name" id="e_Store_name" name="e_Store_name" class="form-control"  placeholder="ادخل الاسم الكامل">
+						<input type="name" id="e_Store_name" name="e_Store_name" class="form-control"  placeholder="">
 						<span class="form-text  text-danger" id="e_Store_name_err"></span>
 					</div>
 	            </div>
@@ -155,12 +161,12 @@ getAllStores($("#getAllStoresTable"));
   </div>
 
 <script type="text/javascript" src="js/getCities.js"></script>
+<script type="text/javascript" src="js/getClients.js"></script>
 <script>
+getClients($("#e_client"));
 function editStore(id){
   $(".text-danger").text("");
   $("#editStoreid").val(id);
-  getCities($("#e_Store_city"));
-  getManagers($("#e_Store_manager"));
   $.ajax({
     url:"script/_getStoreByID.php",
     data:{id: id},
@@ -172,9 +178,7 @@ function editStore(id){
       if(res.success == 1){
         $.each(res.data,function(){
           $('#e_Store_name').val(this.name);
-          $('#e_Store_email').val(this.email);
-          $('#e_Store_phone').val(this.phone);
-          $('#e_Store_branch').selectpicker('val', this.branch_id);
+          $("#e_client").val(this.client_id);
         });
       }
       console.log(res);

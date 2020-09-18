@@ -91,7 +91,7 @@ function acc($id){
 								<ul class="kt-menu__subnav">
                                     <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Profile</span></span></li>
                                     <?php if($a == 1 || $a == 3 || $a == 5 || $a==99){?>
-                                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/updateOrdersStatus.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشوفات العملاء</span></a></li>
+                                        <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/clientInoices.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">كشوفات العملاء</span></a></li>
                                     <?php } ?>
                                     <?php if($a == 1 || $a == 2 || $a==99){?>
                                       <li class="kt-menu__item " aria-haspopup="true"><a href="?page=pages/clients.php" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">العملاء</span></a></li>
