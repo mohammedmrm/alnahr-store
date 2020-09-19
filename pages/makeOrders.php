@@ -24,8 +24,17 @@
             <div class="kt-portlet__body">
                 <div class="tab-content">
                     <div class="tab-pane active" id="baskets" role="tabpanel">
-                    <h1 class="fa-2x">السلات المطلوب تحضيرها</h1>
-	                <table class="table table-striped  table-bordered nowrap" style="white-space: nowrap;" id="tb-baskets">
+                     <div class="row">
+                        <div class="col-lg-5 kt-margin-b-10-tablet-and-mobile">
+                            <h1 class="fa-2x">السلات المطلوب تحضيرها</h1>
+                        </div>
+                        <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
+                                <input id="makeAllOrders" name="makeAllOrders" type="button" onclick="makeAllOrders()" value="توليد كل الشحنات"  class="btn btn-warning form-control">
+                        </div>
+
+                     </div>
+                      <hr />
+	                 <table class="table table-striped  table-bordered nowrap" style="white-space: nowrap;" id="tb-baskets">
         			       <thead>
         	  						<tr>
         										<th>رقم السلة</th>
@@ -650,6 +659,33 @@ function setOrderNo (id){
         }
       },
       error:function(e){
+        toastr.error("خطأ");
+        console.log(e);
+      }
+    });
+}
+function makeAllOrders(){
+    $.ajax({
+      url:"script/_setBasketsToOrders.php",
+      type:"POST",
+      beforeSend:function(){
+        $("#basketOrdersForm").addClass("loading");
+      },
+      success:function(res){
+        $("#basketOrdersForm").removeClass("loading");
+        console.log(res);
+        if(res.success == 1){
+          toastr.success('تم تسجيل '+res.added+' طلب ');
+          getBasketForPerpare();
+          getorders();
+        }else{
+          toastr.warning(res.msg);
+          getBasketForPerpare();
+          getorders();
+        }
+      },
+      error:function(e){
+        $("#basketOrdersForm").removeClass("loading");
         toastr.error("خطأ");
         console.log(e);
       }
