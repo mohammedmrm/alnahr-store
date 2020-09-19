@@ -277,7 +277,7 @@ $.ajax({
             '<td>'+this.id+'</td>'+
             '<td>'+this.order_no+'</td>'+
             '<td>'+this.store_name+'<br />'+phone_format(this.client_phone)+'</td>'+
-            '<td>'+phone_format(this.customer_phone)+'</td>'+
+            '<td>'+this.customer_name+'<br />'+phone_format(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'<br />'+this.address+'</td>'+
             '<td>'+this.dev_comp_name+'</td>'+
             '<td>'+formatMoney(this.total_price)+'</td>'+

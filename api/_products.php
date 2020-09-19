@@ -40,7 +40,7 @@ try{
   if($userrole == 4){
     $filter .= " and product.store_id in (SELECT store_id from mandop_stores where mandop_stores.mandop_id=".$userid.")";
   }
-  $filter .= " and product.company_id=?";
+  $filter .= " and product.display=1 and product.company_id=?";
 
   if ($cat >= 1) {
         $filter .=' and product.category_id='.$cat;

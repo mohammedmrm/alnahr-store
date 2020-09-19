@@ -700,7 +700,7 @@ $.ajax({
        '<tr>'+
             '<td>'+this.order_no+'</td>'+
             '<td>'+this.store_name+'<br />'+(this.client_phone)+'</td>'+
-            '<td>'+(this.customer_phone)+'</td>'+
+            '<td>'+this.customer_name+'<br />'+(this.customer_phone)+'</td>'+
             '<td>'+this.city+'/'+this.town+'</td>'+
             '<td>'+date+'</td>'+
             '<td>'+
