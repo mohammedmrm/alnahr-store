@@ -30,7 +30,8 @@ try{
           left join attribute_config on attribute_config.id = sub_option.attribute_config_id
          where configurable_product_id=".$at['id'];
          $config  = getData($con,$sql);
-         $data[$i]["configurable_product"][$j]['cofig'] = $config;
+         $data[$i]["configurable_product"][$j]['config'] = $config;
+         $j++;
        }
        $sql ="select * from images where product_id = ?";
        $img = getData($con,$sql,[$id]);

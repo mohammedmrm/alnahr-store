@@ -114,5 +114,5 @@ if($v->passes() && $img_err =="") {
            'img'=>$img_err,
            ];
 }
-echo json_encode([$forall,$_POST,$imgs,'success'=>$success, 'error'=>$error]);
+echo json_encode([$_POST,'success'=>$success, 'error'=>$error]);
 ?>

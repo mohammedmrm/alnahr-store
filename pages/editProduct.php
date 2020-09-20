@@ -110,7 +110,7 @@ if (file_exists("script/_access.php")) {
 </div>
 <!-- end:: Content -->
 <div class="modal fade" id="editProduct" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
@@ -126,10 +126,17 @@ if (file_exists("script/_access.php")) {
                 <div class="kt-section kt-section--first">
                   <div class="kt-section__body">
                     <div class="form-group row">
-                      <div class="col-lg-12 kt-margin-b-10-tablet-and-mobile">
-                        <label>صوره</label>
-                        <input type="file" class="form-control" id="e_img" name="e_img" />
-                        <span class="form-text text-danger" id="e_customer_name_err"></span>
+                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>السوق / البيج</label>
+                        <select data-live-search="true" class="form-control selectpicker" id="e_store" name="e_store" >
+                        </select>
+                        <span class="form-text text-danger" id="e_store_err"></span>
+                      </div>
+                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>التصنيف</label><br />
+                        <select data-live-search="true" class="form-control selectpicker" id="e_category" name="e_category">
+                        </select>
+                        <span class="form-text text-danger" id="e_category_err"></span>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -145,6 +152,18 @@ if (file_exists("script/_access.php")) {
                       </div>
                     </div>
                     <div class="form-group row">
+                     <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>الوصف</label><br />
+                        <textarea type="text" class="form-control" id="e_simple_des" name="e_simple_des" ></textarea>
+                        <span class="form-text text-danger" id="e_simple_des_err"></span>
+                      </div>
+                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
+                        <label>صور</label>
+                        <input type="file" class="form-control" id="e_img" name="e_img[]" />
+                        <span class="form-text text-danger" id="e_customer_name_err"></span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                       <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
                         <label>سعر الشراء</label>
                         <input type="text" class="form-control" id="e_buy_price" name="e_buy_price" />
@@ -156,18 +175,43 @@ if (file_exists("script/_access.php")) {
                         <span class="form-text text-danger" id="e_price_err"></span>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <label>الكميه</label>
-                        <input type="number" class="form-control" id="e_qty" name="e_qty" />
-                        <span class="form-text text-danger" id="e_qty_err"></span>
-                      </div>
-                      <div class="col-lg-6 kt-margin-b-10-tablet-and-mobile">
-                        <label>الموقع</label><br />
-                        <input type="text" class="form-control" id="e_location" name="e_location" />
-                        <span class="form-text text-danger" id="e_location_err"></span>
-                      </div>
-                      <input type="hidden" id="e_product_id" name="e_product_id" />
+                    <hr />
+                    <div class="col-md-12">
+                           <div id="configTable">
+                      		<table class="table table-striped table-bordered table-hover responsive no-wrap" id="tb-Configrationtable">
+                      		<thead>
+                      	  	<tr id="configTableHead">
+    	 							<th>Image</th>
+    								<th>الاسم</th>
+    								<th>sku</th>
+                                    <th>الكميه</th>
+    								<th>السعر</th>
+    								<th>سعر الشراء</th>
+    								<th>الموقع</th>
+    								<th>المخزن</th>
+    								<th>الصفات</th>
+
+                            </tr>
+                      	  	<tr id="configTableInit" class="bg-warning">
+    	 							<td colspan="3">القيم الاولية</td>
+    								<td><input type="number" step="1" min="0" onchange="updateInitVal()" id="qty_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="price_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="buy_price_init" class="form-control" /></td>
+    								<td><input type="text" onchange="updateInitVal()" id="location_init" class="form-control" /></td>
+    								<td>
+                                      <select onchange="updateInitVal()" id="stock_init" class="from-control selectpicker">
+                                        <option value="1" class="text-success">بالمخزن</option>
+                                        <option value="0" class="text-danger">غير متوفر</option>
+                                      </select>
+                                    </td>
+                                    <td></td>
+
+                            </tr>
+                            </thead>
+                                <tbody id="configTableBody">
+                                </tbody>
+                            </table>
+                           </div>
                     </div>
                   </div>
                 </div>
@@ -199,21 +243,12 @@ if (file_exists("script/_access.php")) {
 <script src="assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
 <!--begin::Page Scripts(used by this page) -->
 <script src="assets/js/pages/components/datatables/extensions/responsive.js" type="text/javascript"></script>
-<script src="js/getBraches.js" type="text/javascript"></script>
-<script src="js/getClients.js" type="text/javascript"></script>
-<script src="js/getorderStatus.js" type="text/javascript"></script>
-<script src="js/getBasketByStaff.js" type="text/javascript"></script>
-<script src="js/getCities.js" type="text/javascript"></script>
-<script src="js/getTowns.js" type="text/javascript"></script>
+<script src="js/getStores.js" type="text/javascript"></script>
+<script src="js/getCategories.js" type="text/javascript"></script>
 <script type="text/javascript">
-  getBasketByStaff($('#basket'));
-  getBasketByStaff($('#e_basket_id'));
-  getCities($('#city'));
-  getCities($('#e_city'));
-  getTowns($('#town'), 1);
-  getTowns($('#e_town'), 1);
-
-  function getProducts() {
+getStores($("#e_store"));
+getCategories($("#e_category"));
+ function getProducts() {
     $.ajax({
       url: "script/_getFullProducts.php",
       type: "POST",
@@ -321,33 +356,15 @@ if (file_exists("script/_access.php")) {
       }
     });
   }
-  getProducts();
+ getProducts();
 
-
-  function getorderspage(page) {
+ function getorderspage(page) {
     $("#p").val(page);
     getProducts();
   }
-  getClients($("#client"));
 
   function getclient() {
     getProducts();
-  }
-
-  function replaceStatus() {
-    if ($("#replace").is(':checked')) {
-      $("#oldOrderDiv").css("display", 'inline-block');
-    } else {
-      $("#oldOrderDiv").css("display", 'none');
-    }
-  }
-
-  function e_replaceStatus() {
-    if ($("#e_replace").is(':checked')) {
-      $("#e_oldOrderDiv").css("display", 'inline-block');
-    } else {
-      $("#e_oldOrderDiv").css("display", 'none');
-    }
   }
 
   function openBasket(id) {
@@ -381,13 +398,6 @@ if (file_exists("script/_access.php")) {
 
 
   });
-
-
-  function disable() {
-    $('.selectpicker').selectpicker('refresh');
-    console.log($("#action").val());
-  }
-
   function deleteProduct(id) {
     $.ajax({
       url: "script/_runAction.php",
@@ -418,15 +428,38 @@ if (file_exists("script/_access.php")) {
       },
       success: function(res) {
          console.log(res);
+         $("#configTableBody").html("");
         if (res.success == 1) {
+          tr = "";
           $.each(res.data, function() {
-            $("#e_name").val(this.sub_name);
+            $("#e_name").val(this.name);
             $("#e_sku").val(this.sku);
-            $("#e_qty").val(this.qty);
-            $("#e_location").val(this.location);
             $("#e_buy_price").val(this.buy_price);
             $("#e_price").val(this.price);
             $("#e_product_id").val(id);
+            $("#e_store").val(this.store_id);
+            $("#e_category").val(this.category_id);
+            $("#e_simple_des").val(this.simple_des);
+            $(".selectpicker").selectpicker("refresh");
+            $.each(this.configurable_product,function(){
+                config = "";
+                $.each(this.config,function(){
+                  config += '<b>'+this.name+':</b> '+this.value+'<br />';
+                })
+                tr = '<tr>'+
+                        "<td>"+this.img+"</td>"+
+                        "<td>"+this.sub_name+"</td>"+
+                        "<td>"+this.sku+"</td>"+
+                        "<td>"+this.qty+"</td>"+
+                        "<td>"+this.price+"</td>"+
+                        "<td>"+this.buy_price+"</td>"+
+                        "<td>"+this.location+"</td>"+
+                        "<td>"+this.stock+"</td>"+
+                        "<td>"+config+"</td>"+
+                     '</tr>';
+                  $("#configTableBody").append(tr);
+                 });
+
           });
         } else {
           toastr.warning("حدث خطاء! حاول مرة اخرى.");
