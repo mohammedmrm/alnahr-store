@@ -17,7 +17,7 @@ $name   = $_REQUEST['e_name'];
 $des    = $_REQUEST['e_des'];
 $simple_des= $_REQUEST['e_simple_des'];
 $price  = $_REQUEST['e_price'];
-$forall = $_REQUEST['e_price_froall'];
+$forall = $_REQUEST['e_price_forall'];
 $imgs   = $_FILES['e_img'];
 
 
