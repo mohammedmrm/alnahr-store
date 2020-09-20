@@ -95,7 +95,7 @@ if($v->passes() && $img_err =="") {
       }
       $sql = "update product set name=? , des=? , simple_des=? , price=? where id=?";
       $res = setData($con,$sql,[$name,$des,$simple_des,$price,$id]);
-      if($forall == 1){
+      if($forall == "checked" || $forall == 1){
         $sql = "update configurable_product set price = ? where product_id=?";
         setData($con,$sql,[$price,$id]);
       }
