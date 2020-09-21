@@ -175,6 +175,7 @@ if (file_exists("script/_access.php")) {
                         <span class="form-text text-danger" id="e_price_err"></span>
                       </div>
                     </div>
+                    <input  type="hidden" id="e_product_id" name="e_product_id"/>
                     <hr />
                     <div class="col-md-12">
                            <div id="configTable">
@@ -184,11 +185,10 @@ if (file_exists("script/_access.php")) {
     	 							<th>Image</th>
     								<th>الاسم</th>
     								<th>sku</th>
-                                    <th>الكميه</th>
-    								<th>السعر</th>
-    								<th>سعر الشراء</th>
-    								<th>الموقع</th>
-    								<th>المخزن</th>
+                                    <th width='100px'>الكميه</th>
+    								<th width='100px'>السعر</th>
+    								<th width='100px'>سعر الشراء</th>
+    								<th width='100px'>الموقع</th>
     								<th>الصفات</th>
 
                             </tr>
@@ -198,12 +198,6 @@ if (file_exists("script/_access.php")) {
     								<td><input type="text" onchange="updateInitVal()" id="price_init" class="form-control" /></td>
     								<td><input type="text" onchange="updateInitVal()" id="buy_price_init" class="form-control" /></td>
     								<td><input type="text" onchange="updateInitVal()" id="location_init" class="form-control" /></td>
-    								<td>
-                                      <select onchange="updateInitVal()" id="stock_init" class="from-control selectpicker">
-                                        <option value="1" class="text-success">بالمخزن</option>
-                                        <option value="0" class="text-danger">غير متوفر</option>
-                                      </select>
-                                    </td>
                                     <td></td>
 
                             </tr>
@@ -447,14 +441,16 @@ getCategories($("#e_category"));
                   config += '<b>'+this.name+':</b> '+this.value+'<br />';
                 })
                 tr = '<tr>'+
-                        "<td>"+this.img+"</td>"+
-                        "<td>"+this.sub_name+"</td>"+
-                        "<td>"+this.sku+"</td>"+
-                        "<td>"+this.qty+"</td>"+
-                        "<td>"+this.price+"</td>"+
-                        "<td>"+this.buy_price+"</td>"+
-                        "<td>"+this.location+"</td>"+
-                        "<td>"+this.stock+"</td>"+
+                        "<td>"+
+                            "<input style='width:100px;' type='file' name='img[]'/>"+
+                            "<input style='width:100px;' type='hidden' name='c_id[]'/>"+
+                        "</td>"+
+                        "<td>"+"<input type='text' name='name[]' value='"+this.sub_name+"' class ='form-control'/></td>"+
+                        "<td>"+"<input type='text' name='sku[]' value='"+this.sku+"' class ='form-control'/></td>"+
+                        "<td>"+"<input style='width:100px;' type='number' name='qty[]' value='"+this.qty+"' class ='form-control' /></td>"+
+                        "<td>"+"<input style='width:100px;'type='number' name='price[]' value='"+this.price+"' class ='form-control'/></td>"+
+                        "<td>"+"<input style='width:100px;'type='number' name='buy_price[]' value='"+this.buy_price+"' class ='form-control' /></td>"+
+                        "<td>"+"<input style='width:100px;' type='text' name='location[]' value='"+this.location+"' class ='form-control' /></td>"+
                         "<td>"+config+"</td>"+
                      '</tr>';
                   $("#configTableBody").append(tr);
@@ -472,12 +468,14 @@ getCategories($("#e_category"));
       }
     });
   }
-
+  function updateProduct(){
+    editProductForm
+  }
   function updateProduct() {
     var myform = document.getElementById('editProductForm');
     var fd = new FormData(myform);
     $.ajax({
-      url: "script/_updateConfigrableProduct.php",
+      url: "script/_updateFullProduct.php",
       type: "POST",
       beforeSend: function() {
         $("#editProductForm").addClass('loading');
@@ -522,7 +520,7 @@ getCategories($("#e_category"));
       success: function(res) {
         getProducts();
         if (res.success == 1) {
-          toastr.warning("تم");
+          toastr.success("تم");
         } else {
           toastr.warning("حدث خطاء! حاول مرة اخرى.");
         }
@@ -544,7 +542,7 @@ getCategories($("#e_category"));
       success: function(res) {
         getProducts();
         if (res.success == 1) {
-          toastr.warning("تم");
+          toastr.success("تم");
         } else {
           toastr.warning("حدث خطاء! حاول مرة اخرى.");
         }

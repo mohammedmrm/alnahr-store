@@ -119,7 +119,7 @@ try{
             ) b on b.order_no = orders.order_no
             ";
    $where = "where";
-   $filter = " and orders.confirm = 1";
+   $filter = " and orders.confirm = 1 and orders.company_id=".$_SESSION['company_id'];
 
   if($driver >= 1){
    $filter .= " and driver_id =".$driver;
