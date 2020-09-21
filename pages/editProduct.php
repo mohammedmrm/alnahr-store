@@ -442,15 +442,15 @@ getCategories($("#e_category"));
                 })
                 tr = '<tr>'+
                         "<td>"+
-                            "<input style='width:100px;' type='file' name='img[]'/>"+
-                            "<input style='width:100px;' type='hidden' name='c_id[]'/>"+
+                            "<input style='width:100px;' type='file' name='c_img[]'/>"+
+                            "<input style='width:100px;' type='hidden' value='"+this.id+"'  name='c_id[]'/>"+
                         "</td>"+
-                        "<td>"+"<input type='text' name='name[]' value='"+this.sub_name+"' class ='form-control'/></td>"+
-                        "<td>"+"<input type='text' name='sku[]' value='"+this.sku+"' class ='form-control'/></td>"+
-                        "<td>"+"<input style='width:100px;' type='number' name='qty[]' value='"+this.qty+"' class ='form-control' /></td>"+
-                        "<td>"+"<input style='width:100px;'type='number' name='price[]' value='"+this.price+"' class ='form-control'/></td>"+
-                        "<td>"+"<input style='width:100px;'type='number' name='buy_price[]' value='"+this.buy_price+"' class ='form-control' /></td>"+
-                        "<td>"+"<input style='width:100px;' type='text' name='location[]' value='"+this.location+"' class ='form-control' /></td>"+
+                        "<td>"+"<input type='text' name='c_name[]' value='"+this.sub_name+"' class ='form-control'/></td>"+
+                        "<td>"+"<input type='text' name='c_sku[]' value='"+this.sku+"' class ='form-control'/></td>"+
+                        "<td>"+"<input style='width:100px;' type='number' name='c_qty[]' value='"+this.qty+"' class ='form-control' /></td>"+
+                        "<td>"+"<input style='width:100px;' type='number' name='c_price[]' value='"+this.price+"' class ='form-control'/></td>"+
+                        "<td>"+"<input style='width:100px;' type='number' name='c_buy_price[]' value='"+this.buy_price+"' class ='form-control' /></td>"+
+                        "<td>"+"<input style='width:100px;' type='text' name='c_location[]' value='"+this.location+"' class ='form-control' /></td>"+
                         "<td>"+config+"</td>"+
                      '</tr>';
                   $("#configTableBody").append(tr);
