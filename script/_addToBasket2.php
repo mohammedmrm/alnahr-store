@@ -82,7 +82,7 @@ if($v->passes() && $msg == "") {
             }
         $i++;
     }
-      $query1 = 'SELECT configurable_product_id as c_id,COUNT(configurable_product_id) as count
+      $query1 = 'SELECT configurable_product.qty as qty, configurable_product_id as c_id,COUNT(configurable_product_id) as count
                 FROM sub_option
                 left join configurable_product on configurable_product.id = sub_option.configurable_product_id
                 left join product on configurable_product.product_id = product.id
@@ -90,15 +90,20 @@ if($v->passes() && $msg == "") {
                 GROUP by configurable_product_id
                 order by COUNT(configurable_product_id) DESC
                 limit 1';
-     $configrabe_pro = getData($con,$query1);
-     $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
-                values (?,?,?,?)';
-     $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$_SESSION['userid']]);
-     if($addToBasket){
-       $success = 1;
-        $sql = "update basket set status=1 where staff_id=? and id=?";
-        setData($con,$sql,[$_SESSION['userid'],$basket]);
-     }
+
+    $configrabe_pro = getData($con,$query1);
+    if($configrabe_pro[0]['qty'] >= $qty){
+       $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
+                  values (?,?,?,?)';
+       $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$_SESSION['userid']]);
+       if($addToBasket){
+         $success = 1;
+          $sql = "update basket set status=1 where staff_id=? and id=?";
+          setData($con,$sql,[$_SESSION['userid'],$basket]);
+       }
+    }else{
+       $msg = "لايوجد كميه";
+    }
  }
 
 }else{

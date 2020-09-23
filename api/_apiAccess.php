@@ -29,5 +29,5 @@ function access(){
   if($GLOBALS['msg']!=1){
      die(json_encode(['message'=>$GLOBALS['msg'],'code'=>$GLOBALS['code']]));
   }
-}
+} 
 ?>
