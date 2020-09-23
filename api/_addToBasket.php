@@ -72,6 +72,7 @@ if($type == 2){
 
 
 if($v->passes() && $msg == "") {
+try{
  $sql = "select attribute_id from sub_option
                             left join configurable_product on configurable_product.id = sub_option.configurable_product_id
                             left join product on product.id = configurable_product.product_id
@@ -110,7 +111,10 @@ if($v->passes() && $msg == "") {
         $msg = "لايوجد كميه";
      }
  }
-
+} catch(PDOException $ex) {
+   $success="0";
+   $msg =["error"=>$ex];
+}
 }else{
   $error = [
            'product'=> implode($v->errors()->get('product')),
@@ -120,5 +124,5 @@ if($v->passes() && $msg == "") {
            ];
 }
 
-echo json_encode([$query,"code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
+echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
 ?>
