@@ -89,7 +89,7 @@ try{
             }
         $i++;
     }
-      $query = 'SELECT configurable_product_id.qty as qty , configurable_product_id as c_id,COUNT(configurable_product_id) as count
+      $query = 'SELECT configurable_product.qty as qty , configurable_product_id as c_id,COUNT(configurable_product_id) as count
                 FROM sub_option
                 left join configurable_product on configurable_product.id = sub_option.configurable_product_id
                 left join product on configurable_product.product_id = product.id
