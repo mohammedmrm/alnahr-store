@@ -73,6 +73,9 @@ if($type == 2){
 
 if($v->passes() && $msg == "") {
 try{
+ $sql = "select * from product where id=?";
+ $res = getData($con,$sql,[$product]);
+ if($res[0]['type']==2){
  $sql = "select attribute_id from sub_option
                             left join configurable_product on configurable_product.id = sub_option.configurable_product_id
                             left join product on product.id = configurable_product.product_id
@@ -111,6 +114,29 @@ try{
         $msg = "لايوجد كميه";
      }
  }
+}else{
+        $query1 = 'SELECT configurable_product.qty as qty, configurable_product.id as c_id,COUNT(configurable_product.id) as count
+                    FROM configurable_product
+                    left join product on configurable_product.product_id = product.id
+                    where product.id = '.$product.'
+                    GROUP by configurable_product.id
+                    order by COUNT(configurable_product.id) DESC
+                    limit 1';
+
+        $configrabe_pro = getData($con,$query1);
+        if($configrabe_pro[0]['qty'] >= $qty){
+           $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
+                      values (?,?,?,?)';
+           $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
+           if($addToBasket){
+             $success = 1;
+              $sql = "update basket set status=1 where staff_id=? and id=?";
+              setData($con,$sql,[$userid,$basket]);
+           }
+        }else{
+           $msg = "لايوجد كميه";
+        }
+}
 } catch(PDOException $ex) {
    $success="0";
    $msg =["error"=>$ex];
