@@ -40,7 +40,7 @@ $sql = "select orders.*,count(order_items.id) as items, date_format(orders.date,
 $result =getData($con,$sql);
 if(count($res) == 1){
     $response = httpPost($res[0]['dns'].'/api/addOrdersByClient.php',['token'=>$res[0]['token'],'store'=>$store,'orders'=>$result]);
-    $response = json_decode($response, true);
+    $response2 = json_decode($response, true);
     foreach($response['data'] as $k=>$val){
         if(isset($val['barcode'])){
           $sql = "update orders set bar_code = ?,delivery_company_id=? where id=? ";
@@ -61,5 +61,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo json_encode([$_REQUEST,"msg"=>$msg,"response"=>$response]);
+echo json_encode([$_REQUEST,"msg"=>$msg,"response"=>$response2,$response]);
 ?>
