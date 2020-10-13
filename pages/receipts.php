@@ -54,8 +54,8 @@ include_once("config.php");
 			       <thead>
 	  						<tr>
 								<th>#</th>
-								<th>الشركه</th>
-                                <th>الشعار</th>
+<!--								<th>الشركه</th>
+                                <th>الشعار</th>-->
 								<th>من</th>
 								<th>الى</th>
 								<th>حذف</th>
@@ -159,8 +159,8 @@ $.ajax({
      $("#RequestesTable").append(
        '<tr>'+
             '<td>'+this.f_id+'</td>'+
-            '<td>'+this.name+'</td>'+
-            '<td><img height="50" src="img/'+this.logo+'"></td>'+
+/*            '<td>'+this.name+'</td>'+
+            '<td><img height="50" src="img/'+this.logo+'"></td>'+*/
             '<td>'+this.from_receipt+'</td>'+
             '<td>'+this.to_receipt+'</td>'+
             '<td>'+btn+'</td>'+
