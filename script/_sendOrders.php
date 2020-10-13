@@ -61,5 +61,5 @@ function httpPost($url, $data)
     curl_close($curl);
     return $response;
 }
-echo json_encode([$res[0]['dns'].'/api/addOrdersByClient.php',"msg"=>$msg,"response"=>$response2,$response]);
+echo json_encode([$res[0]['dns'].'/api/addOrdersByClient.php',$res[0]['token'],"msg"=>$msg,"response"=>$response2,$response]);
 ?>
