@@ -281,7 +281,7 @@ legend
           <div class="row text-white" id="total-section">
                <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
                  <div class="row">
-                    <label>المبلغ الصافي للعملاء:&nbsp;</label><label id="total-price"> 0.0 </label>
+                    <label>المبلغ الصافي:&nbsp;</label><label id="total-price"> 0.0 </label>
                  </div>
                </div>
                <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
@@ -296,7 +296,7 @@ legend
                </div>
                <div class="col-sm-3 kt-margin-b-10-tablet-and-mobile">
                  <div class="row">
-                    <label>الصفحة:&nbsp;</label><label id="total-store"></label>
+                    <label>مبلغ التوصيل:&nbsp;</label><label id="total-dev"> 0 </label>
                  </div>
                </div>
           </div>
@@ -628,10 +628,10 @@ $.ajax({
     $('#branch').attr('disabled',"disabled");
     $('#branch').selectpicker('refresh');
    }
-   $("#total-store").html(res.total[0].store_name);
-   $("#total-price").text(formatMoney(res.total[0].client_price));
+   $("#total-dev").html(res.total[0].dev);
+   $("#total-price").text(formatMoney(Number(res.total[0].income) - Number(res.total[0].dev)));
    $("#total-discount").text(formatMoney(res.total[0].discount));
-   $("#total-orders").text(res.total[0].orders);
+   $("#total-orders").text(res.total[0].count);
 
    if(res.pages >= 1){
      if(res.page > 1){

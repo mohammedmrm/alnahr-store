@@ -41,8 +41,35 @@ if(!empty($end)) {
 }
 
 try{
-  $count = "select count(*) as count from orders
+  $count = "select
+              sum(total_price) as income,
+
+              sum(
+                     if(order_status_id = 9,
+                         0,
+                         if(orders.city_id = 1,
+                               if(order_status_id=9,0,if(client_dev_price.price is null,(".$config['dev_b']." - discount),(client_dev_price.price - discount))),
+                               if(order_status_id=9,0,if(client_dev_price.price is null,(".$config['dev_o']." - discount),(client_dev_price.price - discount)))
+                          )
+                      )
+              ) as dev,
+
+              sum(total_price -
+                  (
+                     if(order_status_id = 9,
+                         0,
+                         if(orders.city_id = 1,
+                               if(order_status_id=9,0,if(client_dev_price.price is null,(".$config['dev_b']." - discount),(client_dev_price.price - discount))),
+                               if(order_status_id=9,0,if(client_dev_price.price is null,(".$config['dev_o']." - discount),(client_dev_price.price - discount)))
+                          )
+                      )
+                  )
+              ) as client_price,
+              sum(discount) as discount,
+             count(*) as count
+            from orders
             left join stores on  stores.id = orders.store_id
+            left JOIN client_dev_price on client_dev_price.client_id = stores.client_id AND client_dev_price.city_id = orders.city_id
             left join (
              select order_no,count(*) as rep from orders
               GROUP BY order_no
@@ -202,5 +229,5 @@ if($store >=1){
    $total=["error"=>$ex];
    $success="0";
 }
-echo json_encode(array($query,"success"=>$success,"data"=>$data,'total'=>$total,"pages"=>$pages,"page"=>$page));
+echo json_encode(array($query,"success"=>$success,"data"=>$data,'total'=>$count,"pages"=>$pages,"page"=>$page));
 ?>
