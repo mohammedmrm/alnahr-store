@@ -628,7 +628,7 @@ $.ajax({
     $('#branch').attr('disabled',"disabled");
     $('#branch').selectpicker('refresh');
    }
-   $("#total-dev").html(res.total[0].dev);
+   $("#total-dev").html(Number(res.total[0].dev));
    $("#total-price").text(formatMoney(Number(res.total[0].income) - Number(res.total[0].dev)));
    $("#total-discount").text(formatMoney(res.total[0].discount));
    $("#total-orders").text(res.total[0].count);
