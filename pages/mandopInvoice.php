@@ -204,8 +204,7 @@ background-color: #FFFF99;
 <script src="js/getMandops.js" type="text/javascript"></script>
 <script src="js/getBraches.js" type="text/javascript"></script>
 <script type="text/javascript">
-$('#tb-orders').DataTable();
-$('#tb-invioces').DataTable();
+
 function getorderStatus(elem){
 $.ajax({
   url:"script/_getorderStatus.php",
@@ -247,17 +246,18 @@ function  getMandopInvoices(){
     type:"POST",
     data:$("#mandopInvoicesForm").serialize(),
     beforeSend:function(){
-       $("#section-to-print").addClass('loading');
+        $("#section-to-print").addClass('loading');
 
     },
     success:function(res){
+      console.log(res);
       $("#section-to-print").removeClass('loading');
       $("#tb-orders").DataTable().destroy();
       $("#tb-invioces").DataTable().destroy();
       $("#mandop_orders").html("");
       $("#mandop_data").html("");
       $("#invoicesTable").html("");
-      console.log(res);
+
       content ="";
       $.each(res.data,function(){
       content = content +
@@ -435,6 +435,8 @@ function unpayInvoice(id){
   }
 }
 $( document ).ready(function(){
+    $('#tb-orders').DataTable();
+    $('#tb-invioces').DataTable();
     getMandops($("#mandop"));
     getMandopInvoices();
 });
