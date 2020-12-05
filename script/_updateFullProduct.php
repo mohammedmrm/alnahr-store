@@ -58,7 +58,7 @@ foreach($c_id as $cid){
       'c_name'     => [$c_name[$a],     'required|max(250)'],
       'c_sku'      => [$c_sku[$a],      'required|max(250)'],
       'c_location' => [$c_location[$a], 'max(250)'],
-      'c_qty'      => [$c_qty[$a],      'required|isPrice'],
+      'c_qty'      => [$c_qty[$a],      'int'],
   ]);
 $valid_file_extensions = array(".jpg", ".jpeg", ".png",".gif");
 if(count($imgs['tmp_name']) > 0 && $imgs['size'][0] > 0){
