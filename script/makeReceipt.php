@@ -55,12 +55,13 @@ try{
 
   $query = "select orders.*,count(order_items.id) as items,date_format(orders.date,'%Y-%m-%d') as dat,
             stores.name as store_name, companies.logo as logo,
-            cites.name as city ,towns.name as town
+            cites.name as city ,towns.name as town,clients.phone as client_phone
             from orders
             left join cites on  cites.id = orders.city_id
             left join towns on  towns.id = orders.town_id
             left join staff on  staff.id = orders.mandop_id
             left join stores on  stores.id = orders.store_id
+            left join clients on  stores.client_id = clients.id
             left join companies on  companies.id = orders.delivery_company_id
             left join order_items on  order_items.order_id = orders.id
             where orders.id = ? group by orders.id";
@@ -161,6 +162,7 @@ $tbl = '
 <table  cellpadding="5">
     <tr>
     <td width="209">اسم الصفحه : '.$data['store_name'].'</td>
+    <td width="209">هاتف العميل : '.$data['client_phone'].'</td>
   </tr>
   <tr>
     <td width="209" >رقم الوصل : '.$data['order_no'].'</td>
