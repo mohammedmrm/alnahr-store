@@ -137,8 +137,17 @@
                                                 <input id="downloadReceipts" name="downloadReceipts" type="button" onclick="download_Receipts()" value="تحميل الوصولات"  class="btn btn-warning form-control">
                                         </div>
                                         <div class="col-lg-2 kt-margin-b-10-tablet-and-mobile">
-                                            	<label>عدد السجلات</label>
-                                            	<input onchange="getorders()" type="number" value="10" class="form-control kt-input" name="limit" data-col-index="7" />
+                                            <label>عدد السجلات</label>
+                                            <select name="limit" onchange="getorders()" class="form-control kt-input" data-col-index="2">
+                                        		<option value="10">10</option>
+                                        		<option value="20">20</option>
+                                        		<option value="30">30</option>
+                                        		<option value="40">40</option>
+                                        		<option value="50">50</option>
+                                        		<option value="60">60</option>
+                                        		<option value="75">75</option>
+                                        		<option value="100">100</option>
+                                            </select>
                                         </div>
                                       </div>
                                       </fieldset>
