@@ -205,7 +205,7 @@ try{
     $count .= " ".$filter;
     $query .= " ".$filter." group by orders.id order by city_id,town_id,orders.id" . $limit;
   }else{
-    $query .=" group by orders.id order by city_id,town_id,orders.id". $limit;;
+    $query .=" group by orders.id order by orders.date DESC ". $limit;;
   }
   $count = getData($con,$count);
   $orders = $count[0]['count'];
