@@ -26,6 +26,10 @@ try{
    on configurable_product.id = basket_items.configurable_product_id
    where basket_items.basket_id = ?";
   $res = getData($con,$sql,[$id]);
+  foreach($res as $it){
+    $data['total_price'] += $it['price'];
+  }
+  $data['total_price'] += $data['dev_price'] - $data['discount'];
   $data['items'] = $res;
   $success="1";
 } catch(PDOException $ex) {

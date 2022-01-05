@@ -28,9 +28,14 @@ try{
    inner join configurable_product
    on configurable_product.id = basket_items.configurable_product_id
    where basket_items.basket_id = ?";
-    $res = getData($con,$sql,[$id]);
+    $res = getData($con,$sql,[$data[$i]['id']]);
     $data[$i]['items'] = $res;
     $data[$i]['customer_name'] = correct_encoding($data[$i]['customer_name']);
+    foreach($res as $it){
+      $data[$i]['total_price'] += $it['price'];
+    }
+    $data[$i]['total_price'] += $data[$i]['dev_price'];
+
     $i++;
   }
   $success="1";

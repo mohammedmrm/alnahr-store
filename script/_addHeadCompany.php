@@ -59,6 +59,7 @@ $v->validate([
 ]);
 $logo_err = image($logo,[".jpg", ".jpeg", ".png"],1);
 if($v->passes()) {
+  try{
   $sql = 'insert into head_company (name,phone,note) values
                               (?,?,?)';
   $result = setDataWithLastID($con,$sql,[$name,$phone,$note]);
@@ -68,6 +69,10 @@ if($v->passes()) {
     $sql = "insert into staff (name,phone,password,company_id,role_id) values(?,?,?,?,?)";
     $data = setData($con,$sql,[$mname,$username,$pass,$result,1]);
   }
+} catch(PDOException $ex) {
+   $success="0";
+   $error =["error"=>$ex];
+}
 }else{
   $error = [
            'name_err'=> implode($v->errors()->get('name')),
