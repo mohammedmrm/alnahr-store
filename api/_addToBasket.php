@@ -43,6 +43,7 @@ $v->validate([
     'basket'  => [$basket,   'required|int'],
     'qty'     => [$qty,'required|int'],
 ]);
+try{
 $sql = "select * from basket where id=?";
 $basket2 = getData($con,$sql,[$basket]);
 $type = $basket2[0]['type'];
@@ -69,7 +70,10 @@ if($type == 2){
 }else{
    $msg = "";
 }
-
+} catch(PDOException $ex) {
+   $success="0";
+   $msg =["error"=>$ex];
+}
 
 if($v->passes() && $msg == "") {
 try{
@@ -83,7 +87,7 @@ try{
  $pro = getData($con,$sql,[$product]);
  $count = count($pro);
  $op = count($option);
- if($count = $op && $op !== 0){
+ if($count = $op){
     foreach($option as $conf) {
         if ($i == 0) {
                 $options .= ' attribute_config_id='.$conf;
@@ -113,27 +117,6 @@ try{
      }else{
         $msg = "لايوجد كميه";
      }
- }else{
-        $query1 = 'SELECT configurable_product.qty as qty, configurable_product.id as c_id,COUNT(configurable_product.id) as count
-                    FROM configurable_product
-                    left join product on configurable_product.product_id = product.id
-                    where product.id = '.$product.'
-                    GROUP by configurable_product.id
-                    order by COUNT(configurable_product.id) DESC
-                    limit 1';
-
-        $configrabe_pro = getData($con,$query1);
-        if($configrabe_pro[0]['qty'] >= $qty){
-           $query = 'insert into basket_items (configurable_product_id,basket_id,qty,staff_id)
-                      values (?,?,?,?)';
-           $addToBasket = setData($con,$query,[$configrabe_pro[0]['c_id'],$basket,$qty,$userid]);
-           if($addToBasket){
-             $success = 1;
-              $sql = "update basket set status=1 where staff_id=? and id=?";
-              setData($con,$sql,[$userid,$basket]);
-           }
-        }else{
-           $msg = "لايوجد كميه";
  }
 }else{
         $query1 = 'SELECT configurable_product.qty as qty, configurable_product.id as c_id,COUNT(configurable_product.id) as count
@@ -171,5 +154,5 @@ try{
            ];
 }
 
-echo json_encode([$pro,"code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
+echo json_encode(["code"=>200,"message"=>$msg,'success'=>$success,'error'=>$error]);
 ?>
