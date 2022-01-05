@@ -21,6 +21,9 @@ $store   = $_REQUEST['store'];
 $simple_des   = $_REQUEST['simple_des'];
 $des  = $_REQUEST['des'];
 $buy_price  = $_REQUEST['buy_price'];
+if(empty($buy_price) || $buy_price == ''){
+  $buy_price = 0;
+}
 $price   = $_REQUEST['price'];
 $sku  = $_REQUEST['sku'];
 $qty  = $_REQUEST['qty'];
