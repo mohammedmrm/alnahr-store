@@ -86,6 +86,7 @@ foreach($imgs["tmp_name"] as $val){
    $img_err =  "يجب رفع صورة واحدة على الاقل";
 }
 if($v->passes() && $img_err ==""){
+  try{
   $sql = 'insert into product (name,simple_des,des,type,category_id,store_id,price,buy_price,company_id,staff_id) values (?,?,?,?,?,?,?,?,?,?)';
   $result = setData($con,$sql,[$name,$simple_des,$des,$type,$cat,$store,$price,$buy_price,$_SESSION['company_id'],$staff_id]);
   if($result > 0){
@@ -135,11 +136,15 @@ if($v->passes() && $img_err ==""){
         $m++;
       }
     }else if($type == 1){
+
       $sql =" insert into `configurable_product` (product_id,buy_price,price,qty,sku,sub_name,location) values(?,?,?,?,?,?,?)";
       $res2 = setData($con,$sql,[$res['id'],$buy_price,$price,$qty,$sku,$name,$location]);
     }
  }
-
+} catch(PDOException $ex) {
+   $success="0";
+   $error =["error"=>$ex];
+}
 }else{
   $error = [
            'name'=> implode($v->errors()->get('name')),
