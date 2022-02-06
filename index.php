@@ -81,7 +81,7 @@ License: You must have a valid license purchased only from https://themes.getboo
       		padding: 10px;
       		position: relative;
       		border-radius:4px;
-              border-bottom:2px solid #FF6600;
+            border-bottom:2px solid #FF6600;
       		background-color:#f5f5f5;
       		padding-left:10px !important;
       		width:100%;
@@ -122,7 +122,7 @@ License: You must have a valid license purchased only from https://themes.getboo
         .table th {
           font-size: 13px;
           font-weight: 500;
-          background-color: #660099;
+          background-color:#663300;
           color: #F0F8FF !important;
         }
         .table td {

@@ -67,7 +67,7 @@ legend
   font-size: 18px;
 }
 #total-section {
-  background-color: #660099;
+  background-color: #663300;
   border-radius: 5px;
   box-shadow: 0px 0px 0px #444444;
   margin-top:5px;
