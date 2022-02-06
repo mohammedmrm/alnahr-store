@@ -60,7 +60,7 @@ if($fontSize < 5 || $fontSize > 100 || empty($fontSize)){
 $sty= <<<EOF
 <style>
   .title {
-    background-color: #999999;
+    background-color: #ddd;
   }
   .head-tr {
    background-color: #ddd;
@@ -230,7 +230,26 @@ class MYPDF extends TCPDF {
         // Page number
         $this->writeHTML('<hr><span style="text-align: right;color:#444444;">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
     }
+     public function Header() {
+        // Set font
+        $this->SetFont('aealarabiya', 'B', 12);
+        // Title
+        if($data['delivery_company_id'] != 0){
+          $logo = '../img/logos/companies/'.$GLOBALS['data']['logo'];
+        }else{
+          $logo = "../".$GLOBALS['config']['Company_logo'];
+        }
+        $header= '<table>
+                   <tr>
+                          <td align="left">
+                            <img src="'.$logo.'" height="80px"/>
+                          </td>
+                   </tr>
+                  </table>';
+        $this->writeHTML($header);
+    }
 }
+
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 foreach($datas as $data){
 $type = "";
@@ -270,12 +289,6 @@ $pdf->setLanguageArray($lg);
 $pdf->SetFont('aealarabiya', '', 12);
 
 // set default header data
-if($data['delivery_company_id'] != 0){
-  $logo = '../../../img/logos/companies/'.$data['logo'];
-}else{
-  $logo = "../../../".$config['Company_logo'];
-}
-$pdf->SetHeaderData($logo,30,"");
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array('aealarabiya', '', 12));
@@ -307,29 +320,29 @@ $pdf->setRTL(true);
 $pdf->AddPage('P', 'A5');
 
 // Persian and English content
+//<td width="209">هاتف العميل : '.$data['client_phone'].'</td>
 $tbl = '
-<table  cellpadding="5" stye="border-radius:10">
-    <tr>
-    <td width="209">اسم الصفحه : '.$data['store_name'].'</td>
-    <td width="209">هاتف العميل : '.$data['client_phone'].'</td>  
+<table  cellpadding="5" >
+  <tr class="title">
+    <td >رقم الوصل : '.$data['order_no'].'</td>
+    <td>تاريخ : '.$data['dat'].'</td>
   </tr>
   <tr>
-    <td width="209" >رقم الوصل : '.$data['order_no'].'</td>
-    <td width="209">تاريخ : '.$data['dat'].'</td>
+    <td  colspan="2">اسم الصفحه : '.$data['store_name'].'</td>
   </tr>
 </table>
-<table  border="1" cellpadding="5">
+<table  border="1" cellpadding="5" style="border-color:gray;border-radius:10">
     <tr>
-    <td width="153" class="title">اسم الزبون</td>
-    <td align="center" width="300">'.$data['customer_name'].'</td>
+    <td width="150" class="title">اسم الزبون</td>
+    <td align="center" width="303">'.$data['customer_name'].'</td>
   </tr>
   <tr>
-    <td width="153" class="title">هاتف الزبون</td>
-    <td align="center" width="300">'.$data['customer_phone'].'</td>
+    <td width="150" class="title">هاتف الزبون</td>
+    <td align="center" width="303">'.$data['customer_phone'].'</td>
   </tr>
 </table>
 <br /><br />
-<table cellpadding="2" border="1">
+<table cellpadding="5" >
     <tr>
         <td  align="center" class="title">العنوان</td>
     </tr>
@@ -340,9 +353,10 @@ $tbl = '
         <td  align="center" class="title">المنتجات</td>
     </tr>
     <tr>
-        <td colspan="1" height="200">'.$products.'</td>
+        <td colspan="1" height="180">'.$products.'</td>
     </tr>
 </table>
+<br /><br />
 <table  border="1" cellpadding="5">
   <tr>
     <td colspan="1"  class="title">النوع</td>
