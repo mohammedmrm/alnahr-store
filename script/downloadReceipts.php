@@ -349,7 +349,7 @@ $tbl = '<table >
 <br /><br />
 <table cellpadding="5" >
     <tr>
-        <td  align="center" class="title">العنوان الزبون</td>
+        <td  align="center" class="title">عنوان الزبون</td>
     </tr>
     <tr>
         <td colspan="1"  align="center">'.$data['city'].' - '.$data['town'].' - '.$data['address'].'</td>
