@@ -60,7 +60,7 @@ if($fontSize < 5 || $fontSize > 100 || empty($fontSize)){
 $sty= <<<EOF
 <style>
   .title {
-    background-color: #FF9595;
+    background-color: #999999;
   }
   .head-tr {
    background-color: #ddd;
@@ -102,7 +102,7 @@ try{
               HAVING COUNT(orders.id) > 1
             ) b on b.order_no = orders.order_no
            ";
-  $query = "select orders.*,count(order_items.id) as items, date_format(orders.date,'%Y-%m-%d') as dat,
+  $query = "select orders.*,count(order_items.id) as items, date_format(orders.date,'%Y/%m/%d') as dat,
             stores.name as store_name, companies.logo as logo,
             cites.name as city ,towns.name as town,staff.name as driver_name,clients.phone as client_phone
             from orders
@@ -226,9 +226,9 @@ class MYPDF extends TCPDF {
         // Position at 15 mm from bottom
         $this->SetY(-10);
         // Set font
-        $this->SetFont('aealarabiya', 'I', 10);
+        $this->SetFont('aealarabiya', 'I', 12);
         // Page number
-        $this->writeHTML('<hr><span style="text-align: right;color:#003399">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
+        $this->writeHTML('<hr><span style="text-align: right;color:#444444;">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
     }
 }
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -283,7 +283,7 @@ $pdf->setHeaderFont(Array('aealarabiya', '', 12));
 
 
 // set margins
-$pdf->SetMargins(10, 30,10, 10);
+$pdf->SetMargins(10, 30,10,10);
 $pdf->SetHeaderMargin(5);
 //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
@@ -301,14 +301,14 @@ if($data['city_id'] == 1){
 }else{
   $dev_p = $config['dev_o'];
 }
-$pdf->SetFont('aealarabiya', '', 12);
+$pdf->SetFont('dejavusans', '', 12);
 $pdf->setRTL(true);
 // add a page
 $pdf->AddPage('P', 'A5');
 
 // Persian and English content
 $tbl = '
-<table  cellpadding="5">
+<table  cellpadding="5" stye="border-radius:10">
     <tr>
     <td width="209">اسم الصفحه : '.$data['store_name'].'</td>
     <td width="209">هاتف العميل : '.$data['client_phone'].'</td>  
@@ -340,27 +340,24 @@ $tbl = '
         <td  align="center" class="title">المنتجات</td>
     </tr>
     <tr>
-        <td colspan="1" height="100">'.$products.'</td>
+        <td colspan="1" height="200">'.$products.'</td>
     </tr>
 </table>
 <table  border="1" cellpadding="5">
   <tr>
-    <td colspan="6" class="title" align="center">تفاصيل الطلب</td>
-  </tr>
-  <tr>
     <td colspan="1"  class="title">النوع</td>
-    <td colspan="1" width="238" align="center" >'.$type.'</td>
-    <td colspan="1" width="35" class="title">الوزن</td>
-    <td colspan="1" width="35"align="center" > 1</td>
-    <td colspan="1" width="35"class="title">العدد</td>
-    <td colspan="1" width="35"align="center" >'.$data['items'].'</td>
+    <td colspan="1" width="200" align="center" >'.$type.'</td>
+    <td colspan="1" width="44" class="title">العدد</td>
+    <td colspan="1" width="45" align="center" >'.$data['items'].'</td>
+    <td colspan="1" width="44" class="title">الوزن</td>
+    <td colspan="1" width="45" align="center" > 1</td>
   </tr>
   <tr>
     <td colspan="1" class="title">ملاحظات</td>
     <td colspan="5" align="center" >'.$data['note'].'</td>
   </tr>
   <tr>
-    <td colspan="1" width="110"class="title">المبلغ مع التوصيل</td>
+    <td colspan="1" width="120"class="title">المبلغ مع التوصيل</td>
     <td colspan="4" align="center">'.number_format($data['total_price']+$dev_p-$data['discount']).' دينار</td>
   </tr>
 </table>
@@ -424,7 +421,7 @@ $style2 = array(
     'border' => false,
     'hpadding' => '0',
     'vpadding' => '0',
-    'fgcolor' => array(111,11,111),
+    'fgcolor' => array(150,40,150),
     'bgcolor' => "",
     'text' => true,
     'label' => $data['bar_code'],
@@ -433,7 +430,7 @@ $style2 = array(
     'stretchtext' => 1
 );
 // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-$pdf->write1DBarcode($data['bar_code'], 'C39', 0, 185, 100, 15, 0.4, $style2, 'N');
+$pdf->write1DBarcode($data['bar_code'], 'C39', 0, 180, 120, 20, 0.4, $style2, 'N');
 $pdf->SetTextColor(25,25,112);
 $pdf->SetFont('aealarabiya', '', 9);
 
@@ -445,7 +442,7 @@ $pdf->SetFont('aealarabiya', '', 10);
 //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
 $style['position'] = '';
 $pdf->setRTL(false);
-$pdf->write2DBarcode($id, 'QRCODE,M',10, 0, 30, 30, $style, 'N');
+//$pdf->write2DBarcode($id, 'QRCODE,M',10, 0, 30, 30, $style, 'N');
 }
 
 //Close and output PDF document
