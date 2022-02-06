@@ -358,7 +358,7 @@ $tbl = '<table >
         <td  align="center" class="title">المنتجات</td>
     </tr>
     <tr>
-        <td colspan="1" height="170">'.$products.'</td>
+        <td colspan="1" height="150">'.$products.'</td>
     </tr>
 </table>
 <br /><br />

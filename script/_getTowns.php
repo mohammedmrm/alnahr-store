@@ -1,6 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+error_reporting(0);
 require("_access.php");
 access([1,2,3,4,5,10]);
 require("dbconnection.php");
