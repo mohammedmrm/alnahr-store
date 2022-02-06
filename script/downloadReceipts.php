@@ -228,30 +228,17 @@ class MYPDF extends TCPDF {
         // Set font
         $this->SetFont('aealarabiya', 'I', 12);
         // Page number
-        $this->writeHTML('<hr><span style="text-align: right;color:#444444;">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
+        $this->writeHTML('<hr><span style="text-align: right;color:#444444;">يسقط حق المطالبة بالوصل بعد مرور شهر من تاريخ الوصل</span>');
     }
      public function Header() {
         // Set font
-        $this->SetFont('aealarabiya', 'B', 12);
-        // Title
-        if($data['delivery_company_id'] != 0){
-          $logo = '../img/logos/companies/'.$GLOBALS['data']['logo'];
-        }else{
-          $logo = "../".$GLOBALS['config']['Company_logo'];
-        }
-        $header= '<table>
-                   <tr>
-                          <td align="left">
-                            <img src="'.$logo.'" height="80px"/>
-                          </td>
-                   </tr>
-                  </table>';
-        $this->writeHTML($header);
+
     }
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 foreach($datas as $data){
+
 $type = "";
 $products="";
 $sql = "select category.title as cat_name from order_items
@@ -266,8 +253,10 @@ $sql  = "select * from order_items
 LEFT join configurable_product on configurable_product.id = order_items.configurable_product_id
 where order_items.order_id=?";
 $items = getData($con,$sql,[$data['id']]);
+$i=1;
 foreach($items as $item){
-  $products .= $item['sub_name']." | ";
+  $products .= $i."-".$item['sub_name']."<br />";
+  $i++;
 }
 $sql = "update orders set print = print +1 where orders.id=?";
 setData($con,$sql,[$data['id']]);
@@ -296,7 +285,7 @@ $pdf->setHeaderFont(Array('aealarabiya', '', 12));
 
 
 // set margins
-$pdf->SetMargins(10, 30,10,10);
+$pdf->SetMargins(10, 5,10,10);
 $pdf->SetHeaderMargin(5);
 //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 // set auto page breaks
@@ -319,32 +308,48 @@ $pdf->setRTL(true);
 // add a page
 $pdf->AddPage('P', 'A5');
 
+// Title
+if($data['delivery_company_id'] != 0){
+  $logo = '../img/logos/companies/'.$data['logo'];
+}else{
+  $logo = "../".$config['Company_logo'];
+}
 // Persian and English content
 //<td width="209">هاتف العميل : '.$data['client_phone'].'</td>
-$tbl = '
+$tbl = '<table >
+           <tr>
+                  <td align="right">
+                  <br /><br /><br />   &nbsp;<b>'.$data['order_no'].'</b>
+                  </td>
+                  <td align="left">
+                    <img src="'.$logo.'" height="80px"/>
+                  </td>
+           </tr>
+          </table>
 <table  cellpadding="5" >
+
+  <tr>
+    <td  colspan="2">اسم المتجر : '.$data['store_name'].'</td>
+  </tr>
   <tr class="title">
     <td >رقم الوصل : '.$data['order_no'].'</td>
     <td>تاريخ : '.$data['dat'].'</td>
   </tr>
-  <tr>
-    <td  colspan="2">اسم الصفحه : '.$data['store_name'].'</td>
-  </tr>
-</table>
+</table> <br /><br />
 <table  border="1" cellpadding="5" style="border-color:gray;border-radius:10">
     <tr>
-    <td width="150" class="title">اسم الزبون</td>
-    <td align="center" width="303">'.$data['customer_name'].'</td>
+    <td class="title">اسم الزبون</td>
+    <td align="center">'.$data['customer_name'].'</td>
   </tr>
   <tr>
-    <td width="150" class="title">هاتف الزبون</td>
-    <td align="center" width="303">'.$data['customer_phone'].'</td>
+    <td class="title">هاتف الزبون</td>
+    <td align="center" >'.$data['customer_phone'].'</td>
   </tr>
 </table>
 <br /><br />
 <table cellpadding="5" >
     <tr>
-        <td  align="center" class="title">العنوان</td>
+        <td  align="center" class="title">العنوان الزبون</td>
     </tr>
     <tr>
         <td colspan="1"  align="center">'.$data['city'].' - '.$data['town'].' - '.$data['address'].'</td>
@@ -353,13 +358,13 @@ $tbl = '
         <td  align="center" class="title">المنتجات</td>
     </tr>
     <tr>
-        <td colspan="1" height="180">'.$products.'</td>
+        <td colspan="1" height="170">'.$products.'</td>
     </tr>
 </table>
 <br /><br />
 <table  border="1" cellpadding="5">
   <tr>
-    <td colspan="1"  class="title">النوع</td>
+    <td colspan="1"  class="title">نوع المنتج</td>
     <td colspan="1" width="200" align="center" >'.$type.'</td>
     <td colspan="1" width="44" class="title">العدد</td>
     <td colspan="1" width="45" align="center" >'.$data['items'].'</td>
@@ -372,7 +377,7 @@ $tbl = '
   </tr>
   <tr>
     <td colspan="1" width="120"class="title">المبلغ مع التوصيل</td>
-    <td colspan="4" align="center">'.number_format($data['total_price']+$dev_p-$data['discount']).' دينار</td>
+    <td colspan="4" align="center"><b>'.number_format($data['total_price']+$dev_p-$data['discount']).' دينار</b></td>
   </tr>
 </table>
 ';
@@ -444,7 +449,7 @@ $style2 = array(
     'stretchtext' => 1
 );
 // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-$pdf->write1DBarcode($data['bar_code'], 'C39', 0, 180, 120, 20, 0.4, $style2, 'N');
+$pdf->write1DBarcode($data['bar_code'], 'C39', 0, 180, 120, 18, 0.4, $style2, 'N');
 $pdf->SetTextColor(25,25,112);
 $pdf->SetFont('aealarabiya', '', 9);
 
