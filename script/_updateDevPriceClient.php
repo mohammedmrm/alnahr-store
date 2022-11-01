@@ -12,7 +12,7 @@ require_once("../config.php");
 $success = 0;
 $client  = $_REQUEST['client_id'];
 $dev  = $_REQUEST['devPrice'];
-$devTown  = $_REQUEST['devTownPrice'];
+$devTown  = $_REQUEST['devCity'];
 $city  = $_REQUEST['devCity'];
 $msg = "";
 $j = 0;
