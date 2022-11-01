@@ -88,5 +88,4 @@ try{
    $success="0";
 }
 
-echo (json_encode(array($_SESSION,$query,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>($page+1),'role'=>$_SESSION['role'])));
-?>
+echo (json_encode(array($_SESSION, $sql, $query,"success"=>$success,"data"=>$data,'pages'=>$pages,'page'=>($page+1),'role'=>$_SESSION['role'])));

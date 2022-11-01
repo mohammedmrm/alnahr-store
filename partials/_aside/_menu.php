@@ -12,7 +12,6 @@ function acc($id){
  background-color: #663300 !important;
 }
 
-
 </style>
 <input type="hidden" value="<?php if(isset($_GET['page'])){echo $_GET['page'];}?>" id="page">
 <!-- begin:: Aside Menu -->
