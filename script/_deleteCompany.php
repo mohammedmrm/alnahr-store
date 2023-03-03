@@ -1,6 +1,6 @@
 <?php
 session_start();
-//error_reporting(0);
+error_reporting(0);
 header('Content-Type: application/json');
 require("_access.php");
 access([1]);
@@ -19,12 +19,16 @@ $v->validate([
 ]);
 
 if ($v->passes()) {
-   $sql = "delete from companies where id = ? and company_id=?";
-   $result = setData($con, $sql, [$id, $_SESSION['user_details']['company_id']]);
-   if ($result > 0) {
-      $success = 1;
-   } else {
-      $msg = "فشل الحذف";
+   try {
+      $sql = "delete from companies where id = ? and company_id=?";
+      $result = setData($con, $sql, [$id, $_SESSION['company_id']]);
+      if ($result > 0) {
+         $success = 1;
+      } else {
+         $msg = "فشل الحذف";
+      }
+   } catch (PDOException $e) {
+      $success = $e;
    }
 } else {
    $msg = "فشل الحذف";
