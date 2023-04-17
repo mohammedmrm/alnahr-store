@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 require_once("_apiAccess.php");
 access();
@@ -119,4 +120,3 @@ if($v->passes() && $oldOrder_err == "") {
            ];
 }
 echo json_encode(['code'=>200,'message'=>$msg,'success'=>$success,'error'=>$error,'data'=>$data]);
-?>
