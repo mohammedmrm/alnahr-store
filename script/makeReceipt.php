@@ -127,7 +127,7 @@ where order_items.order_id=?";
   } else {
     $logo = "../../../" . $config['Company_logo'];
   }
-  $pdf->SetHeaderData($logo, 30, "");
+  $pdf->SetHeaderData($logo, 50, "");
 
   // set header and footer fonts
   $pdf->setHeaderFont(array('aealarabiya', '', 12));
