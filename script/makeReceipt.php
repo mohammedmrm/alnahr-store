@@ -127,7 +127,7 @@ where order_items.order_id=?";
   } else {
     $logo = "../../../" . $config['Company_logo'];
   }
-  $pdf->SetHeaderData($logo, 50, "");
+  $pdf->SetHeaderData($logo, 40, "");
 
   // set header and footer fonts
   $pdf->setHeaderFont(array('aealarabiya', '', 12));
@@ -135,7 +135,7 @@ where order_items.order_id=?";
 
 
   // set margins
-  $pdf->SetMargins(5, 30, 5, 5);
+  $pdf->SetMargins(5, 20, 5, 5);
   $pdf->SetHeaderMargin(5);
   //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
   // set auto page breaks
@@ -153,10 +153,22 @@ where order_items.order_id=?";
   } else {
     $dev_p = $config['dev_o'];
   }
-  $pdf->SetFont('aealarabiya', '', 15);
+  $pdf->SetFont('aealarabiya', '', 10);
   $pdf->setRTL(true);
+  $page_format = array(
+    'MediaBox' => array('llx' => 0, 'lly' => 0, 'urx' => 100, 'ury' => 150),
+    'Dur' => .6,
+    'trans' => array(
+      'D' => 1.5,
+      'S' => 'Split',
+      'Dm' => 'V',
+      'M' => 'O'
+    ),
+    'Rotate' => 0,
+    'PZ' => 1,
+  );
   // add a page
-  $pdf->AddPage('P', 'A5');
+  $pdf->AddPage('P', $page_format, false, false);
 
   // Persian and English content
   $tbl = '
@@ -191,8 +203,8 @@ where order_items.order_id=?";
 </table>
 <table  border="1" cellpadding="5">
   <tr>
-    <td colspan="1"  class="title">النوع</td>
-    <td colspan="1" width="250" align="center" >' . $type . '</td>
+    <td colspan="1" class="title">النوع</td>
+    <td colspan="1" width="123" align="center" >' . $type . '</td>
     <td colspan="1" width="50"class="title">العدد</td>
     <td colspan="1" width="66"align="center" >' . $data['items'] . '</td>
   </tr>
@@ -268,8 +280,8 @@ where order_items.order_id=?";
     'stretchtext' => 1
   );
   // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 10, 100, 15, 0.4, $style2, 'N');
-  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 185, 100, 15, 0.5, $style2, 'N');
+  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 10, 100, 10, 0.4, $style2, 'N');
+  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 120, 100, 15, 0.4, $style2, 'N');
   $pdf->SetTextColor(25, 25, 112);
   $pdf->SetFont('aealarabiya', '', 9);
 
@@ -281,7 +293,7 @@ where order_items.order_id=?";
   //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
   $style['position'] = '';
   $pdf->setRTL(false);
-  $pdf->write2DBarcode($orderData, 'QRCODE,M', 80, 141, 60, 60, $style, 'N');
+  $pdf->write2DBarcode($orderData, 'QRCODE,L', 53, 98, 70, 70, $style, 'N');
 }
 
 //Close and output PDF document
