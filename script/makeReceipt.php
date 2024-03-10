@@ -97,7 +97,7 @@ left join category on product.category_id = category.id where order_items.order_
   foreach ($cats as $cat) {
     $type .= $cat['cat_name'] . ",  ";
   }
-  $sql  = "select * from order_items
+  $sql = "select * from order_items
 LEFT join configurable_product on configurable_product.id = order_items.configurable_product_id
 where order_items.order_id=?";
   $items = getData($con, $sql, [$data['id']]);
@@ -135,7 +135,7 @@ where order_items.order_id=?";
 
 
   // set margins
-  $pdf->SetMargins(10, 30, 10, 10);
+  $pdf->SetMargins(5, 30, 5, 5);
   $pdf->SetHeaderMargin(5);
   //$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
   // set auto page breaks
@@ -163,7 +163,7 @@ where order_items.order_id=?";
 <table  cellpadding="5">
     <tr>
     <td width="209">اسم الصفحه : ' . $data['store_name'] . '</td>
-    <td width="209">هاتف العميل : ' . $data['client_phone'] . '</td>
+    <td width="209">هاتف العميل : ' . $data['client_phone'] . '</td>  
   </tr>
   <tr>
     <td width="209" >رقم الوصل : ' . $data['order_no'] . '</td>
@@ -172,47 +172,41 @@ where order_items.order_id=?";
 </table>
 <table  border="1" cellpadding="5">
     <tr>
-    <td width="153" class="title">اسم الزبون</td>
-    <td align="center" width="300">' . $data['customer_name'] . '</td>
+    <td width="20%" class="title">اسم الزبون</td>
+    <td align="center"  width="80%">' . $data['customer_name'] . '</td>
   </tr>
   <tr>
-    <td width="153" class="title">هاتف الزبون</td>
-    <td align="center" width="300">' . $data['customer_phone'] . '</td>
-  </tr>
+    <td width="20%" class="title">هاتف الزبون</td>
+    <td align="center"  width="80%">' . $data['customer_phone'] . '</td>
+  </tr>    
+  <tr>
+        <td align="right" width="20%"  class="title">العنوان</td>
+        <td colspan="1" width="80%" align="center">' . $data['city'] . ' - ' . $data['town'] . ' - ' . $data['address'] . '</td>
+    </tr>
 </table>
-<br /><br />
+<br />
 <table cellpadding="2" border="1">
+
     <tr>
-        <td  align="center" class="title">العنوان</td>
+        <td width="100%" align="center" class="title">المنتجات</td>
     </tr>
     <tr>
-        <td colspan="1"  align="center">' . $data['city'] . ' - ' . $data['town'] . ' - ' . $data['address'] . '</td>
-    </tr>
-    <tr>
-        <td  align="center" class="title">المنتجات</td>
-    </tr>
-    <tr>
-        <td colspan="1" height="100">' . $products . '</td>
+        <td colspan="1" >' . $products . '</td>
     </tr>
 </table>
 <table  border="1" cellpadding="5">
   <tr>
-    <td colspan="6" class="title" align="center">تفاصيل الطلب</td>
-  </tr>
-  <tr>
     <td colspan="1"  class="title">النوع</td>
-    <td colspan="1" width="238" align="center" >' . $type . '</td>
-    <td colspan="1" width="35" class="title">الوزن</td>
-    <td colspan="1" width="35"align="center" > 1</td>
-    <td colspan="1" width="35"class="title">العدد</td>
-    <td colspan="1" width="35"align="center" >' . $data['items'] . '</td>
+    <td colspan="1" width="250" align="center" >' . $type . '</td>
+    <td colspan="1" width="50"class="title">العدد</td>
+    <td colspan="1" width="66"align="center" >' . $data['items'] . '</td>
   </tr>
   <tr>
     <td colspan="1" class="title">ملاحظات</td>
     <td colspan="5" align="center" >' . $data['note'] . '</td>
   </tr>
   <tr>
-    <td colspan="1" width="110"class="title">المبلغ مع التوصيل</td>
+    <td colspan="1" class="title">المبلغ مع التوصيل</td>
     <td colspan="4" align="center">' . number_format($data['total_price'] + $dev_p - $data['discount']) . ' دينار</td>
   </tr>
 </table>
@@ -228,30 +222,24 @@ where order_items.order_id=?";
   $pdf->setRTL(true);
 
   $pdf->SetFontSize(10);
-  $id =
-    '
-{
-    "data":{
-      "id":' . '"' . $data['id'] . '",' .
-    '"order_no":' . '"' . $data['order_no'] . '",' .
-    '"city_id":' . '"' . $data['city_id'] . '",' .
-    '"town_id":' . '"' . $data['town_id'] . '",' .
-    '"city":' . '"' . $data['city'] . '",' .
-    '"town":' . '"' . $data['town'] . '",' .
-    '"address":' . '"' . $data['address'] . '",' .
-    '"customer_name":' . '"' . $data['customer_name'] . '",' .
-    '"customer_phone":' . '"' . $data['customer_phone'] . '",' .
-    '"price":' . '"' . $data['price'] + $dev_p - $data['discount'] . '",' .
-    '"note":' . '"' . $data['note'] . '"
-    }
-}
-';
+  $orderData = json_encode([
+    'id' => $data['id'],
+    "order_no" => $data['order_no'],
+    "city_id" => $data['city_id'],
+    "town_id" => $data['town_id'],
+    "city" => $data['city'],
+    "town" => $data['town'],
+    "address" => $data['address'],
+    "customer_name" => $data['customer_name'],
+    "customer_phone" => $data['customer_phone'],
+    "price" => $data['price'] + $dev_p - $data['discount'],
+    "note" => $data['note']
+  ]);
   // print newline
   $style = array(
-    'position' => 'L',
-    'align' => 'L',
+    'position' => 'R',
+    'align' => 'E',
     'stretch' => false,
-    'fitwidth' => false,
     'cellfitalign' => '',
     'border' => false,
     'hpadding' => 'auto',
@@ -259,7 +247,7 @@ where order_items.order_id=?";
     'fgcolor' => array(0, 0, 0),
     'bgcolor' => "",
     'text' => true,
-    'label' => $id,
+    'label' => "بيانات الطلب",
     'font' => 'helvetica',
     'fontsize' => 12,
     'stretchtext' => 1
@@ -285,7 +273,8 @@ where order_items.order_id=?";
     'stretchtext' => 1
   );
   // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
-  $pdf->write1DBarcode($data['bar_code'], 'C39', 0, 185, 100, 15, 0.5, $style2, 'N');
+  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 10, 100, 15, 0.4, $style2, 'N');
+  $pdf->write1DBarcode($data['bar_code'], 'C128', 0, 185, 100, 15, 0.5, $style2, 'N');
   $pdf->SetTextColor(25, 25, 112);
   $pdf->SetFont('aealarabiya', '', 9);
 
@@ -297,7 +286,7 @@ where order_items.order_id=?";
   //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
   $style['position'] = '';
   $pdf->setRTL(false);
-  $pdf->write2DBarcode($id, 'QRCODE,M', 10, 0, 30, 30, $style, 'N');
+  $pdf->write2DBarcode($orderData, 'QRCODE,M', 80, 141, 60, 60, $style, 'N');
 }
 
 //Close and output PDF document
