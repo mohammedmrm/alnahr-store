@@ -274,7 +274,7 @@ where order_items.order_id=?";
   );
   // CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.
   $pdf->write1DBarcode($data['order_no'], 'C128', 0, 10, 100, 15, 0.4, $style2, 'N');
-  $pdf->write1DBarcode($data['bar_code'], 'C128', 0, 185, 100, 15, 0.5, $style2, 'N');
+  $pdf->write1DBarcode($data['order_no'], 'C128', 0, 185, 100, 15, 0.5, $style2, 'N');
   $pdf->SetTextColor(25, 25, 112);
   $pdf->SetFont('aealarabiya', '', 9);
 
