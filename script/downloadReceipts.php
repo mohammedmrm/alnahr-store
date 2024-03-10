@@ -331,8 +331,7 @@ where order_items.order_id=?";
     </tr>
 </table>
 <br />
-<table cellpadding="2" border="1">
-
+<table cellpadding="5" border="1">
     <tr>
         <td width="100%" align="center" class="title">المنتجات</td>
     </tr>
