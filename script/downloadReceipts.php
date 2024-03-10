@@ -303,23 +303,19 @@ where order_items.order_id=?";
   } else {
     $dev_p = $config['dev_o'];
   }
-  $pdf->SetFont('aealarabiya', '', 14);
+  $pdf->SetFont('aealarabiya', '', 15);
   $pdf->setRTL(true);
   // add a page
   $pdf->AddPage('P', 'A5');
 
   // Persian and English content
   $tbl = '
-<table  cellpadding="5">
+  <table cellpadding="5">
     <tr>
-    <td width="209">اسم الصفحه : ' . $data['store_name'] . '</td>
-    <td width="209">هاتف العميل : ' . $data['client_phone'] . '</td>  
-  </tr>
-  <tr>
-    <td width="209" >رقم الوصل : ' . $data['order_no'] . '</td>
-    <td width="209">تاريخ : ' . $data['dat'] . '</td>
-  </tr>
-</table>
+      <td align="right" width="360" > المحل : ' . $data['store_name'] . ' ( ' . $data['client_phone'] . ' ) </td>
+      <td align="left" width="130">' . $data['dat'] . '</td>
+    </tr>
+  </table>
 <table  border="1" cellpadding="5">
     <tr>
     <td width="20%" class="title">اسم الزبون</td>
