@@ -228,7 +228,7 @@ class MYPDF extends TCPDF
     // Position at 15 mm from bottom
     $this->SetY(-10);
     // Set font
-    $this->SetFont('aealarabiya', 'I', 10);
+    $this->SetFont('aealarabiya', 'I', 8);
     // Page number
     $this->writeHTML('<hr><span style="text-align: right;color:#003399">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
   }
@@ -441,7 +441,7 @@ where order_items.order_id=?";
 
   $pdf->SetTextColor(55, 55, 55);
   $pdf->setRTL(false);
-  $pdf->write2DBarcode($orderData, 'QRCODE,L', 53, 98, 70, 70, $style, 'N');
+  $pdf->write2DBarcode($orderData, 'QRCODE,M', 52, 98, 70, 70, $style, 'N');
 }
 
 //Close and output PDF document

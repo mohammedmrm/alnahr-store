@@ -81,7 +81,7 @@ class MYPDF extends TCPDF
     // Position at 15 mm from bottom
     $this->SetY(-10);
     // Set font
-    $this->SetFont('aealarabiya', 'I', 10);
+    $this->SetFont('aealarabiya', 'I', 8);
     // Page number
     $this->writeHTML('<hr><span style="text-align: right;color:#003399">يسقط حق المطالبة بالوصال بعد مرور شهر من تاريخ الوصل</span>');
   }
@@ -291,9 +291,8 @@ where order_items.order_id=?";
   //$del = "<br /><hr />صممم و طور من قبل شركة <b><u>النهر</u></b> للحلول البرمجية<br /> 07722877759";
   //$pdf->writeHTML($del, true, false, false, false, '');
   //$pdf->write2DBarcode($id, 'QRCODE,M',0, 0, 30, 30, $style, 'N');
-  $style['position'] = '';
   $pdf->setRTL(false);
-  $pdf->write2DBarcode($orderData, 'QRCODE,L', 53, 98, 70, 70, $style, 'N');
+  $pdf->write2DBarcode($orderData, 'QRCODE,M', 52, 98, 70, 70, $style, 'N');
 }
 
 //Close and output PDF document
